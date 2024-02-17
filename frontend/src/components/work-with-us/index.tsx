@@ -1,4 +1,3 @@
-import Workwithus from '@/images/png/work-with-us.png';
 import Image from 'next/image';
 import NutritionistForm from '../nutritionist-form';
 import { Button } from '@chakra-ui/react';
@@ -8,7 +7,7 @@ const WorkWithUs = () => {
     <div className='w-full bg-[#EEC438] px-4 lg:px-8 text-[#3C4142]'>
       <section className='w-full flex flex-col  gap-6 lg:flex-row py-20 max-w-[1074px] mx-auto items-center justify-between'>
         <div className='w-full h-[250px] max-w-[471px] lg:h-[474px]  relative'>
-          <Image src={Workwithus} fill alt='work with us' />
+          <Image src={'/images/png/work-with-us.png'} fill alt='work with us' />
         </div>
         <div className='w-full flex flex-col gap-6 lg:max-w-[493px]'>
           <p className='text-[#014421] text-lg font-bold lg:text-[40px]'>
@@ -46,7 +45,7 @@ const WorkWithUs = () => {
             Join Us
           </Button> */}
             <input className='modal-state' id='modal-3' type='checkbox' />
-            <NutritionistForm showModal/>
+            <NutritionistForm showModal />
           </>
         </div>
       </section>

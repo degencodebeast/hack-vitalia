@@ -1,5 +1,3 @@
-import Food from '@/images/png/food.png';
-import Exercise from '@/images/png/excercise.png';
 import Image from 'next/image';
 
 const WhatWeDo = () => {
@@ -18,7 +16,7 @@ const WhatWeDo = () => {
       <div className='flex flex-col gap-5 lg:flex-row lg:gap-16 text-[#3C4142]'>
         <div className='w-full flex flex-col items-center gap-2'>
           <div className='w-full relative max-w-[350px]   lg:max-w-[471px] h-[200px] lg:h-[471px]'>
-            <Image src={Food} fill alt='food' />
+            <Image src={'/images/png/food.png'} fill alt='food' />
           </div>
           <div className='flex flex-col w-full items-center justify-center lg:items-start gap-2'>
             <p className='font-bold text-lg'>Meal Plans</p>
@@ -32,7 +30,7 @@ const WhatWeDo = () => {
         </div>
         <div className='w-full flex flex-col items-center gap-2'>
           <div className='w-full relative  max-w-[350px] lg:max-w-[471px] h-[200px] lg:h-[471px]'>
-            <Image src={Exercise} fill alt='food' />
+            <Image src={'/images/png/excercise.png'} fill alt='food' />
           </div>
           <div className='flex flex-col w-full items-center lg:items-start gap-2'>
             <p className='font-bold text-lg'>Fitness</p>
