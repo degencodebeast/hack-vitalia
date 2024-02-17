@@ -1,0 +1,10 @@
+Deploying Contracts for Avalanche....
+Deploying treasury for Avalanche
+---- Treasury Contract was deployed to: ----  0xdf2f1C4d00dF9b3b4c243d064D08F4B3FB6ede3E
+Deploying Community contract for Avalanche
+---- Community Contract for Avalanche was deployed to Avalanche testnet at this address: ----  0x3A3bc7C19bE0381294d8E7Bd311C123b76b33982
+Deploying UserNFT for Avalanche....
+---- UserNFT Contract was deployed to: ----  0x8E4508Dc5f0E17767C7c5b364cD4ee4f33e6C2e2
+Deploying NutritionistNFT for Avalanche....
+---- NutritionistNFT Contract was deployed to: ----  0xE3B57b2d4b7CdF04024CE1C26488C6A4Ea561df8
+
