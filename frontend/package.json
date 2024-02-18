@@ -9,6 +9,8 @@
     "prod": "next out",
     "lint": "next lint",
     "dev:static": "serve ./out",
+    "db:push": "drizzle-kit push:mysql",
+    "db:gen": "drizzle-kit generate:mysql",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore ."
   },

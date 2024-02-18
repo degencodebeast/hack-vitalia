@@ -7,6 +7,7 @@ import {
   mysqlTable,
   serial,
   timestamp,
+  uniqueIndex,
   varchar,
 } from 'drizzle-orm/mysql-core';
 
@@ -85,7 +86,7 @@ export const users = mysqlTable(
     username: varchar('username', { length: 50 }).unique().notNull(),
     password: varchar('password', { length: 255 }),
     email: varchar('email', { length: 255 }).unique(),
-    address: varchar('address', { length: 40 }).notNull(),
+    address: varchar('address', { length: 40 }).notNull().unique(),
     avatar: varchar('avatar', { length: 255 }),
     userType: mysqlEnum('user_type', ['member', 'nutritionist'])
       .default('member')
@@ -97,8 +98,8 @@ export const users = mysqlTable(
   (t) => ({
     emailIdx: index('email_idx').on(t.email),
     userTypeIdx: index('user_type_idx').on(t.userType),
-    addressIdx: index('address_idx').on(t.address),
-    usernameIdx: index('username_idx').on(t.username),
+    addressIdx: uniqueIndex('address_idx').on(t.address),
+    usernameIdx: uniqueIndex('username_idx').on(t.username),
   })
 );
 export const userRelations = relations(users, ({ one, many }) => ({
