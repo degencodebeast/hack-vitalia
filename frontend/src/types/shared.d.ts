@@ -15,7 +15,7 @@ export type Article = {
     fullName?: string;
     username: string;
     address: string;
-    name: string;
+   
     avatar?: string;
   };
 };
@@ -43,7 +43,7 @@ export type MealPlan = {
     fullName?: string;
     username: string;
     address: string;
-    name: string;
+  
     avatar?: string;
   };
 };
@@ -75,7 +75,7 @@ export type FitnessPlan = {
     fullName?: string;
     username: string;
     address: string;
-    name: string;
+   
     avatar?: string;
   };
 };
