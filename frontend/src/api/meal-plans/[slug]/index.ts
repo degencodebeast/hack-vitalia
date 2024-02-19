@@ -7,9 +7,9 @@ import {
   successHandlerCallback,
 } from '@/utils/api-utils';
 import { NextApiRequest, NextApiResponse } from 'next';
-import dotenv from 'dotenv';
+
 import { eq, or } from 'drizzle-orm';
-dotenv.config();
+
 import isEmpty from 'just-is-empty';
 import { IS_DEV } from '@/utils';
 

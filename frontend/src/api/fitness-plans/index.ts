@@ -7,10 +7,9 @@ import {
   successHandlerCallback,
 } from '@/utils/api-utils';
 import { NextApiRequest, NextApiResponse } from 'next';
-import dotenv from 'dotenv';
+
 import { IS_DEV } from '@/utils';
 import { eq } from 'drizzle-orm';
-dotenv.config();
 
 export default async function handler(
   req: NextApiRequest,

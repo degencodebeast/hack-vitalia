@@ -7,10 +7,9 @@ import {
   successHandlerCallback,
 } from '@/utils/api-utils';
 import { NextApiRequest, NextApiResponse } from 'next';
-import dotenv from 'dotenv';
+
 import { IS_DEV } from '@/utils';
 import { eq } from 'drizzle-orm';
-dotenv.config();
 
 export default async function handler(
   req: NextApiRequest,
@@ -67,7 +66,9 @@ export const POST: HTTP_METHOD_CB = async (
     }
 
     const createdMealplan = await db.transaction(async (tx) => {
-      const [insertRes] = await tx.insert(mealPlans).values({ ...rest, status });
+      const [insertRes] = await tx
+        .insert(mealPlans)
+        .values({ ...rest, status });
       return await tx.query.mealPlans.findFirst({
         where: eq(mealPlans.id, insertRes.insertId),
       });
