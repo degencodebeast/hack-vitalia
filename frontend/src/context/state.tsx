@@ -36,7 +36,6 @@ const defaultCommunities = [
   },
 ];
 
-
 const contextDefaultValue: stateContextType = {
   allTokensData: {},
   address: '',
@@ -54,15 +53,14 @@ const contextDefaultValue: stateContextType = {
   setCommunity: () => null,
   mealPlans: [] as MealPlan[],
 
-  setMealPlans: ()=>null,
-  selectedMealPlan:  {},
-  setSelectedMealPlan: ()=>null,
+  setMealPlans: () => null,
+  selectedMealPlan: {},
+  setSelectedMealPlan: () => null,
 
   ensName: null,
   setEnsName: () => null,
   ensAvatar: null,
-  setEnsAvatar: () => null
-
+  setEnsAvatar: () => null,
 };
 
 type StateContextProviderProps = {
@@ -78,7 +76,9 @@ export function AppWrapper({ children }: StateContextProviderProps) {
   });
   const [address, setAddress] = useState<string>('');
 
-  const [selectedMealPlan, setSelectedMealPlan] = useState<MealPlan|null>(null);
+  const [selectedMealPlan, setSelectedMealPlan] = useState<MealPlan | null>(
+    null
+  );
   const [community, setCommunity] = useState<Community | null>(null);
   const [communities, setCommunities] =
     useState<Community[]>(defaultCommunities);
@@ -111,8 +111,8 @@ export function AppWrapper({ children }: StateContextProviderProps) {
     isUserConnected,
     setIsUserConnected,
     user,
-        selectedMealPlan,
-        setSelectedMealPlan,
+    selectedMealPlan,
+    setSelectedMealPlan,
     setUser,
     communities,
     community,
@@ -121,8 +121,7 @@ export function AppWrapper({ children }: StateContextProviderProps) {
     ensName,
     setEnsName,
     ensAvatar,
-    setEnsAvatar
-
+    setEnsAvatar,
   };
 
   return (
@@ -135,10 +134,10 @@ export function useAppContext() {
 }
 export const sampleMealPlans: MealPlan[] = [
   {
-    id: "123e4567-e89b-12d3-a456-426614174001",
-    time: "Breakfast",
-    title: "Healthy Oatmeal Delight",
-    details: `
+    id: 1,
+    time: 'Breakfast',slug:'healthy-oatmeal-delight',authorId:1,
+    title: 'Healthy Oatmeal Delight',
+    content: `
     # Healthy Oatmeal Delight
     
     ## Overview
@@ -167,14 +166,17 @@ export const sampleMealPlans: MealPlan[] = [
     ## Notes
     Feel free to customize with your favorite fruits and nuts.
     `,
-    createdAt: Date.now(),
-    userAddress: "0xAbCdEf0123456789abcdef0123456789abcdef012",
-  },
+    createdAt: new Date(),
+    author:{
+id:1,'fullName':'Vicky Debby', username: 'Vicky-Debbie',
+      address: "0xabcdef0123456789012345678901234567890abc",
+    
+  }},
   {
-    id: "456e789f-12c3-45d6-7890-abcde1234567",
-    time: "Lunch",
-    title: "Mediterranean Chickpea Salad",
-    details: `
+    id: 2,
+    time: 'Lunch',authorId:1,slug:'mediterranean-chickpea-salad',
+    title: 'Mediterranean Chickpea Salad',
+    content: `
     # Mediterranean Chickpea Salad
     
     ## Overview
@@ -205,14 +207,17 @@ export const sampleMealPlans: MealPlan[] = [
     ## Notes
     Perfect for a light and satisfying lunch.
     `,
-    createdAt: Date.now(),
-    userAddress: "0x1234567890abcdef0987654321fedcba09876543",
+    createdAt: new Date(),
+    author:{
+id:1,'fullName':'Vicky Debby', username: 'Vicky-Debbie',
+      address: "0xabcdef0123456789012345678901234567890abc",
+    }
   },
   {
-    id: "789a1b23-45c6-7d89-01e2-345678901234",
-    time: "Dinner",
-    title: "Grilled Salmon with Lemon Herb Marinade",
-    details: `
+    id: 3,
+    time: 'Dinner',authorId:1,slug:'grilled-salmon-with-lemon-herb',
+    title: 'Grilled Salmon with Lemon Herb Marinade',
+    content: `
     # Grilled Salmon with Lemon Herb Marinade
     
     ## Overview
@@ -241,13 +246,18 @@ export const sampleMealPlans: MealPlan[] = [
     ## Notes
     Serve with a side of steamed vegetables for a complete meal.
     `,
-    createdAt: Date.now(),
-    userAddress: "0xfedcba09876543211234567890abcdef12345678",
+    createdAt: new Date(),
+    author: {
+      id: 1,
+      fullName: 'Vicky Debby',
+      username: 'Vicky-Debbie',
+      address: '0xabcdef0123456789012345678901234567890abc',
+    },
   },
   {
-    id: "a1b2c3d4-e5f6-7890-1234-567890abcdef",
-    time: "Breakfast",
-    title: "Protein-Packed Avocado Toast",
+    id: 4,
+    time: 'Breakfast',slug:'protein-packed-avocado-toast',authorId:1,
+    title: 'Protein-Packed Avocado Toast',
     details: `
     # Protein-Packed Avocado Toast
     
@@ -279,7 +289,11 @@ export const sampleMealPlans: MealPlan[] = [
     ## Notes
     A satisfying breakfast that keeps you energized throughout the morning.
     `,
-    createdAt: Date.now(),
-    userAddress: "0xabcdef0123456789012345678901234567890abc",
+    createdAt: new Date(),
+    author: {
+      id: 1,
+      fullName: 'Vicky Debby',
+      address: '0xabcdef0123456789012345678901234567890abc',
+    },
   },
 ];

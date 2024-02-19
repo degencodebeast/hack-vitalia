@@ -7,14 +7,19 @@ import React from 'react';
 import { AppWrapper } from '../context/state';
 import ChakraProviders from '@/providers/chakra-provider';
 import { PushProtocolProvider } from '@/context/pushContext';
-
+import { Provider as ReduxProvider } from 'react-redux';
+import { store } from '@/state/store';
 function Providers({ children }: { children: React.ReactNode }) {
   return (
     
     <AppWrapper>
-      <PushProtocolProvider>
-        <ChakraProviders>{children}</ChakraProviders>
-      </PushProtocolProvider>
+      <ReduxProvider store={store}>
+        <PushProtocolProvider>
+          <ChakraProviders>
+            {children}
+          </ChakraProviders>
+        </PushProtocolProvider>
+      </ReduxProvider>
     </AppWrapper>
   );
 }

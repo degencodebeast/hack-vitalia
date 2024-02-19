@@ -1,4 +1,3 @@
-import Nutritionist from '@/images/png/nutitionist.png';
 import Image from 'next/image';
 import { Button } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
@@ -29,14 +28,16 @@ const TalkToNutritionist = () => {
             more fulfilling life.
           </p>
           <Button
-            onClick={findOutMoreHandler} size={'lg'} alignSelf={'flex-start'}
+            onClick={findOutMoreHandler}
+            size={'lg'}
+            alignSelf={'flex-start'}
           >
             Find out more
           </Button>
           {/* <Button size={'lg'} variant={'solid'} className="bg-primaryGreen text-primaryBeige" rounded={'md'}>Find out more</Button> */}
         </div>
         <div className='w-full h-[350px] max-w-[471px] lg:h-[474px] relative'>
-          <Image src={Nutritionist} fill alt='work with us' />
+          <Image src={'/images/png/nutitionist.png'} fill alt='work with us' />
         </div>
       </section>
     </div>

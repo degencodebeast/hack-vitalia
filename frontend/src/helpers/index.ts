@@ -1,6 +1,4 @@
-import { Petit_Formal_Script } from 'next/font/google';
-//@ts-ignore
-import { Web3Storage } from 'web3.storage';
+// import { Web3Storage } from 'web3.storage';
 import {
   formatDistance,
   format,
@@ -8,13 +6,13 @@ import {
   isYesterday,
   formatDistanceStrict,
 } from 'date-fns';
-import slugify from 'slugify'
-import {nanoid} from 'nanoid'
+import slugify from 'slugify';
+import { nanoid } from 'nanoid';
 
-
-export function shortenText(text:string,len=50){
-return text?.length > len? text?.substring(0,len)+'...':text
+export function shortenText(text: string, len = 50) {
+  return text?.length > len ? text?.substring(0, len) + '...' : text;
 }
+
 export const formatChatTimestamp = (timestamp: number | Date) => {
   const currentDate = new Date();
   const messageDate = new Date(timestamp);
@@ -27,10 +25,15 @@ export const formatChatTimestamp = (timestamp: number | Date) => {
     return format(messageDate, 'yyyy/M/d h:mm a');
   }
 };
-export function generateSlug(text:string){
-return slugify(text,{
-  lower:true,strict:true
-})+'-'+nanoid(10)
+export function generateSlug(text: string) {
+  return (
+    slugify(text, {
+      lower: true,
+      strict: true,
+    }) +
+    '-' +
+    nanoid(10)
+  );
 }
 function getAccessToken() {
   return process.env.NEXT_PUBLIC_WEB3STORAGE_API_TOKEN;
@@ -55,7 +58,7 @@ export function maskHexAddress(address: string) {
 }
 
 function makeStorageClient() {
-  return new Web3Storage({ token: getAccessToken() as string});
+  // return new Web3Storage({ token: getAccessToken() as string });
 }
 export const uploadPromptToIpfs = async (data: any) => {
   const client = makeStorageClient();
@@ -156,9 +159,9 @@ export const uploadPromptToIpfs = async (data: any) => {
   const fileObj = new File([content], 'file.json', {
     type: 'application/json',
   });
-  const res = await client.put([fileObj]);
-  console.log(res);
-  return res;
+  // const res = await client.put([fileObj]);
+  // console.log(res);
+  // return res;
 };
 
 export const putJSONandGetHash = async (json: any) => {
@@ -169,6 +172,6 @@ export const putJSONandGetHash = async (json: any) => {
   const fileObj = new File([content], 'file.json', {
     type: 'application/json',
   });
-  const res = await client.put([fileObj]);
-  return res;
+  // const res = await client.put([fileObj]);
+  // return res;
 };
