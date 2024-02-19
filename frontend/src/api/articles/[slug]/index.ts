@@ -13,7 +13,6 @@ dotenv.config();
 import isEmpty from 'just-is-empty';
 import { IS_DEV } from '@/utils';
 
-const MAX_LOCKED_CONTENT_LENGTH = 200;
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

@@ -47,7 +47,10 @@ export const mealPlans = mysqlTable(
       'draft'
     ),
     views: int('views').default(0),
-    time: varchar('time', { length: 50 }).notNull(),
+    time: varchar('time', {
+      enum: ['breakfast', 'lunch', 'dinner', 'snack'],
+      length: 50,
+    }).notNull(),
     authorId: int('author_id').notNull(),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').onUpdateNow(),
