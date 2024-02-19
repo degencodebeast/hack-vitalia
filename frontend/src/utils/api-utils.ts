@@ -84,15 +84,27 @@ export async function mainHandler(
       .as("isFollowing");
  */
 export const getUserFromDB = async (
-  usernameOrId: string | number,
+  usernameOrIdOrAddress: string | number,
   columns = {}
 ) => {
+  const defaultCols = {
+    id: true,
+    address: true,
+    fullName: true,
+    username: true,
+    avatar: true,
+    userType: true,
+    role: true,
+  };
+  const cols = { ...defaultCols, ...columns };
   try {
     const user = await db.query.users.findFirst({
       where: or(
-        eq(users.username, usernameOrId as string),
-        eq(users.id, usernameOrId as number)
+        eq(users.username, usernameOrIdOrAddress as string),
+        eq(users.address, usernameOrIdOrAddress as string),
+        eq(users.id, usernameOrIdOrAddress as number)
       ),
+      columns: cols,
     });
     return user;
   } catch (error) {

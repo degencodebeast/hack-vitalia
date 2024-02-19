@@ -1,5 +1,5 @@
 import { db } from '@/db';
-import { articles } from '@/db/schema';
+import { mealPlans } from '@/db/schema';
 import {
   HTTP_METHOD_CB,
   errorHandlerCallback,
@@ -31,8 +31,8 @@ export const GET: HTTP_METHOD_CB = async (
   try {
     let { slug } = req.query;
 
-    const article = await db.query.articles.findFirst({
-      where: or(eq(articles.slug, slug as string)),
+    const mealPlan = await db.query.mealPlans.findFirst({
+      where: or(eq(mealPlans.slug, slug as string)),
 
       with: {
         author: {
@@ -47,23 +47,23 @@ export const GET: HTTP_METHOD_CB = async (
       },
     });
 
-    if (isEmpty(article)) {
+    if (isEmpty(mealPlan)) {
       return await successHandlerCallback(
         req,
         res,
         {
-          message: `Article with '${slug}' does not exist`,
-          data: article,
+          message: `meal Plan with '${slug}' does not exist`,
+          data: mealPlan,
         },
         404
       );
     }
     // update the views whenever a post is requested
-    await db.update(articles).set({ views: (article?.views as number) + 1 });
+    await db.update(mealPlans).set({ views: (mealPlan?.views as number) + 1 });
 
     return await successHandlerCallback(req, res, {
-      message: `Article retrieved successfully`,
-      data: article,
+      message: `meal Plan retrieved successfully`,
+      data: mealPlan,
     });
   } catch (error: any) {
     return await errorHandlerCallback(req, res, {
@@ -80,33 +80,33 @@ export const PUT: HTTP_METHOD_CB = async (
     const { status, ...rest } = req.body;
     let { slug } = req.query;
 
-    const article = await db.query.articles.findFirst({
-      where: or(eq(articles.slug, slug as string)),
+    const mealPlan = await db.query.mealPlans.findFirst({
+      where: or(eq(mealPlans.slug, slug as string)),
     });
-    if (isEmpty(article)) {
+    if (isEmpty(mealPlan)) {
       return await successHandlerCallback(
         req,
         res,
         {
-          message: `Article with '${slug}' does not exist`,
-          data: article,
+          message: `Meal plan with '${slug}' does not exist`,
+          data: mealPlan,
         },
         404
       );
     }
-    //TODO: add a check to see if the user is the author of the article
+    //TODO: add a check to see if the user is the author of the mealPlan
 
     if (status === 'DRAFT') {
-      await db.update(articles).set({ ...rest, status });
+      await db.update(mealPlans).set({ ...rest, status });
       return await successHandlerCallback(req, res, {
         message: 'Draft updated successfully',
       });
     }
 
-    const update = await db.update(articles).set({ ...rest, status });
+    const update = await db.update(mealPlans).set({ ...rest, status });
 
     return await successHandlerCallback(req, res, {
-      message: 'Article updated successfully',
+      message: 'meal plan updated successfully',
     });
   } catch (error: any) {
     return await errorHandlerCallback(req, res, {

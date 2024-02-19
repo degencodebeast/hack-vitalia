@@ -9570,6 +9570,11 @@ jsonparse@^1.2.0:
     object.assign "^4.1.4"
     object.values "^1.1.6"
 
+just-is-empty@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/just-is-empty/-/just-is-empty-3.4.1.tgz#a3d287bf37e8b91856568747c4aed8c8dc992428"
+  integrity sha512-bweyqPPl3HReVyVzLJvCJn+cfXJKh6dy4kSLoW9YLqwFz+2vZbWLN38AOK7esEIVPQwY1W48HaNvOFZqYAjLpw==
+
 keccak@^3.0.1:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/keccak/-/keccak-3.0.4.tgz#edc09b89e633c0549da444432ecf062ffadee86d"

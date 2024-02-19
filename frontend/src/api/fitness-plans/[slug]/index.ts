@@ -1,5 +1,5 @@
 import { db } from '@/db';
-import { articles } from '@/db/schema';
+import { fitnessPlans } from '@/db/schema';
 import {
   HTTP_METHOD_CB,
   errorHandlerCallback,
@@ -31,8 +31,8 @@ export const GET: HTTP_METHOD_CB = async (
   try {
     let { slug } = req.query;
 
-    const article = await db.query.articles.findFirst({
-      where: or(eq(articles.slug, slug as string)),
+    const fitnessPlan = await db.query.fitnessPlans.findFirst({
+      where: or(eq(fitnessPlans.slug, slug as string)),
 
       with: {
         author: {
@@ -47,23 +47,25 @@ export const GET: HTTP_METHOD_CB = async (
       },
     });
 
-    if (isEmpty(article)) {
+    if (isEmpty(fitnessPlan)) {
       return await successHandlerCallback(
         req,
         res,
         {
-          message: `Article with '${slug}' does not exist`,
-          data: article,
+          message: `Fitness Plan with '${slug}' does not exist`,
+          data: fitnessPlan,
         },
         404
       );
     }
     // update the views whenever a post is requested
-    await db.update(articles).set({ views: (article?.views as number) + 1 });
+    await db
+      .update(fitnessPlans)
+      .set({ views: (fitnessPlan?.views as number) + 1 });
 
     return await successHandlerCallback(req, res, {
-      message: `Article retrieved successfully`,
-      data: article,
+      message: `Fitness Plan retrieved successfully`,
+      data: fitnessPlan,
     });
   } catch (error: any) {
     return await errorHandlerCallback(req, res, {
@@ -80,33 +82,33 @@ export const PUT: HTTP_METHOD_CB = async (
     const { status, ...rest } = req.body;
     let { slug } = req.query;
 
-    const article = await db.query.articles.findFirst({
-      where: or(eq(articles.slug, slug as string)),
+    const fitnessPlan = await db.query.fitnessPlans.findFirst({
+      where: or(eq(fitnessPlans.slug, slug as string)),
     });
-    if (isEmpty(article)) {
+    if (isEmpty(fitnessPlan)) {
       return await successHandlerCallback(
         req,
         res,
         {
-          message: `Article with '${slug}' does not exist`,
-          data: article,
+          message: `Fitness plan with '${slug}' does not exist`,
+          data: fitnessPlan,
         },
         404
       );
     }
-    //TODO: add a check to see if the user is the author of the article
+    //TODO: add a check to see if the user is the author of the fitnessPlan
 
     if (status === 'DRAFT') {
-      await db.update(articles).set({ ...rest, status });
+      await db.update(fitnessPlans).set({ ...rest, status });
       return await successHandlerCallback(req, res, {
         message: 'Draft updated successfully',
       });
     }
 
-    const update = await db.update(articles).set({ ...rest, status });
+    const update = await db.update(fitnessPlans).set({ ...rest, status });
 
     return await successHandlerCallback(req, res, {
-      message: 'Article updated successfully',
+      message: 'Fitness plan updated successfully',
     });
   } catch (error: any) {
     return await errorHandlerCallback(req, res, {

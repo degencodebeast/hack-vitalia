@@ -43,6 +43,7 @@
     "flowbite-react": "^0.6.1",
     "framer-motion": "^10.16.4",
     "i": "^0.3.7",
+    "just-is-empty": "^3.4.1",
     "lokijs": "1.x",
     "material-symbols": "^0.13.0",
     "mysql2": "^3.9.1",

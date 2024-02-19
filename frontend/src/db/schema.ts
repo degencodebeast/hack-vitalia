@@ -23,6 +23,7 @@ export const articles = mysqlTable(
     status: mysqlEnum('status', ['published', 'draft', 'deleted']).default(
       'draft'
     ),
+    views: int('views').default(0),
     authorId: int('author_id').notNull(),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').onUpdateNow(),
@@ -45,6 +46,7 @@ export const mealPlans = mysqlTable(
     status: mysqlEnum('status', ['published', 'draft', 'deleted']).default(
       'draft'
     ),
+    views: int('views').default(0),
     time: varchar('time', { length: 50 }).notNull(),
     authorId: int('author_id').notNull(),
     createdAt: timestamp('created_at').defaultNow(),
@@ -61,7 +63,7 @@ export const fitnessPlans = mysqlTable(
   {
     id: serial('id').primaryKey(),
     title: varchar('title', { length: 120 }).notNull(),
-
+    views: int('views').default(0),
     image: varchar('image', { length: 255 }),
     slug: varchar('slug', { length: 255 }).notNull(),
     content: longtext('content'),
@@ -83,6 +85,7 @@ export const users = mysqlTable(
   'users',
   {
     id: serial('id').primaryKey(),
+    fullName: varchar('full_name', { length: 120 }),
     username: varchar('username', { length: 50 }).unique().notNull(),
     password: varchar('password', { length: 255 }),
     email: varchar('email', { length: 255 }).unique(),
