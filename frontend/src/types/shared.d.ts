@@ -9,7 +9,7 @@ export type Article = {
   intro?: string;
   createdAt: string | Date;
   updatedAt?: string | Date;
-  views: number;
+  views?: number;
   author: {
     id: number;
     fullName?: string;
@@ -34,7 +34,7 @@ export type MealPlan = {
   authorId: number;
   status?: PostStatus;
   intro?: string;
-  views: number;
+  views?: number;
   time: string | 'breakfast' | 'lunch' | 'dinner' | 'snack';
   createdAt: string | Date;
   updatedAt?: string | Date;
@@ -67,7 +67,7 @@ export type FitnessPlan = {
   authorId: number;
   status?: PostStatus;
   intro?: string;
-  views: number;
+  views?: number;
   createdAt: string | Date;
   updatedAt?: string | Date;
   author: {

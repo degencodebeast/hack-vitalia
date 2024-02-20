@@ -1,4 +1,5 @@
 'use client';
+//eslint#disabling-rules
 import { createContext, useContext, useState } from 'react';
 import { Community, User, stateContextType } from '../types/state';
 import { useAccount, useNetwork, useWalletClient, useEnsName } from 'wagmi';
@@ -135,7 +136,9 @@ export function useAppContext() {
 export const sampleMealPlans: MealPlan[] = [
   {
     id: 1,
-    time: 'Breakfast',slug:'healthy-oatmeal-delight',authorId:1,
+    time: 'Breakfast',
+    slug: 'healthy-oatmeal-delight',
+    authorId: 1,
     title: 'Healthy Oatmeal Delight',
     content: `
     # Healthy Oatmeal Delight
@@ -167,14 +170,18 @@ export const sampleMealPlans: MealPlan[] = [
     Feel free to customize with your favorite fruits and nuts.
     `,
     createdAt: new Date(),
-    author:{
-id:1,'fullName':'Vicky Debby', username: 'Vicky-Debbie',
-      address: "0xabcdef0123456789012345678901234567890abc",
-    
-  }},
+    author: {
+      id: 1,
+      fullName: 'Vicky Debby',
+      username: 'Vicky-Debbie',
+      address: '0xabcdef0123456789012345678901234567890abc',
+    },
+  },
   {
     id: 2,
-    time: 'Lunch',authorId:1,slug:'mediterranean-chickpea-salad',
+    time: 'Lunch',
+    authorId: 1,
+    slug: 'mediterranean-chickpea-salad',
     title: 'Mediterranean Chickpea Salad',
     content: `
     # Mediterranean Chickpea Salad
@@ -208,14 +215,18 @@ id:1,'fullName':'Vicky Debby', username: 'Vicky-Debbie',
     Perfect for a light and satisfying lunch.
     `,
     createdAt: new Date(),
-    author:{
-id:1,'fullName':'Vicky Debby', username: 'Vicky-Debbie',
-      address: "0xabcdef0123456789012345678901234567890abc",
-    }
+    author: {
+      id: 1,
+      fullName: 'Vicky Debby',
+      username: 'Vicky-Debbie',
+      address: '0xabcdef0123456789012345678901234567890abc',
+    },
   },
   {
     id: 3,
-    time: 'Dinner',authorId:1,slug:'grilled-salmon-with-lemon-herb',
+    time: 'Dinner',
+    authorId: 1,
+    slug: 'grilled-salmon-with-lemon-herb',
     title: 'Grilled Salmon with Lemon Herb Marinade',
     content: `
     # Grilled Salmon with Lemon Herb Marinade
@@ -256,9 +267,11 @@ id:1,'fullName':'Vicky Debby', username: 'Vicky-Debbie',
   },
   {
     id: 4,
-    time: 'Breakfast',slug:'protein-packed-avocado-toast',authorId:1,
+    time: 'Breakfast',
+    slug: 'protein-packed-avocado-toast',
+    authorId: 1,
     title: 'Protein-Packed Avocado Toast',
-    details: `
+    content: `
     # Protein-Packed Avocado Toast
     
     ## Overview
@@ -293,6 +306,7 @@ id:1,'fullName':'Vicky Debby', username: 'Vicky-Debbie',
     author: {
       id: 1,
       fullName: 'Vicky Debby',
+      username: 'Vicky-Debbie',
       address: '0xabcdef0123456789012345678901234567890abc',
     },
   },
