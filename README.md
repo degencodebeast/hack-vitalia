@@ -1,11 +1,11 @@
-# RejuvenateAI x DeSoc hack 
+# RejuvenateAI x Avalanche hack 
 
-Live Demo - [Youtube video]() <br />
-Live Link - [RejuvenateAI dapp]() <br />
+Live Demo - [Youtube video](https://youtu.be/u9oClURPhUY) <br />
+Live Link - [RejuvenateAI dapp](https://rejuvenate-ai-chainlink.vercel.app/) <br />
 
 ## ✨ Description
 
-[RejuvenateAI]() is the first community blockchain based project powered by community built for community to promote healthy living and achieve  healthy locations where people live up to a 100 years all around the world. We are trying to make sure people live healthy by incorporating healthy habits into their lifestyle and trying to make sure they get the most out of the human experience by discovering their purpose if they haven't already and enjoying this life, all while doing it together as a community being accountable to each other.
+[RejuvenateAI](https://rejuvenate-ai-chainlink.vercel.app/) is the first community blockchain based project powered by community built for community to promote healthy living and achieve  healthy locations where people live up to a 100 years all around the world. We are trying to make sure people live healthy by incorporating healthy habits into their lifestyle and trying to make sure they get the most out of the human experience by discovering their purpose if they haven't already and enjoying this life, all while doing it together as a community being accountable to each other.
 
 ## Inspiration
 
@@ -45,12 +45,12 @@ We created and deployed our smart contracts on the Avalanche fuji testnet chain.
 
 ### Avalanche Testnet
 
-1. CommunityNetwork contract 0x3A3bc7C19bE0381294d8E7Bd311C123b76b33982 - [View source code](https://github.com/degencodebeast/RejuvenateAI-chainlink/blob/main/smart-contracts/contracts/CommunityNetwork.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x3A3bc7C19bE0381294d8E7Bd311C123b76b33982)
+1. CommunityNetwork contract 0x48DF3348bb3810c4eec755152fA3a9c68897f0F2 - [View source code](https://github.com/degencodebeast/RejuvenateAI-Avalanche/blob/main/smart-contracts/contracts/CommunityNetwork.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x48DF3348bb3810c4eec755152fA3a9c68897f0F2)
 
-2. Treasury contract 0xdf2f1C4d00dF9b3b4c243d064D08F4B3FB6ede3E - [View source code](https://github.com/degencodebeast/RejuvenateAI-chainlink/blob/main/smart-contracts/contracts/Treasury.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0xdf2f1C4d00dF9b3b4c243d064D08F4B3FB6ede3E)
+2. Treasury contract 0x3168Be8281fa2D097d3DB9119143b0937e529a87 - [View source code](https://github.com/degencodebeast/RejuvenateAI-Avalanche/blob/main/smart-contracts/contracts/Treasury.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x3168Be8281fa2D097d3DB9119143b0937e529a87)
 
-3. User NFT contract 0x8E4508Dc5f0E17767C7c5b364cD4ee4f33e6C2e2 - [View source code](https://github.com/degencodebeast/RejuvenateAI-chainlink/blob/main/smart-contracts/contracts/UserNFT.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x8E4508Dc5f0E17767C7c5b364cD4ee4f33e6C2e2)
+3. User NFT contract 0xC862942EF3bb3D185F8154487A6af9ca9F5FB775 - [View source code](https://github.com/degencodebeast/RejuvenateAI-Avalanche/blob/main/smart-contracts/contracts/UserNFT.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0xC862942EF3bb3D185F8154487A6af9ca9F5FB775)
 
-4. Nutritionist NFT contract 0xE3B57b2d4b7CdF04024CE1C26488C6A4Ea561df8 - [View source code](https://github.com/degencodebeast/RejuvenateAI-chainlink/blob/main/smart-contracts/contracts/NutritionistNFT.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0xE3B57b2d4b7CdF04024CE1C26488C6A4Ea561df8)
+4. Nutritionist NFT contract 0x0Ac68437476A0aB3aC8e3fB03b01B030B4Ec5413 - [View source code](https://github.com/degencodebeast/RejuvenateAI-Avalanche/blob/main/smart-contracts/contracts/NutritionistNFT.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x0Ac68437476A0aB3aC8e3fB03b01B030B4Ec5413)
 
 

@@ -1,4 +1,4 @@
-import { BigNumber, Wallet, getDefaultProvider, utils} from "ethers";
+import { BigNumber, Wallet, getDefaultProvider, utils } from "ethers";
 require('dotenv').config()
 import { ethers, run, network } from "hardhat";
 import { NutritionistNFT__factory, UserNFT__factory, Treasury__factory, CommunityNetwork__factory } from "../typechain-types";
@@ -7,10 +7,10 @@ import { NutritionistNFT__factory, UserNFT__factory, Treasury__factory, Communit
 //const wallet = new ethers.Wallet(PRIVATE_KEY, ethers.provider);
 //const encoder  =  new utils.AbiCoder()
 const encoder = ethers.utils.defaultAbiCoder;
-const treasuryAddr = "0xdf2f1C4d00dF9b3b4c243d064D08F4B3FB6ede3E"
-const communityAddr = "0x3A3bc7C19bE0381294d8E7Bd311C123b76b33982"
-const nutritionistNFTAddr = "0xE3B57b2d4b7CdF04024CE1C26488C6A4Ea561df8"
-const userNftAddr = "0x8E4508Dc5f0E17767C7c5b364cD4ee4f33e6C2e2"
+const treasuryAddr = "0x3168Be8281fa2D097d3DB9119143b0937e529a87"
+const communityAddr = "0x48DF3348bb3810c4eec755152fA3a9c68897f0F2"
+const nutritionistNFTAddr = "0x0Ac68437476A0aB3aC8e3fB03b01B030B4Ec5413"
+const userNftAddr = "0xC862942EF3bb3D185F8154487A6af9ca9F5FB775"
 
 
 const registryAddr = "0x819B58A646CDd8289275A87653a2aA4902b14fe6"
@@ -29,23 +29,16 @@ const avalancheRpc = "https://api.avax-test.network/ext/bc/C/rpc"
 
 async function main() {
     //await deployCommunityContracts();
-  
+
     //await setupNFTs();
     //await joinCommunity("0x3A3bc7C19bE0381294d8E7Bd311C123b76b33982");
 
-    
-    //await verifyContract()
-    // const chainID = network.config.chainId;
-    // if (chainID != 31337) {
-    //     await verifyContract()
-    // }
 
-    const message: string = "Hello from goerli"
-    let number: BigNumber = ethers.BigNumber.from(1287);
-    console.log(number)
-    //console.log(encoder.encode(["string"], [message]))
- 
-    
+    await verifyContract()
+    const chainID = network.config.chainId;
+    if (chainID != 31337) {
+        await verifyContract()
+    }
 
     //await joinCommunity(communityContract);
 }
@@ -67,7 +60,7 @@ async function deployTreasury() {
 async function deployUserNFT(_communityAddr: any) {
     //console.log("Deploying UserNFT....");
     const UserNFTFactory = await ethers.getContractFactory("UserNFT");
-    const userNFT = await UserNFTFactory.deploy("User NFT", "UST", _communityAddr, {gasLimit: 8000000});
+    const userNFT = await UserNFTFactory.deploy("User NFT", "UST", _communityAddr, { gasLimit: 8000000 });
     await userNFT.deployed();
     console.log("---- UserNFT Contract was deployed to: ---- ", userNFT.address);
     return userNFT.address;
@@ -76,14 +69,14 @@ async function deployUserNFT(_communityAddr: any) {
 async function deployNutritionistNFT(_communityAddr: any) {
     //console.log("Deploying NutrionistNFT....");
     const NutritionistNFTFactory = await ethers.getContractFactory("NutritionistNFT");
-    const nutritionistNFT = await NutritionistNFTFactory.deploy("Nutritionist NFT", "NUT", _communityAddr, {gasLimit: 8000000});
+    const nutritionistNFT = await NutritionistNFTFactory.deploy("Nutritionist NFT", "NUT", _communityAddr, { gasLimit: 8000000 });
     await nutritionistNFT.deployed();
     console.log("---- NutritionistNFT Contract was deployed to: ---- ", nutritionistNFT.address);
     return nutritionistNFT.address;
 }
 
 async function joinCommunity(_communityAddr: any) {
-    
+
     const provider = getDefaultProvider(avalancheRpc);
     const connectedWallet = wallet.connect(provider);
 
@@ -100,9 +93,10 @@ async function joinCommunity(_communityAddr: any) {
 }
 
 async function setupNFTs() {
-    let userNFTAddr = "0x8E4508Dc5f0E17767C7c5b364cD4ee4f33e6C2e2"
-    let nutritionistNFTAddr = "0xE3B57b2d4b7CdF04024CE1C26488C6A4Ea561df8"
-    let communityAddr = "0x3A3bc7C19bE0381294d8E7Bd311C123b76b33982"
+
+    let userNFTAddr = "0xC862942EF3bb3D185F8154487A6af9ca9F5FB775"
+    let nutritionistNFTAddr = "0x0Ac68437476A0aB3aC8e3fB03b01B030B4Ec5413"
+    let communityAddr = "0x48DF3348bb3810c4eec755152fA3a9c68897f0F2"
 
     const provider = getDefaultProvider(avalancheRpc);
     const connectedWallet = wallet.connect(provider);
@@ -173,8 +167,8 @@ async function verifyContract() {
 
     try {
         await run("verify:verify", {
-            address: userNftAddr,
-            constructorArguments: ["User NFT", "UST", communityAddr],
+            address: treasuryAddr,
+            constructorArguments: [],
         });
         //console.log(`contract for ${chain.name} verified`);
     } catch (e: any) {
