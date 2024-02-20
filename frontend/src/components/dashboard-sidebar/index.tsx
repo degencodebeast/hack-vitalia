@@ -20,16 +20,29 @@ export default function DashboardSideBar(props: {
   //     router.push('/');
   //   }
   // }, [user]);
+  // const pathname = usePathname();
+  // const parts = pathname.split('/');
+  // const lastPart = parts[parts.length - 1];
+  // const _links = props.links.map((link, i) => {
+  //   const isActive =
+  //     lastPart === link?.url ||
+  //     (link?.url === 'overview' && lastPart === 'dashboard');
+  //   // console.log({pathname,lastPart,isActive});
+  //   const buildLink = (entry: string, lnk: string) =>
+  //     lnk.toLowerCase() === 'overview' ? entry + '' : entry + lnk;
   const pathname = usePathname();
+  // console.log({pathname,entry:entryPath});
+
   const parts = pathname.split('/');
   const lastPart = parts[parts.length - 1];
-  const _links = props.links.map((link, i) => {
+  const _links = links.map((link, i) => {
     const isActive =
       lastPart === link?.url ||
+      link.child.includes(lastPart) ||
       (link?.url === 'overview' && lastPart === 'dashboard');
-    // console.log({pathname,lastPart,isActive});
-    const buildLink = (entry: string, lnk: string) =>
-      lnk.toLowerCase() === 'overview' ? entry + '' : entry + lnk;
+
+    const buildLink = (entry: string, url: string) =>
+      url.toLowerCase() === 'overview' ? entry + '' : entry + url;
 
     return (
       <ListItem
