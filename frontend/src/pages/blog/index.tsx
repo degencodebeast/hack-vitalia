@@ -6,12 +6,12 @@ import { Box, HStack, Heading } from "@chakra-ui/react"
 import Head from "next/head"
 
 const BlogPage = () => {
-    const articles=[{id:'1',slug:'article-1', title:'Fitness Recipes: Healthy Food for any workout',intro:'',content:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto qui saepe rerum pariatur nemo facilis quam incidunt laudantium iure officia. Itaque impedit iste nemo facere, temporibus ab quasi qui quas!',image:'/images/fruit.jpg'
-},{id:'2',slug:'article-2',
-    title:'This may be the untold secret to longetivity',intro:'',content:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto qui saepe rerum pariatur nemo facilis quam incidunt laudantium iure officia. Itaque impedit iste nemo facere, temporibus ab quasi qui quas!',image:'/images/fruit.jpg'
-},{id:'3',slug:'article-3',
+    const articles=[{id:1,slug:'article-1', title:'Fitness Recipes: Healthy Food for any workout',intro:'',content:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto qui saepe rerum pariatur nemo facilis quam incidunt laudantium iure officia. Itaque impedit iste nemo facere, temporibus ab quasi qui quas!',image:'/images/fruit.jpg'
+},{id:2,slug:'article-2',
+    title:'This may be the untold secret to longevity',intro:'',content:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto qui saepe rerum pariatur nemo facilis quam incidunt laudantium iure officia. Itaque impedit iste nemo facere, temporibus ab quasi qui quas!',image:'/images/fruit.jpg'
+},{id:3,slug:'article-3',
     title:'Walking leads to longer life, better outcomes.',intro:'',content:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto qui saepe rerum pariatur nemo facilis quam incidunt laudantium iure officia. Itaque impedit iste nemo facere, temporibus ab quasi qui quas!',image:'/images/fruit.jpg'
-},{id:'4',slug:'article-4',
+},{id:4,slug:'article-4',
 title:'Walking leads to longer life, better outcomes.',intro:'',content:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto qui saepe rerum pariatur nemo facilis quam incidunt laudantium iure officia. Itaque impedit iste nemo facere, temporibus ab quasi qui quas!',image:'/images/fruit.jpg'
 }]
   return (

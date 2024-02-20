@@ -12,6 +12,7 @@ export default function NutritionistDashBoardLayout({
     { url: 'overview', title: 'Overview', icon: 'dashboard' },
     { url: 'meal-plans', title: 'Meal Plans', icon: 'fastfood' },
     { url: 'fitness-plans', title: 'Fitness Plans', icon: 'exercise' },
+    { url: 'articles', title: 'Articles', icon: 'post_add' },
     { url: 'appointments', title: 'Appointments', icon: 'book_online' },
     { url: 'settings', title: 'Settings', icon: 'settings' },
   ];
