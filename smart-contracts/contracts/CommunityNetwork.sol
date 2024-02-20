@@ -87,6 +87,14 @@ contract CommunityNetwork is Ownable {
 
     event ApplicationApproved(address applicant);
 
+    event MintUserNFT(address member);
+
+    event BurnUserNFT(address member, uint256 tokenId);
+
+    event MintNutritionistNFT(address nutritionist);
+
+    event BurnNutritionistNFT(address member, uint256 tokenId);
+
     enum NutritionistApplicationStatus {
         NotApplied,
         Pending,
@@ -252,6 +260,8 @@ contract CommunityNetwork is Ownable {
 
         //mint userNft for the user
         userNFT.mint(msg.sender, nftUri);
+        emit MintUserNFT(msg.sender);
+
         payable(treasury).transfer(msg.value);
 
         // Emit event
@@ -280,6 +290,8 @@ contract CommunityNetwork is Ownable {
         uint256 userTokenId = userNFT.getTokenIdOfOwner(user.userAddress);
 
         userNFT.burn(user.userAddress, userTokenId);
+
+        emit BurnUserNFT(user.userAddress, userTokenId);
         //nft will be used for access control with lighthouse
     }
 
@@ -391,6 +403,8 @@ contract CommunityNetwork is Ownable {
 
         nutritionistNFT.mint(msg.sender, nutritionistNftUri);
 
+        emit MintNutritionistNFT(msg.sender);
+
         // Emit event
         emit ApplicationApproved(applicant);
     }
@@ -438,6 +452,8 @@ contract CommunityNetwork is Ownable {
         users[msg.sender] = user;
 
         userNFT.mint(msg.sender, nftUri);
+
+        emit MintUserNFT(msg.sender);
     }
 
     function getAllMembers() external view returns (User[] memory _users) {
@@ -470,7 +486,7 @@ contract CommunityNetwork is Ownable {
         return allMealPlans;
     }
 
-     //review this, I don't know if this needs to live on the contracts
+    //review this, I don't know if this needs to live on the contracts
     function createFitnessPlan(
         string memory _fitnessName,
         string memory fitnessDesc
@@ -488,7 +504,7 @@ contract CommunityNetwork is Ownable {
         return allFitnessPlans;
     }
 
-     //review this, I don't know if this needs to live on the contracts
+    //review this, I don't know if this needs to live on the contracts
     function createConsultation(
         string memory _consultationDesc
     ) external onlyNutritionists {
@@ -500,7 +516,7 @@ contract CommunityNetwork is Ownable {
         _nutritionist.consultationServices = consultationService;
     }
 
-     //review this, I don't know if this needs to live on the contracts
+    //review this, I don't know if this needs to live on the contracts
     function publishArticle(
         string memory _title,
         string memory _authorName,
