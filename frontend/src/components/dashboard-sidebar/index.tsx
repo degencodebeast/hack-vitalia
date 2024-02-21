@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 // import { } from 'material-symbols'
 export default function DashboardSideBar(props: {
   entryPath?: string;
-  links: Array<{ title: string; url: string; icon: string }>;
+  links: Array<{ title: string; url: string; icon: string ,child?:string[]}>;
 }) {
   const { user } = useAppContext();
   const router = useRouter();
@@ -35,10 +35,10 @@ export default function DashboardSideBar(props: {
 
   const parts = pathname.split('/');
   const lastPart = parts[parts.length - 1];
-  const _links = links.map((link, i) => {
+  const _links = props.links.map((link, i) => {
     const isActive =
       lastPart === link?.url ||
-      link.child.includes(lastPart) ||
+      link?.child?.includes(lastPart) ||
       (link?.url === 'overview' && lastPart === 'dashboard');
 
     const buildLink = (entry: string, url: string) =>
@@ -58,7 +58,7 @@ export default function DashboardSideBar(props: {
           textDecor={'none!important'}
           href={buildLink(props?.entryPath as string, link?.url)}
           alignItems={'center'}
-          className='flex gap-[24px]'
+          className='flex gap-[22px]'
         >
           <Icon name={link?.icon} size={24} />
           <span>{link?.title}</span>

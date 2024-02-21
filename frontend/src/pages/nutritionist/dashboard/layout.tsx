@@ -1,4 +1,4 @@
-'use client';
+
 import DashBoardHeader from '@/components/dashboard-header';
 import DashboardSideBar from '@/components/dashboard-sidebar';
 import { ReactNode } from 'react';
@@ -9,12 +9,22 @@ export default function NutritionistDashBoardLayout({
   children: ReactNode;
 }) {
   const navLinks = [
-    { url: 'overview', title: 'Overview', icon: 'dashboard' },
-    { url: 'meal-plans', title: 'Meal Plans', icon: 'fastfood' },
-    { url: 'fitness-plans', title: 'Fitness Plans', icon: 'exercise' },
-    { url: 'articles', title: 'Articles', icon: 'post_add' },
-    { url: 'appointments', title: 'Appointments', icon: 'book_online' },
-    { url: 'settings', title: 'Settings', icon: 'settings' },
+    { url: 'overview', title: 'Overview', icon: 'dashboard', child: [] },
+    { url: 'meal-plans', title: 'Meal Plans', icon: 'fastfood', child: [] },
+    {
+      url: 'fitness-plans',
+      title: 'Fitness Plans',
+      icon: 'exercise',
+      child: [],
+    },
+    { url: 'articles', title: 'Articles', icon: 'post_add', child: [] },
+    {
+      url: 'appointments',
+      title: 'Appointments',
+      icon: 'book_online',
+      child: [],
+    },
+    { url: 'settings', title: 'Settings', icon: 'settings', child: [] },
   ];
   return (
     <div className='flex max-w-[1400px] mx-auto my-0 h-[100vh] max-h-[750px] min-h-[700px] bg-primaryBeige'>
