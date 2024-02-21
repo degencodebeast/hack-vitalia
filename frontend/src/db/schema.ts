@@ -3,6 +3,7 @@ import {
   index,
   int,
   longtext,
+  mediumtext,
   mysqlEnum,
   mysqlTable,
   serial,
@@ -17,7 +18,7 @@ export const articles = mysqlTable(
     id: serial('id').primaryKey(),
     title: varchar('title', { length: 120 }).notNull(),
     intro: varchar('intro', { length: 255 }),
-    image: varchar('image', { length: 255 }),
+    image: mediumtext('image'),
     slug: varchar('slug', { length: 255 }).notNull(),
     content: longtext('content'),
     status: mysqlEnum('status', ['published', 'draft', 'deleted']).default(
@@ -40,7 +41,7 @@ export const mealPlans = mysqlTable(
     id: serial('id').primaryKey(),
     title: varchar('title', { length: 120 }).notNull(),
     intro: varchar('intro', { length: 255 }),
-    image: varchar('image', { length: 255 }),
+    image: mediumtext('image'),
     slug: varchar('slug', { length: 255 }).notNull(),
     content: longtext('content'),
     status: mysqlEnum('status', ['published', 'draft', 'deleted']).default(
@@ -67,7 +68,7 @@ export const fitnessPlans = mysqlTable(
     id: serial('id').primaryKey(),
     title: varchar('title', { length: 120 }).notNull(),
     views: int('views').default(0),
-    image: varchar('image', { length: 255 }),
+    image: mediumtext('image'),
     slug: varchar('slug', { length: 255 }).notNull(),
     content: longtext('content'),
     status: mysqlEnum('status', ['published', 'draft', 'deleted']).default(

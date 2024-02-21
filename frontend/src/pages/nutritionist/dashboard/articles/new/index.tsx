@@ -20,8 +20,10 @@ import { generateSlug } from '@/utils';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { NewArticle } from '@/types/shared';
+import { useAddArticleMutation } from '@/state/services';
 
 export default function NewPostPage() {
+  const addArticleMutation = useAddArticleMutation();
   const router = useRouter();
   const toast = useToast({
     duration: 3000,
@@ -55,7 +57,7 @@ export default function NewPostPage() {
       reader.onload = function (e) {
         const base64String = e.target?.result as string;
         console.log({ base64String });
-        setPost((prev) => ({ ...prev, coverImage: base64String }));
+        setPost((prev) => ({ ...prev, image: base64String }));
       };
       reader.readAsDataURL(files[0]);
     }
@@ -67,23 +69,24 @@ export default function NewPostPage() {
         ...post,
         slug: generateSlug(post.title),
       };
+      addArticleMutation.mutate(postToSave);
       // if(imageFile){
       //   // const reader = new FileReader();
 
       //   // reader.onload = function (e) {
       //   //   const base64String = e.target?.result as string;
-      //   //   postToSave.coverImage=base64String
+      //   //   postToSave.image=base64String
       //   // };
       //   // reader.readAsDataURL(imageFile);
       //   console.log({postToSave});
 
       // }
-      const res = await axios.post('/api/posts/new', postToSave);
-      toast({ title: res.data?.message });
+      // const res = await axios.post('/api/posts/new', postToSave);
+      // toast({ title: res.data?.message });
 
       setTimeout(() => {
         setSubmitting(false);
-        router.replace('/dashboard/posts');
+        router.replace('/dashboard/articles');
       }, 1500);
     } catch (error) {
       toast({ title: 'An error occured, please try again', status: 'error' });
@@ -104,17 +107,17 @@ export default function NewPostPage() {
 
       //   reader.onload = function (e) {
       //     const base64String = e.target?.result as string;
-      //     postToSave.coverImage=base64String
+      //     postToSave.image=base64String
       //   };
 
       //   reader.readAsDataURL(imageFile);
       // }
-      const res = await axios.post('/api/posts/new', postToSave);
-      toast({ title: res.data?.message });
+      // const res = await axios.post('/api/posts/new', postToSave);
+      // toast({ title: res.data?.message });
 
       setTimeout(() => {
         setSubmitting(false);
-        router.replace('/dashboard/posts');
+        router.replace('/dashboard/articles');
       }, 1500);
     } catch (error) {
       toast({ title: 'An error occured, please try again', status: 'error' });

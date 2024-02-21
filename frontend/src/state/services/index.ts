@@ -22,7 +22,7 @@ export const RejuvenateApi = createApi({
     getArticles: builder.query<Partial<APIResponse<Article[]>>, {}>({
       query: (params) => {
         return {
-          url: `articles/`,
+          url: `articles`,
         };
       },
       providesTags: (result) =>
@@ -42,7 +42,7 @@ export const RejuvenateApi = createApi({
     getMealPlans: builder.query<Partial<APIResponse<MealPlan[]>>, {}>({
       query: (params) => {
         return {
-          url: `meal-plans/`,
+          url: `meal-plans`,
         };
       },
       providesTags: (result) =>
@@ -62,7 +62,7 @@ export const RejuvenateApi = createApi({
     getFitnessPlans: builder.query<Partial<APIResponse<FitnessPlan[]>>, {}>({
       query: (params) => {
         return {
-          url: `fitness-plans/`,
+          url: `fitness-plans`,
         };
       },
       providesTags: (result) =>

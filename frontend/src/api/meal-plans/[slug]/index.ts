@@ -96,7 +96,7 @@ export const PUT: HTTP_METHOD_CB = async (
     }
     //TODO: add a check to see if the user is the author of the mealPlan
 
-    if (status === 'DRAFT') {
+    if (status === 'draft') {
       await db.update(mealPlans).set({ ...rest, status });
       return await successHandlerCallback(req, res, {
         message: 'Draft updated successfully',

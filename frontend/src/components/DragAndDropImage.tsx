@@ -5,6 +5,7 @@ import {
   Flex,
   Image,
   LinkBox,
+  ResponsiveValue,
   Stack,
   Text,
 } from '@chakra-ui/react';
@@ -43,6 +44,9 @@ function DragAndDropImage({
     onUploadChange(images.length > 0, files, images?.[0]?.src as string);
   }, [images, onUploadChange, files]);
   const { getRootProps, getInputProps } = useDropzone({
+    onError(err) {
+      console.log(err);
+    },
     accept: { 'image/*': ['.jpeg', '.png', '.jpg', '.webp'] },
     onDrop,
     maxFiles: 1,
@@ -68,7 +72,7 @@ function DragAndDropImage({
           {...getRootProps({
             className: 'dropzone',
             h: '10rem',
-            textAlign: 'center',
+            textAlign: 'center' as ResponsiveValue<'center'>,
             maxW: '600px',
             border: '2px',
             borderStyle: 'dashed',

@@ -98,7 +98,7 @@ export const PUT: HTTP_METHOD_CB = async (
     }
     //TODO: add a check to see if the user is the author of the fitnessPlan
 
-    if (status === 'DRAFT') {
+    if (status === 'draft') {
       await db.update(fitnessPlans).set({ ...rest, status });
       return await successHandlerCallback(req, res, {
         message: 'Draft updated successfully',

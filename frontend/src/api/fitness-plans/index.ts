@@ -58,7 +58,7 @@ export const POST: HTTP_METHOD_CB = async (
   try {
     const { status, ...rest } = req.body;
 
-    if (status === 'DRAFT') {
+    if (status === 'draft') {
       await db.insert(fitnessPlans).values({ ...rest, status });
       return await successHandlerCallback(req, res, {
         message: 'Draft saved successfully',

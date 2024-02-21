@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 // import { } from 'material-symbols'
 export default function DashboardSideBar(props: {
   entryPath?: string;
-  links: Array<{ title: string; url: string; icon: string ,child?:string[]}>;
+  links: Array<{ title: string; url: string; icon: string; child?: string[] }>;
 }) {
   const { user } = useAppContext();
   const router = useRouter();
@@ -34,11 +34,12 @@ export default function DashboardSideBar(props: {
   // console.log({pathname,entry:entryPath});
 
   const parts = pathname.split('/');
+  const beforeLastPart = parts[parts.length - 2];
   const lastPart = parts[parts.length - 1];
   const _links = props.links.map((link, i) => {
     const isActive =
       lastPart === link?.url ||
-      link?.child?.includes(lastPart) ||
+      (beforeLastPart == link.url && link?.child?.includes(lastPart)) ||
       (link?.url === 'overview' && lastPart === 'dashboard');
 
     const buildLink = (entry: string, url: string) =>

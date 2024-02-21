@@ -1,4 +1,3 @@
-
 import DashBoardHeader from '@/components/dashboard-header';
 import DashboardSideBar from '@/components/dashboard-sidebar';
 import { ReactNode } from 'react';
@@ -10,14 +9,19 @@ export default function NutritionistDashBoardLayout({
 }) {
   const navLinks = [
     { url: 'overview', title: 'Overview', icon: 'dashboard', child: [] },
-    { url: 'meal-plans', title: 'Meal Plans', icon: 'fastfood', child: [] },
+    {
+      url: 'meal-plans',
+      title: 'Meal Plans',
+      icon: 'fastfood',
+      child: ['new'],
+    },
     {
       url: 'fitness-plans',
       title: 'Fitness Plans',
       icon: 'exercise',
-      child: [],
+      child: ['new'],
     },
-    { url: 'articles', title: 'Articles', icon: 'post_add', child: [] },
+    { url: 'articles', title: 'Articles', icon: 'post_add', child: ['new'] },
     {
       url: 'appointments',
       title: 'Appointments',
