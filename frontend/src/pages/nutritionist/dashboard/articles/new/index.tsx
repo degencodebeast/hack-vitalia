@@ -69,7 +69,7 @@ export default function NewPostPage() {
         ...post,
         slug: generateSlug(post.title),
       };
-      addArticleMutation.mutate(postToSave);
+      // addArticleMutation.mutate(postToSave);
       // if(imageFile){
       //   // const reader = new FileReader();
 
