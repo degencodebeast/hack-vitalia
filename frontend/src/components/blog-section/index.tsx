@@ -11,7 +11,7 @@ import {
   LinkOverlay,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import Article from '../article';
+import ArticleCard from '../article';
 
 const BlogSection = () => {
   const articles = [
@@ -65,7 +65,7 @@ const BlogSection = () => {
       >
         {articles.length &&
           articles.map((article) => (
-            <Article key={article?.id} article={article} />
+            <ArticleCard key={article?.id} article={article} />
           ))}
       </HStack>
     </Box>

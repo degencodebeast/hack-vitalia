@@ -2,8 +2,10 @@ import { Box, Flex, Text, Button, Heading } from '@chakra-ui/react';
 import NutritionistDashBoardLayout from '../layout';
 import Head from 'next/head';
 import { Link } from '@chakra-ui/next-js';
+import { useGetArticlesQuery } from '@/state/services';
 
 export default function ArticlesDashBoard() {
+  const { data, isLoading, isFetching } = useGetArticlesQuery({ s: 'all' });
   return (
     <>
       <Head>
@@ -26,6 +28,8 @@ export default function ArticlesDashBoard() {
               Create Post
             </Button>
           </Flex>
+          {isLoading ? 'loading' : 'loaded'}
+          {isFetching ? 'fetching' : 'fetched'}
         </Box>
         ;
       </NutritionistDashBoardLayout>
