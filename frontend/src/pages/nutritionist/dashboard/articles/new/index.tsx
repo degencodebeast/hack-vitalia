@@ -23,7 +23,7 @@ import { NewArticle } from '@/types/shared';
 import { useAddArticleMutation } from '@/state/services';
 
 export default function NewPostPage() {
-  const addArticleMutation = useAddArticleMutation();
+  const [addArticle,{isLoading,status,isSuccess,isError}] = useAddArticleMutation();
   const router = useRouter();
   const toast = useToast({
     duration: 3000,
@@ -69,7 +69,7 @@ export default function NewPostPage() {
         ...post,
         slug: generateSlug(post.title),
       };
-      // addArticleMutation.mutate(postToSave);
+      addArticle(postToSave);
       // if(imageFile){
       //   // const reader = new FileReader();
 
@@ -86,7 +86,7 @@ export default function NewPostPage() {
 
       setTimeout(() => {
         setSubmitting(false);
-        router.replace('/dashboard/articles');
+        // router.replace('/dashboard/articles');
       }, 1500);
     } catch (error) {
       toast({ title: 'An error occured, please try again', status: 'error' });
