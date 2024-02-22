@@ -43,6 +43,7 @@
     "flowbite": "^1.8.1",
     "flowbite-react": "^0.6.1",
     "framer-motion": "^10.16.4",
+    "generate-unique-id": "^2.0.3",
     "i": "^0.3.7",
     "just-is-empty": "^3.4.1",
     "lokijs": "1.x",

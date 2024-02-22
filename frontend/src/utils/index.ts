@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import slugify from 'slugify';
 import { generate } from 'random-words';
-import { shortenText } from '../helpers/index';
+import generateUniqueId from 'generate-unique-id';
 export const env = process.env.NODE_ENV || 'development';
 export const IS_DEV = env === 'development';
 
@@ -12,7 +12,11 @@ export const generateSlug = (text: string) =>
     strict: true,
   });
 export const generateUsername = () =>
-  generate({ exactly: 1, wordsPerString: 2, separator: '-', maxLength: 5 })[0];
+  'user' +
+  generateUniqueId({
+    length: 8,
+    useLetters: false,
+  });
 
 export function objectToSearchParams(obj: Record<string, string>) {
   const params = new URLSearchParams();
