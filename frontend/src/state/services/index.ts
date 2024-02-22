@@ -8,6 +8,7 @@ import {
   NewArticle,
   NewFitnessPlan,
 } from '@/types/shared';
+import { objectToSearchParams } from '@/utils';
 
 // Define a service using a base URL and expected endpoints
 
@@ -19,10 +20,13 @@ export const RejuvenateApi = createApi({
   tagTypes: ['Articles', 'MealPlans', 'FitnessPlans', 'Users'],
 
   endpoints: (builder) => ({
-    getArticles: builder.query<Partial<APIResponse<Article[]>>, {}>({
+    getArticles: builder.query<
+      Partial<APIResponse<Article[]>>,
+      { s: 'all' | 'published' | 'draft' }
+    >({
       query: (params) => {
         return {
-          url: `articles`,
+          url: `articles?${objectToSearchParams(params)}`,
         };
       },
       providesTags: (result) =>

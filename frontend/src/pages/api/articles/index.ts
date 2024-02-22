@@ -9,8 +9,15 @@ import {
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { IS_DEV } from '@/utils';
-import { eq } from 'drizzle-orm';
-
+import { eq, or } from 'drizzle-orm';
+import { PostStatus } from '@/types/shared';
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '4mb',
+    },
+  },
+};
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -25,9 +32,19 @@ export const GET: HTTP_METHOD_CB = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
+  const { s: status = 'published' } = req.query;
+  const whereFilter =
+    status == 'all'
+      ? {
+          where: or(
+            eq(articles.status, 'published'),
+            eq(articles.status, 'draft')
+          ),
+        }
+      : { where: eq(articles.status, status as PostStatus) };
   try {
     const allArticles = await db.query.articles.findMany({
-      where: eq(articles.status, 'published'),
+      ...whereFilter,
       with: {
         author: {
           columns: {

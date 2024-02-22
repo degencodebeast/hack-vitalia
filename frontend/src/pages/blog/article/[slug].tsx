@@ -1,6 +1,5 @@
-'use client';
-
 import MarkdownRenderer from '@/components/MarkdownRenderer';
+import { useGetArticleQuery } from '@/state/services';
 import { Article } from '@/types/shared';
 import {
   Box,
@@ -14,29 +13,16 @@ import {
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import Head from 'next/head';
+import { usePathname, useParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const ArticleView = () => {
-  const [article, setArticle] = useState<Article>({
-    id: 1,
-    authorId: 1,
-    slug: 'sample-article',
-    title: 'Sample Article Title',
-    content:
-      'This is the content of the sample article. It can include a lot of information and details.',
-    image: '',
-    status: 'published',
-    intro: 'A brief introduction to the sample article.',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    author: {
-      id: 1,
-      avatar: '/m-user-30.jpg',
-      username: 'LuckyVictory',
-      address: '',
-      fullName: 'Lucky Victory',
-    },
-  });
+  const router = useRouter();
+  const { slug } = router.query;
+  const { data, isLoading, isFetching } = useGetArticleQuery(slug as string);
+  const article = data?.data;
+
   return (
     <>
       <Head>
@@ -51,47 +37,53 @@ const ArticleView = () => {
           px={{ lg: 6, base: 4 }}
           py={6}
         >
-          <HStack my={4} spacing={'4'} mb={8}>
-            <Avatar size={'sm'} src={article?.author?.avatar} />
-            <HStack divider={<DotDivider />}>
-              <Text as={'strong'} fontSize={'large'}>
-                {article?.author?.fullName}
-              </Text>{' '}
-              <Text
-                as={'time'}
-                fontWeight={'medium'}
-                fontSize={'sm'}
-                color={'gray.500'}
-              >
-                {format(new Date(article?.createdAt), 'MMM dd, yyyy')}
-              </Text>
-            </HStack>
-          </HStack>
-          <Stack spacing={4} mb={6}>
-            <Box>
-              <Heading mb={8}>{article?.title}</Heading>
-              {article?.intro && (
-                <Text color={'gray.500'} fontWeight={'medium'} mb={2}>
-                  {article?.intro}
+          <Box maxW={'1000px'} mx={'auto'}>
+            <HStack my={4} spacing={'4'} mb={8}>
+              <Avatar size={'lg'} src={article?.author?.avatar} />
+              <HStack divider={<DotDivider />}>
+                <Text as={'strong'} fontSize={'large'}>
+                  {article?.author?.fullName}
+                </Text>{' '}
+                <Text
+                  as={'time'}
+                  fontWeight={'medium'}
+                  fontSize={'sm'}
+                  color={'gray.600'}
+                >
+                  {article &&
+                    format(
+                      new Date(article?.createdAt as string),
+                      'MMM dd, yyyy'
+                    )}
                 </Text>
-              )}
-            </Box>
-
-            <Box>
-              <Image
-                w={'full'}
-                bg={'gray.100'}
-                alt=''
-                src={article?.image || '/images/placeholder-image.png'}
-                h={'auto'}
-                maxH={{ lg: 500, base: 400 }}
-                objectFit={'contain'}
-              />
-            </Box>
-          </Stack>
-
+              </HStack>
+            </HStack>
+            <Stack spacing={4} mb={6}>
+              <Box>
+                <Heading mb={5} as={'h1'}>
+                  {article?.title}
+                </Heading>
+                {article?.intro && (
+                  <Text color={'gray.600'} fontSize={'18px'} mb={1}>
+                    {article?.intro}
+                  </Text>
+                )}
+              </Box>
+            </Stack>
+          </Box>
           <Box>
-            <MarkdownRenderer markdown={article?.content} />
+            <Image
+              w={'full'}
+              bg={'gray.100'}
+              alt=''
+              src={article?.image || '/images/placeholder-image.png'}
+              h={'auto'}
+              // maxH={{ lg: 500, base: 400 }}
+              // objectFit={'contain'}
+            />
+          </Box>
+          <Box maxW={'1000px'} mx={'auto'}>
+            <MarkdownRenderer markdown={article?.content as string} />
           </Box>
         </Box>
       </Box>

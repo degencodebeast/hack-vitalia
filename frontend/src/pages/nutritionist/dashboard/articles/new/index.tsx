@@ -17,13 +17,14 @@ import MarkdownRenderer from '@/components/MarkdownRenderer';
 import DragAndDropImage from '@/components/DragAndDropImage';
 
 import { generateSlug } from '@/utils';
-import axios from 'axios';
+
 import { useRouter } from 'next/router';
-import { NewArticle } from '@/types/shared';
+import { NewArticle, PostStatus } from '@/types/shared';
 import { useAddArticleMutation } from '@/state/services';
 
 export default function NewPostPage() {
-  const [addArticle,{isLoading,status,isSuccess,isError}] = useAddArticleMutation();
+  const [addArticle, { isLoading, status, isSuccess, isError, data }] =
+    useAddArticleMutation();
   const router = useRouter();
   const toast = useToast({
     duration: 3000,
@@ -56,7 +57,7 @@ export default function NewPostPage() {
 
       reader.onload = function (e) {
         const base64String = e.target?.result as string;
-        console.log({ base64String });
+
         setPost((prev) => ({ ...prev, image: base64String }));
       };
       reader.readAsDataURL(files[0]);
@@ -69,18 +70,17 @@ export default function NewPostPage() {
         ...post,
         slug: generateSlug(post.title),
       };
+      if (imageFile) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          const base64String = e.target?.result as string;
+          postToSave.image = base64String;
+        };
+        reader.readAsDataURL(imageFile);
+      }
+      console.log({ postToSave });
       addArticle(postToSave);
-      // if(imageFile){
-      //   // const reader = new FileReader();
-
-      //   // reader.onload = function (e) {
-      //   //   const base64String = e.target?.result as string;
-      //   //   postToSave.image=base64String
-      //   // };
-      //   // reader.readAsDataURL(imageFile);
-      //   console.log({postToSave});
-
-      // }
       // const res = await axios.post('/api/posts/new', postToSave);
       // toast({ title: res.data?.message });
 
@@ -99,28 +99,29 @@ export default function NewPostPage() {
 
       const postToSave = {
         ...post,
-        status: 'published',
+        status: 'published' as PostStatus,
         slug: generateSlug(post.title),
       };
-      // if(imageFile){
-      //   const reader = new FileReader();
+      if (imageFile) {
+        const reader = new FileReader();
 
-      //   reader.onload = function (e) {
-      //     const base64String = e.target?.result as string;
-      //     postToSave.image=base64String
-      //   };
+        reader.onload = function (e) {
+          const base64String = e.target?.result as string;
+          postToSave.image = base64String;
+        };
 
-      //   reader.readAsDataURL(imageFile);
-      // }
+        reader.readAsDataURL(imageFile);
+      }
+      addArticle(postToSave);
       // const res = await axios.post('/api/posts/new', postToSave);
-      // toast({ title: res.data?.message });
+      toast({ title: data?.message });
 
       setTimeout(() => {
         setSubmitting(false);
         router.replace('/dashboard/articles');
       }, 1500);
     } catch (error) {
-      toast({ title: 'An error occured, please try again', status: 'error' });
+      toast({ title: 'An error occurred, please try again', status: 'error' });
       setSubmitting(false);
     }
   }
@@ -205,7 +206,7 @@ export default function NewPostPage() {
                   onChange={(value: string) => handleEditorChange(value)}
                   selectedTab={selectedTab}
                   onTabChange={setSelectedTab}
-                  generateMarkdownPreview={(markdown) =>
+                  generateMarkdownPreview={(markdown: string) =>
                     Promise.resolve(<MarkdownRenderer markdown={markdown} />)
                   }
                 />

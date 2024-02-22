@@ -1,19 +1,58 @@
-import { Article } from "@/types/shared"
-import { Box, Heading, Image, LinkBox, LinkOverlay, Text } from "@chakra-ui/react"
-import NextLink from 'next/link'
+import { shortenText } from '@/helpers';
+import { Article } from '@/types/shared';
+import { Link } from '@chakra-ui/next-js';
+import {
+  Box,
+  Heading,
+  Image,
+  LinkBox,
+  LinkOverlay,
+  Text,
+} from '@chakra-ui/react';
+import NextLink from 'next/link';
 
-const Article = ({article}:{article:Article|Partial<Article>}) => {
+const MAX_CHARACTER_LENGTH = 100;
+const ArticleCard = ({ article }: { article: Article | Partial<Article> }) => {
   return (
-<LinkBox  _hover={{bg:'white',shadow:'md'}}  display={'flex'} flexDir={'column'} gap={'2'} maxW={'350px'}  rounded={'md'} p={'2'} pb={4}>
-    <Image alt="" src={'/images/fruit.jpg'} objectFit={'cover'} rounded={'inherit'} placeholder="blur" w={'full'} h={200} />
-    <LinkOverlay href={'/blog/article/'+article?.slug} as={NextLink}>
-        <Heading as={'h3'} size={'md'} color={'primaryColor.800'}> {article?.title}</Heading>
-    </LinkOverlay>
-    <Text>
-    {article?.intro ? article?.intro : article?.content}
-    </Text>
-</LinkBox>
-  )
-}
+    <LinkBox
+      _hover={{ bg: 'white', shadow: 'md' }}
+      display={'flex'}
+      flexDir={'column'}
+      gap={'2'}
+      maxW={'350px'}
+      rounded={'md'}
+      p={'2'}
+      pb={4}
+      minW={'250px'}
+      border={'1px'}
+      borderColor={'gray.300'}
+    >
+      <Image
+        alt=''
+        src={article?.image || '/images/placeholder-image.png'}
+        objectFit={'cover'}
+        rounded={'inherit'}
+        placeholder='blur'
+        w={'full'}
+        h={200}
+      />
+      <LinkOverlay href={'/blog/article/' + article?.slug} as={NextLink}>
+        <Heading
+          as={'h3'}
+          size={'md'}
+          color={'primaryColor.800'}
+          _hover={{ textDecor: 'underline' }}
+        >
+          {article?.title}
+        </Heading>
+      </LinkOverlay>
+      <Text>
+        {article?.intro
+          ? shortenText(article?.intro as string, MAX_CHARACTER_LENGTH)
+          : shortenText(article?.content as string, MAX_CHARACTER_LENGTH)}
+      </Text>
+    </LinkBox>
+  );
+};
 
-export default Article
+export default ArticleCard;
