@@ -13,17 +13,24 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Accept, useDropzone } from 'react-dropzone';
 
 import MatIcon from './Icon';
+import { genID } from '@/utils';
 function DragAndDropImage({
+  initialImages = [],
   onUploadChange = (hasImage: boolean, files: File[], image: string) => {},
+}: {
+  initialImages?: Array<{
+    id: string;
+    index?: number;
+    src: string | ArrayBuffer | null;
+  }>;
+  onUploadChange: (hasImage: boolean, files: File[], image: string) => void;
 }) {
   const [files, setFiles] = useState<File[]>([]);
-  function genID() {
-    return Math.random().toString(16).substring(2);
-  }
 
-  const [images, setImages] = useState<
-    Array<{ id: string; index: number; src: string | ArrayBuffer | null }>
-  >([]);
+  const [images, setImages] =
+    useState<
+      Array<{ id: string; index?: number; src: string | ArrayBuffer | null }>
+    >(initialImages);
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles((prev) => [...prev, ...acceptedFiles]);
     acceptedFiles.map((file, index) => {
@@ -53,7 +60,7 @@ function DragAndDropImage({
   });
   function removeImage(image: {
     id: string;
-    index: number;
+    index?: number;
     src: string | ArrayBuffer | null;
   }) {
     let _images = [...images];
