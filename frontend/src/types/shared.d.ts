@@ -4,7 +4,7 @@ export type Article = {
   title: string;
   content: string;
   image?: string;
-  authorId: number;
+  authorAddress: string;
   status?: PostStatus;
   intro?: string;
   createdAt: string | Date;
@@ -15,7 +15,7 @@ export type Article = {
     fullName?: string;
     username: string;
     address: string;
-   
+
     avatar?: string;
   };
 };
@@ -23,7 +23,7 @@ export type PostStatus = 'published' | 'draft' | 'deleted';
 
 export type NewArticle = Pick<
   Article,
-  'slug' | 'title' | 'content' | 'image' | 'authorId' | 'intro' | 'status'
+  'slug' | 'title' | 'content' | 'image' | 'authorAddress' | 'intro' | 'status'
 >;
 export type MealPlan = {
   id: number;
@@ -31,7 +31,7 @@ export type MealPlan = {
   title: string;
   content: string;
   image?: string;
-  authorId: number;
+  authorAddress: string;
   status?: PostStatus;
   intro?: string;
   views?: number;
@@ -43,7 +43,7 @@ export type MealPlan = {
     fullName?: string;
     username: string;
     address: string;
-  
+
     avatar?: string;
   };
 };
@@ -53,7 +53,7 @@ export type NewMealPlan = Pick<
   | 'title'
   | 'content'
   | 'image'
-  | 'authorId'
+  | 'authorAddress'
   | 'intro'
   | 'status'
   | 'time'
@@ -64,7 +64,7 @@ export type FitnessPlan = {
   title: string;
   content: string;
   image?: string;
-  authorId: number;
+  authorAddress: string;
   status?: PostStatus;
   intro?: string;
   views?: number;
@@ -75,20 +75,13 @@ export type FitnessPlan = {
     fullName?: string;
     username: string;
     address: string;
-   
+
     avatar?: string;
   };
 };
 export type NewFitnessPlan = Pick<
   MealPlan,
-  | 'slug'
-  | 'title'
-  | 'content'
-  | 'image'
-  | 'authorId'
-  | 'intro'
-  | 'status'
-
+  'slug' | 'title' | 'content' | 'image' | 'authorAddress' | 'intro' | 'status'
 >;
 
 export type StateStatus = 'loading' | 'error' | 'loaded';

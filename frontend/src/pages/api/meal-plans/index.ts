@@ -38,13 +38,13 @@ export const GET: HTTP_METHOD_CB = async (
       : { where: eq(mealPlans.status, status as PostStatus) };
   if (status == 'all' && ad) {
     whereFilter = {
-      where: and(eq(mealPlans.authorId, +ad)),
+      where: and(eq(mealPlans.authorAddress, ad as string)),
     };
   } else if (ad && status !== 'all') {
     whereFilter = {
       where: and(
         eq(mealPlans.status, status as PostStatus),
-        eq(mealPlans.authorId, +ad)
+        eq(mealPlans.authorAddress, ad as string)
       ),
     };
   }
