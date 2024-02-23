@@ -108,9 +108,12 @@ export const RejuvenateApi = createApi({
     //         ]
     //       : [{ type: 'Users', id: 'LIST' }],
     // }),
-    getArticle: builder.query<Partial<APIResponse<Article>>, string>({
-      query: (slug) => `articles/${slug}`,
-      providesTags: (result, error, slug) => {
+    getArticle: builder.query<
+      Partial<APIResponse<Article>>,
+      { slug: string; use_id?: boolean }
+    >({
+      query: ({ slug, use_id = false }) => `articles/${slug}?use_id=${use_id}`,
+      providesTags: (result, error, { slug }) => {
         return [{ type: 'Articles' as const, id: slug }];
       },
     }),

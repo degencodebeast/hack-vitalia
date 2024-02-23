@@ -25,7 +25,9 @@ import { useState } from 'react';
 const ArticleView = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const { data, isLoading, isFetching } = useGetArticleQuery(slug as string);
+  const { data, isLoading, isFetching } = useGetArticleQuery({
+    slug: slug as string,
+  });
   const article = data?.data;
 
   return (

@@ -9,7 +9,8 @@ import {
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { IS_DEV } from '@/utils';
-import { eq } from 'drizzle-orm';
+import { and, desc, eq, or } from 'drizzle-orm';
+import { PostStatus } from '@/types/shared';
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,9 +26,33 @@ export const GET: HTTP_METHOD_CB = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
+  const { s: status = 'published', ad } = req.query;
+  let whereFilter =
+    status == 'all'
+      ? {
+          where: or(
+            eq(fitnessPlans.status, 'published'),
+            eq(fitnessPlans.status, 'draft')
+          ),
+        }
+      : { where: eq(fitnessPlans.status, status as PostStatus) };
+  if (status == 'all' && ad) {
+    whereFilter = {
+      where: and(eq(fitnessPlans.authorId, +ad)),
+    };
+  } else if (ad && status !== 'all') {
+    whereFilter = {
+      where: and(
+        eq(fitnessPlans.status, status as PostStatus),
+        eq(fitnessPlans.authorId, +ad)
+      ),
+    };
+  }
+
   try {
     const allfitnessPlans = await db.query.fitnessPlans.findMany({
-      where: eq(fitnessPlans.status, 'published'),
+      ...whereFilter,
+      orderBy: desc(fitnessPlans.createdAt),
       with: {
         author: {
           columns: {
