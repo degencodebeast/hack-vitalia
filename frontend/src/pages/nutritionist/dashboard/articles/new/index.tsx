@@ -82,7 +82,7 @@ export default function NewPostPage() {
       //   reader.readAsDataURL(imageFile);
       // }
 
-      if (submitted) {
+      if (submitted || isSuccess) {
         resetFields();
         toast({ title: data?.message });
         setTimeout(() => {
@@ -113,7 +113,7 @@ export default function NewPostPage() {
       //   reader.readAsDataURL(imageFile);
       // }
 
-      if (submitted) {
+      if (submitted || isSuccess) {
         resetFields();
         toast({ title: data?.message });
         setTimeout(() => {
