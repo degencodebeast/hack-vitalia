@@ -26,7 +26,6 @@ import { shortenText } from '@/helpers';
 export default function NewPostPage() {
   const [addArticle, { isLoading, status, isSuccess, isError, data }] =
     useAddArticleMutation();
-  console.log({ status }, 'NewPostPage');
 
   const router = useRouter();
   const toast = useToast({
@@ -52,7 +51,6 @@ export default function NewPostPage() {
   const onImageChangeHandler = useCallback(
     (hasImage: boolean, files: File[], image: string) => {
       if (hasImage) {
-        console.log({ hasImage, files, image: shortenText(image) });
         // setPost((prev) => ({ ...prev, image: image }));
         setImageFile(image);
         // const reader = new FileReader();
@@ -83,9 +81,6 @@ export default function NewPostPage() {
       //   };
       //   reader.readAsDataURL(imageFile);
       // }
-      console.log({ postToSave });
-
-      console.log({ status }, 'Success draft saved');
 
       if (submitted) {
         resetFields();
@@ -117,7 +112,6 @@ export default function NewPostPage() {
 
       //   reader.readAsDataURL(imageFile);
       // }
-      console.log({ status, postToSave }, 'Success published saved');
 
       if (submitted) {
         resetFields();

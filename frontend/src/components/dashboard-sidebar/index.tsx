@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useAppContext } from '@/context/state';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-// import { } from 'material-symbols'
+
 export default function DashboardSideBar(props: {
   entryPath?: string;
   links: Array<{ title: string; url: string; icon: string; child?: string[] }>;
@@ -20,18 +20,8 @@ export default function DashboardSideBar(props: {
   //     router.push('/');
   //   }
   // }, [user]);
-  // const pathname = usePathname();
-  // const parts = pathname.split('/');
-  // const lastPart = parts[parts.length - 1];
-  // const _links = props.links.map((link, i) => {
-  //   const isActive =
-  //     lastPart === link?.url ||
-  //     (link?.url === 'overview' && lastPart === 'dashboard');
-  //   // console.log({pathname,lastPart,isActive});
-  //   const buildLink = (entry: string, lnk: string) =>
-  //     lnk.toLowerCase() === 'overview' ? entry + '' : entry + lnk;
+
   const pathname = usePathname();
-  // console.log({pathname,entry:entryPath});
 
   const parts = pathname.split('/');
   const beforeLastPart = parts[parts.length - 2];
