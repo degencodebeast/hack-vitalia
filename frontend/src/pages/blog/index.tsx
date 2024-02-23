@@ -8,7 +8,7 @@ import { Box, HStack, Heading } from '@chakra-ui/react';
 import Head from 'next/head';
 
 const BlogPage = () => {
-  const { data, isFetching, isLoading } = useGetArticlesQuery({ s: 'all' });
+  const { data, isFetching, isLoading } = useGetArticlesQuery({});
   const articles = data?.data as IArticle[];
   return (
     <Box

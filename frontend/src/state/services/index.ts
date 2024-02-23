@@ -22,7 +22,7 @@ export const RejuvenateApi = createApi({
   endpoints: (builder) => ({
     getArticles: builder.query<
       Partial<APIResponse<Article[]>>,
-      { s: 'all' | 'published' | 'draft' }
+      { s?: 'all' | 'published' | 'draft'; ad?: string }
     >({
       query: (params) => {
         return {
@@ -43,10 +43,13 @@ export const RejuvenateApi = createApi({
           : // an error occurred, but we still want to refetch this query when `{ type: 'Articles', id: 'LIST' }` is invalidated
             [{ type: 'Articles', id: 'LIST' }],
     }),
-    getMealPlans: builder.query<Partial<APIResponse<MealPlan[]>>, {}>({
+    getMealPlans: builder.query<
+      Partial<APIResponse<MealPlan[]>>,
+      { s?: 'all' | 'published' | 'draft'; ad?: string }
+    >({
       query: (params) => {
         return {
-          url: `meal-plans`,
+          url: `meal-plans?${objectToSearchParams(params)}`,
         };
       },
       providesTags: (result) =>
@@ -63,10 +66,13 @@ export const RejuvenateApi = createApi({
           : // an error occurred, but we still want to refetch this query when `{ type: 'MealPlans', id: 'LIST' }` is invalidated
             [{ type: 'MealPlans', id: 'LIST' }],
     }),
-    getFitnessPlans: builder.query<Partial<APIResponse<FitnessPlan[]>>, {}>({
+    getFitnessPlans: builder.query<
+      Partial<APIResponse<FitnessPlan[]>>,
+      { s?: 'all' | 'published' | 'draft'; ad?: string }
+    >({
       query: (params) => {
         return {
-          url: `fitness-plans`,
+          url: `fitness-plans?${objectToSearchParams(params)}`,
         };
       },
       providesTags: (result) =>

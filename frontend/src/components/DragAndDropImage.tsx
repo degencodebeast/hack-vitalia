@@ -42,7 +42,7 @@ function DragAndDropImage({
 
   useEffect(() => {
     onUploadChange(images.length > 0, files, images?.[0]?.src as string);
-  }, [images, onUploadChange, files]);
+  }, [images, files, onUploadChange]);
   const { getRootProps, getInputProps } = useDropzone({
     onError(err) {
       console.log(err);

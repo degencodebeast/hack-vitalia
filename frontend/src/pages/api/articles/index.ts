@@ -9,7 +9,7 @@ import {
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { IS_DEV } from '@/utils';
-import { eq, or } from 'drizzle-orm';
+import { and, desc, eq, or } from 'drizzle-orm';
 import { PostStatus } from '@/types/shared';
 export const config = {
   api: {
@@ -32,8 +32,8 @@ export const GET: HTTP_METHOD_CB = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const { s: status = 'published' } = req.query;
-  const whereFilter =
+  const { s: status = 'published', ad } = req.query;
+  let whereFilter =
     status == 'all'
       ? {
           where: or(
@@ -42,9 +42,23 @@ export const GET: HTTP_METHOD_CB = async (
           ),
         }
       : { where: eq(articles.status, status as PostStatus) };
+  if (status == 'all' && ad) {
+    whereFilter = {
+      where: and(eq(articles.authorId, +ad)),
+    };
+  } else if (ad && status !== 'all') {
+    whereFilter = {
+      where: and(
+        eq(articles.status, status as PostStatus),
+        eq(articles.authorId, +ad)
+      ),
+    };
+  }
+
   try {
     const allArticles = await db.query.articles.findMany({
       ...whereFilter,
+      orderBy: desc(articles.createdAt),
       with: {
         author: {
           columns: {
