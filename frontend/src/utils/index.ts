@@ -20,17 +20,20 @@ export const generateUsername = () =>
 export function selectObjectKeys<T extends object>(obj: T) {
   const resultArray = [];
 
-  return Object.keys(obj).map((key) => {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      const spacedKey = key.replace(/([a-z])([A-Z])/g, '$1 $2');
-      const formattedKey =
-        spacedKey.charAt(0).toUpperCase() + spacedKey.slice(1);
+  return (
+    obj &&
+    Object.keys(obj).map((key) => {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        const spacedKey = key.replace(/([a-z])([A-Z])/g, '$1 $2');
+        const formattedKey =
+          spacedKey.charAt(0).toUpperCase() + spacedKey.slice(1);
 
-      const keyString = `${formattedKey}`;
+        const keyString = `${formattedKey}`;
 
-      return keyString;
-    }
-  });
+        return keyString;
+      }
+    })
+  );
 
   // return resultArray;
 }
