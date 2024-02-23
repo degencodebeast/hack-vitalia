@@ -52,11 +52,12 @@ export function removeKeyFromObject<T extends object>(
   return arr?.map((obj) => {
     const newObj: Record<string, any> = {};
 
-    Object.keys(obj).forEach((key) => {
-      if (!keysToRemove.includes(key as keyof T)) {
-        newObj[key] = obj[key as keyof T];
-      }
-    });
+    obj &&
+      Object.keys(obj).forEach((key) => {
+        if (!keysToRemove.includes(key as keyof T)) {
+          newObj[key] = obj[key as keyof T];
+        }
+      });
     // const omits = keysToRemove.join('|') as const;
     return newObj as T;
   });
