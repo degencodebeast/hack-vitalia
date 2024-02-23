@@ -9,7 +9,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import NutritionistDashboardLayout from '../../layout';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import ReactMde from 'react-mde';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
@@ -21,10 +21,13 @@ import { generateSlug } from '@/utils';
 import { useRouter } from 'next/router';
 import { NewArticle, PostStatus } from '@/types/shared';
 import { useAddArticleMutation } from '@/state/services';
+import { shortenText } from '@/helpers';
 
 export default function NewPostPage() {
   const [addArticle, { isLoading, status, isSuccess, isError, data }] =
     useAddArticleMutation();
+  console.log({ status }, 'NewPostPage');
+
   const router = useRouter();
   const toast = useToast({
     duration: 3000,
@@ -32,8 +35,8 @@ export default function NewPostPage() {
     status: 'success',
     title: ' Successful',
   });
-  const [imageFile, setImageFile] = useState<Blob>();
-  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [imageFile, setImageFile] = useState<string>();
+  const [submitted, setSubmitted] = useState<boolean>(false);
   const [contentValue, setContentValue] = useState('');
   const [post, setPost] = useState<NewArticle>({
     title: '',
@@ -42,87 +45,90 @@ export default function NewPostPage() {
     intro: '',
     image: '',
     status: 'draft',
-    authorId: 1,
+    authorId: 2,
   });
 
   const [selectedTab, setSelectedTab] = useState<'write' | 'preview'>('write');
-  function onImageChangeHandler(
-    hasImage: boolean,
-    files: File[],
-    image: string
-  ) {
-    if (hasImage) {
-      setImageFile(files[0]);
-      const reader = new FileReader();
+  const onImageChangeHandler = useCallback(
+    (hasImage: boolean, files: File[], image: string) => {
+      if (hasImage) {
+        console.log({ hasImage, files, image: shortenText(image) });
+        // setPost((prev) => ({ ...prev, image: image }));
+        setImageFile(image);
+        // const reader = new FileReader();
 
-      reader.onload = function (e) {
-        const base64String = e.target?.result as string;
+        //         reader.onload = function (e) {
+        //           const base64String = e.target?.result as string;
 
-        setPost((prev) => ({ ...prev, image: base64String }));
-      };
-      reader.readAsDataURL(files[0]);
-    }
-  }
-  async function saveAsDraft() {
-    setSubmitting(true);
+        //           setPost((prev) => ({ ...prev, image: base64String }));
+        //         };
+        //         reader.readAsDataURL(files[0]);
+      }
+    },
+    []
+  );
+  function saveAsDraft() {
     try {
       const postToSave = {
         ...post,
         slug: generateSlug(post.title),
+        image: imageFile,
       };
-      if (imageFile) {
-        const reader = new FileReader();
+      // if (imageFile) {
+      //   const reader = new FileReader();
 
-        reader.onload = function (e) {
-          const base64String = e.target?.result as string;
-          postToSave.image = base64String;
-        };
-        reader.readAsDataURL(imageFile);
-      }
+      //   reader.onload = function (e) {
+      //     const base64String = e.target?.result as string;
+      //     postToSave.image = base64String;
+      //   };
+      //   reader.readAsDataURL(imageFile);
+      // }
       console.log({ postToSave });
-      addArticle(postToSave);
-      // const res = await axios.post('/api/posts/new', postToSave);
-      // toast({ title: res.data?.message });
 
-      setTimeout(() => {
-        setSubmitting(false);
-        // router.replace('/dashboard/articles');
-      }, 1500);
+      console.log({ status }, 'Success draft saved');
+
+      if (submitted) {
+        resetFields();
+        toast({ title: data?.message });
+        setTimeout(() => {
+          router.replace('/nutritionist/dashboard/articles');
+        }, 2000);
+      }
+      addArticle(postToSave);
     } catch (error) {
-      toast({ title: 'An error occured, please try again', status: 'error' });
-      setSubmitting(false);
+      toast({ title: 'An error occurred, please try again', status: 'error' });
     }
   }
-  async function saveAsPublished() {
+  function saveAsPublished() {
     try {
-      setSubmitting(true);
-
       const postToSave = {
         ...post,
         status: 'published' as PostStatus,
         slug: generateSlug(post.title),
+        image: imageFile,
       };
-      if (imageFile) {
-        const reader = new FileReader();
+      // if (imageFile) {
+      //   const reader = new FileReader();
 
-        reader.onload = function (e) {
-          const base64String = e.target?.result as string;
-          postToSave.image = base64String;
-        };
+      //   reader.onload = function (e) {
+      //     const base64String = e.target?.result as string;
+      //     postToSave.image = base64String;
+      //   };
 
-        reader.readAsDataURL(imageFile);
+      //   reader.readAsDataURL(imageFile);
+      // }
+      console.log({ status, postToSave }, 'Success published saved');
+
+      if (submitted) {
+        resetFields();
+        toast({ title: data?.message });
+        setTimeout(() => {
+          router.replace('/nutritionist/dashboard/articles');
+        }, 2000);
       }
       addArticle(postToSave);
-      // const res = await axios.post('/api/posts/new', postToSave);
-      toast({ title: data?.message });
-
-      setTimeout(() => {
-        setSubmitting(false);
-        router.replace('/dashboard/articles');
-      }, 1500);
     } catch (error) {
       toast({ title: 'An error occurred, please try again', status: 'error' });
-      setSubmitting(false);
     }
   }
   function handleEditorChange(value: string): void {
@@ -136,7 +142,25 @@ export default function NewPostPage() {
     const { name, value } = event.target;
     setPost((prev) => ({ ...prev, [name]: value }));
   }
+  function resetFields(): void {
+    setPost({
+      title: '',
+      slug: '',
+      content: '',
+      intro: '',
+      image: '',
+      status: 'draft',
+      authorId: 2,
+    });
+    setContentValue('');
+    setImageFile(undefined);
+  }
 
+  useEffect(() => {
+    if (status === 'fulfilled') {
+      setSubmitted(true);
+    }
+  }, [status, isSuccess]);
   return (
     <>
       <NutritionistDashboardLayout>
@@ -157,7 +181,7 @@ export default function NewPostPage() {
               {' '}
               <HStack gap={4}>
                 <Button
-                  isLoading={submitting}
+                  isLoading={isLoading}
                   onClick={saveAsPublished}
                   rounded={'full'}
                   px={6}
@@ -166,7 +190,7 @@ export default function NewPostPage() {
                   Publish{' '}
                 </Button>{' '}
                 <Button
-                  isLoading={submitting}
+                  isLoading={isLoading}
                   onClick={saveAsDraft}
                   rounded={'full'}
                   variant={'outline'}
@@ -180,8 +204,7 @@ export default function NewPostPage() {
                 onUploadChange={(hasImage, files, image) =>
                   onImageChangeHandler(hasImage, files, image)
                 }
-              />
-
+              />{' '}
               <Input
                 name='title'
                 value={post.title}
