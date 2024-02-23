@@ -44,13 +44,13 @@ export const GET: HTTP_METHOD_CB = async (
       : { where: eq(articles.status, status as PostStatus) };
   if (status == 'all' && ad) {
     whereFilter = {
-      where: and(eq(articles.authorId, +ad)),
+      where: and(eq(articles.authorAddress, ad as string)),
     };
   } else if (ad && status !== 'all') {
     whereFilter = {
       where: and(
         eq(articles.status, status as PostStatus),
-        eq(articles.authorId, +ad)
+        eq(articles.authorAddress, ad as string)
       ),
     };
   }

@@ -44,7 +44,7 @@ export default function NewPostPage() {
     intro: '',
     image: '',
     status: 'draft',
-    authorId: 2,
+    authorAddress: '0xed65da3exd8fe888dce89834ae',
   });
 
   const [selectedTab, setSelectedTab] = useState<'write' | 'preview'>('write');
@@ -144,7 +144,7 @@ export default function NewPostPage() {
       intro: '',
       image: '',
       status: 'draft',
-      authorId: 2,
+      authorAddress: '0xed65da3exd8fe888dce89834ae',
     });
     setContentValue('');
     setImageFile(undefined);

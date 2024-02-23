@@ -138,7 +138,7 @@ export const sampleMealPlans: MealPlan[] = [
     id: 1,
     time: 'Breakfast',
     slug: 'healthy-oatmeal-delight',
-    authorId: 1,
+    authorAddress: 1,
     title: 'Healthy Oatmeal Delight',
     content: `
     # Healthy Oatmeal Delight
@@ -180,7 +180,7 @@ export const sampleMealPlans: MealPlan[] = [
   {
     id: 2,
     time: 'Lunch',
-    authorId: 1,
+    authorAddress: 1,
     slug: 'mediterranean-chickpea-salad',
     title: 'Mediterranean Chickpea Salad',
     content: `
@@ -225,7 +225,7 @@ export const sampleMealPlans: MealPlan[] = [
   {
     id: 3,
     time: 'Dinner',
-    authorId: 1,
+    authorAddress: 1,
     slug: 'grilled-salmon-with-lemon-herb',
     title: 'Grilled Salmon with Lemon Herb Marinade',
     content: `
@@ -269,7 +269,7 @@ export const sampleMealPlans: MealPlan[] = [
     id: 4,
     time: 'Breakfast',
     slug: 'protein-packed-avocado-toast',
-    authorId: 1,
+    authorAddress: 1,
     title: 'Protein-Packed Avocado Toast',
     content: `
     # Protein-Packed Avocado Toast
