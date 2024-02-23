@@ -28,6 +28,8 @@ export default function ArticlesDashBoard() {
               Create Post
             </Button>
           </Flex>
+          {isLoading ? 'loading' : 'loaded'}
+          {isFetching ? 'fetching' : 'fetched'}
         </Box>
         ;
       </NutritionistDashBoardLayout>
