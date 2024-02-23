@@ -4,7 +4,7 @@ import ArticleCard from '@/components/article';
 import Header from '@/components/header';
 import { useGetArticlesQuery } from '@/state/services';
 import { type Article as IArticle } from '@/types/shared';
-import { Box, HStack, Heading, Skeleton } from '@chakra-ui/react';
+import { Box, HStack, Heading, Skeleton, Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 
 const BlogPage = () => {
@@ -35,7 +35,7 @@ const BlogPage = () => {
           // px={{ base: 3, lg: 0 }}
         >
           {(isFetching || isLoading) && (
-            <Box>
+            <Flex wrap={'wrap'} gap={5}>
               {[0, 0, 0, 0].map((s, i) => (
                 <Skeleton
                   key={'skelon' + i}
@@ -44,7 +44,7 @@ const BlogPage = () => {
                   rounded={'sm'}
                 ></Skeleton>
               ))}
-            </Box>
+            </Flex>
           )}
           {!isLoading &&
             articles?.length &&
