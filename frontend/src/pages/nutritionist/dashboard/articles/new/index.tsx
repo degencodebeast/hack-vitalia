@@ -44,7 +44,7 @@ export default function NewPostPage() {
     intro: '',
     image: '',
     status: 'draft',
-    authorAddress:'0xed65da3exd8fe888dce89834ae',
+    authorAddress: '0xed65da3exd8fe888dce89834ae',
   });
 
   const [selectedTab, setSelectedTab] = useState<'write' | 'preview'>('write');
@@ -82,7 +82,7 @@ export default function NewPostPage() {
       //   reader.readAsDataURL(imageFile);
       // }
 
-      if (submitted) {
+      if (submitted || isSuccess) {
         resetFields();
         toast({ title: data?.message });
         setTimeout(() => {
@@ -113,7 +113,7 @@ export default function NewPostPage() {
       //   reader.readAsDataURL(imageFile);
       // }
 
-      if (submitted) {
+      if (submitted || isSuccess) {
         resetFields();
         toast({ title: data?.message });
         setTimeout(() => {
