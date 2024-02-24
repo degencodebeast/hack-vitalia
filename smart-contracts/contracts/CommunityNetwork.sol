@@ -456,6 +456,20 @@ contract CommunityNetwork is Ownable {
         emit MintUserNFT(msg.sender);
     }
 
+    function checkIsMember(address account) external view returns (bool) {
+        return isMember[account];
+    }
+
+    function checkIsNutritionist(address account) external view returns (bool) {
+        return isNutritionist[account];
+    }
+
+    function checkApplicationStatus(
+        address account
+    ) returns (NutritionistApplicationStatus) {
+        return nutritionistApplicationStatus[account];
+    }
+
     function getAllMembers() external view returns (User[] memory _users) {
         _users = allUsers;
     }

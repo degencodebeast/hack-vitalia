@@ -29,6 +29,7 @@ import {
   Select,
   useToast,
   Text,
+  Spinner
 } from '@chakra-ui/react';
 import { NewUserType, RegisterType } from '../new-user-type';
 //import { useAuth } from "near-social-bridge";
@@ -41,6 +42,9 @@ import { countries } from '@/utils/countries';
 import { useDebounce } from '@/hooks/useDebounce';
 import { communityAbi } from '../../../abis';
 import { communityAddr } from '@/utils/constants';
+import { parseEther, parseGwei } from "viem";
+import { getNetwork, readContract, watchNetwork, writeContract  } from "@wagmi/core";
+
 
 const RegisterForm = ({
   isOpen,
@@ -53,10 +57,10 @@ const RegisterForm = ({
   const { address } = useAccount();
 
   const toast = useToast({
-    duration: 3000,
-    position: 'top',
-    status: 'success',
-    title: 'Sign up was successful',
+    // duration: 3000,
+    // position: 'top',
+    // status: 'success',
+    // title: 'Sign up was successful',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -69,6 +73,7 @@ const RegisterForm = ({
   const [amount, setAmount] = useState('0.01');
   const debouncedAmount = useDebounce<string>(amount, 500);
   const [hasError, setHasError] = useState(false);
+  const [inTx, setInTx] = useState(false);
   // form validation rules
   const validationSchema = Yup.object().shape({
     fullName: Yup.string().required('Field is required'),
@@ -87,32 +92,61 @@ const RegisterForm = ({
     smokingStopped: Yup.string(),
     smokingLength: Yup.string(),
   });
-  const formOptions = { resolver: yupResolver(validationSchema) };
+  const formOptions: any = { resolver: yupResolver(validationSchema) };
   const { register, handleSubmit, formState, reset } = useForm(formOptions);
 
   // get functions to build form with useForm() hook
   const { errors, isValid, isSubmitSuccessful } = formState;
   const [cid, setCid] = useState<string>('');
+  //const [isLoading, setIsLoading] = useState(false);
 
-  const { config } = usePrepareContractWrite({
-    //@ts-ignore
-    address: communityAddr,
-    abi: communityAbi,
-    functionName: 'registerUser',
-    args: [cid, allTokensData.userNftUri],
-    //@ts-ignore
-    value: ethers.utils.parseEther(debouncedAmount || '0'),
-  });
+  
+  const registerUserTx = async () => {
+    try {
+      setInTx(true);
+      const { hash } = await writeContract({
+        address: communityAddr,
+        abi: communityAbi,
+        functionName: "registerUser",
+        args: [cid, allTokensData.userNftUri],
+        value:  parseEther(debouncedAmount || '0'),
+      });
 
-  const { write: registerUser, data } = useContractWrite(config);
+      //toast.success("Registration Successful on Avalanche");
 
-  const { isLoading } = useWaitForTransaction({
-    hash: data?.hash,
-    onSuccess(tx) {
-      console.log(tx);
-      router.push('/member/dashboard');
-    },
-  });
+      setInTx(false);
+      router.push('/member/dashboard')
+    }catch (error) {
+      toast({
+        duration: 3000,
+        position: 'top',
+        status: 'error',
+        title: "You have signed up before",
+      })
+      console.log(error);
+    }
+  }
+
+
+  // const { config } = usePrepareContractWrite({
+  //   //@ts-ignore
+  //   address: communityAddr,
+  //   abi: communityAbi,
+  //   functionName: 'registerUser',
+  //   args: [cid, allTokensData.userNftUri],
+  //   //@ts-ignore
+  //   value: ethers.utils.parseEther(debouncedAmount || '0'),
+  // });
+
+  // const { write: registerUser, data } = useContractWrite(config);
+
+  // const { isLoading } = useWaitForTransaction({
+  //   hash: data?.hash,
+  //   onSuccess(tx) {
+  //     console.log(tx);
+  //     router.push('/member/dashboard');
+  //   },
+  // });
 
   const onInvalidSubmit: SubmitErrorHandler<FieldValues> = (errors: any) => {
     if (!isValid) {
@@ -123,9 +157,14 @@ const RegisterForm = ({
   };
 
   const onValidSubmit = async (data: any) => {
+    //data.preventDefault();
     try {
       if (isSubmitSuccessful) {
+        // setIsLoading(true);
+        
+        // setIsLoading(false);
         console.log({ data });
+
       }
 
       //    const cid = await uploadPromptToIpfs(data);
@@ -159,9 +198,10 @@ const RegisterForm = ({
           name: data.fullName,
         });
 
-        registerUser?.();
+        registerUserTx();
+        await new Promise((resolve) => setTimeout(resolve, 10000));
 
-        toast();
+        //toast();
         reset();
         setIsSubmitting(false);
       }
@@ -555,7 +595,7 @@ const RegisterForm = ({
                               defaultValue=''
                             >
                               <option value='' disabled>
-                                How mamy hours of sleep do you get per day?
+                                How many hours of sleep do you get per day?
                               </option>
                               {Array.from({ length: 13 }, (_, item) => (
                                 <option
@@ -606,10 +646,12 @@ const RegisterForm = ({
                           <Button type='submit' isLoading={isSubmitting}>
                             Complete Sign Up
                           </Button>
+                          {isSubmitting && <Spinner />}
                         </HStack>
                       </SwiperSlide>
                     </Swiper>
                   </form>
+                  
                 )}
                 {SelectedUserType === 'nutritionist' && (
                   <Box>
