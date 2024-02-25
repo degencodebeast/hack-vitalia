@@ -1,4 +1,5 @@
 import MarkdownRenderer from '@/components/MarkdownRenderer';
+import Header from '@/components/header';
 import { maskHexAddress } from '@/helpers';
 import { useGetArticleQuery } from '@/state/services';
 import { Article } from '@/types/shared';
@@ -46,7 +47,8 @@ const ArticleView = () => {
         />
         <meta property='og:image' content={article?.image} />
       </Head>
-      <Box bg={'secondaryColor.100'}>
+      <Header />
+      <Box bg={'secondaryColor.100'} py={8}>
         <Box
           bg={'white'}
           maxW={'1200px'}
@@ -97,7 +99,7 @@ const ArticleView = () => {
                       <Text as={'strong'} fontSize={'large'}>
                         {article?.author?.fullName ||
                           maskHexAddress(
-                            article?.author?.address || '0x4de54a23f34d3es29'
+                            article?.authorAddress || '0x4de54a23f34d3es29'
                           )}
                       </Text>{' '}
                       <Text

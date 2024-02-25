@@ -117,15 +117,23 @@ export const RejuvenateApi = createApi({
         return [{ type: 'Articles' as const, id: slug }];
       },
     }),
-    getMealPlan: builder.query<Partial<APIResponse<MealPlan>>, string>({
-      query: (slug) => `meal-plans/${slug}`,
-      providesTags: (result, error, slug) => {
+    getMealPlan: builder.query<
+      Partial<APIResponse<MealPlan>>,
+      { slug: string; use_id?: boolean }
+    >({
+      query: ({ slug, use_id = false }) =>
+        `meal-plans/${slug}?use_id=${use_id}`,
+      providesTags: (result, error, { slug }) => {
         return [{ type: 'MealPlans' as const, id: slug }];
       },
     }),
-    getFitnessPlan: builder.query<Partial<APIResponse<FitnessPlan>>, string>({
-      query: (slug) => `fitness-plans/${slug}`,
-      providesTags: (result, error, slug) => {
+    getFitnessPlan: builder.query<
+      Partial<APIResponse<FitnessPlan>>,
+      { slug: string; use_id?: boolean }
+    >({
+      query: ({ slug, use_id = false }) =>
+        `fitness-plans/${slug}?use_id=${use_id}`,
+      providesTags: (result, error, { slug }) => {
         return [{ type: 'FitnessPlans' as const, id: slug }];
       },
     }),
