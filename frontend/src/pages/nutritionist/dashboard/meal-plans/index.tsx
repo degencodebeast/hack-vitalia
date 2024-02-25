@@ -238,7 +238,7 @@ export default function DashBoard() {
               </Text>
             </Flex>
           )}
-          {mealPlans?.length && (
+          {mealPlans?.length > 0 && (
             <Box
               my={8}
               maxW={'full'}
@@ -263,7 +263,7 @@ export default function DashBoard() {
                       borderBottom={'2px'}
                       borderBottomColor={'gray.100'}
                     >
-                      {mealPlans &&
+                      {mealPlans?.length > 0 &&
                         selectObjectKeys(mealPlans[0]).map((key, i) => {
                           return (
                             <Th key={'mealplans-th' + key} {...tableHeadStyles}>
@@ -277,14 +277,14 @@ export default function DashBoard() {
                     </Tr>
                   </Thead>
                   <Tbody className='files-table-body'>
-                    {mealPlans &&
+                    {mealPlans?.length > 0 &&
                       mealPlans.map((d, i) => (
                         <Tr key={'mealplans-data' + i}>
                           <TableItems keyPrefix={'mealplans'} dataItem={d} />
                           <Td>
                             <HStack>
                               <Button
-                                href={'/blog/article/' + d.slug}
+                                href={'/meal-plans/' + d.slug}
                                 variant={'outline'}
                                 as={Link}
                                 size={'sm'}

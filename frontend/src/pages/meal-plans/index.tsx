@@ -58,10 +58,10 @@ const MealPlansPage = () => {
                 p={2}
                 maxW={350}
                 gap={4}
-                py={5}
+                pb={5}
               >
                 <Box
-                  h={'150px'}
+                  h={'170px'}
                   bg={'gray.200'}
                   roundedTop={'md'}
                   overflow={'hidden'}
@@ -90,6 +90,7 @@ const MealPlansPage = () => {
                     alt=''
                     h={'full'}
                     w={'full'}
+                    objectFit={'cover'}
                     src={plan?.image ?? '/images/meal-plan.jpg'}
                   />
                 </Box>

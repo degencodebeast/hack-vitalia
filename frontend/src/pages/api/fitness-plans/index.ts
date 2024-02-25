@@ -11,7 +11,13 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { IS_DEV } from '@/utils';
 import { and, desc, eq, or } from 'drizzle-orm';
 import { PostStatus } from '@/types/shared';
-
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '4mb',
+    },
+  },
+};
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

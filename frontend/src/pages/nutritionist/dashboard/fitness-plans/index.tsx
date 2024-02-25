@@ -122,7 +122,7 @@ export default function ArticlesDashBoard() {
                           <Td>
                             <HStack>
                               <Button
-                                href={'/blog/article/' + d.slug}
+                                href={'/fitness-plans/' + d.slug}
                                 variant={'outline'}
                                 as={Link}
                                 size={'sm'}

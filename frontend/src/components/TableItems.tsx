@@ -12,9 +12,9 @@ export default function TableItems({
   keyPrefix: string;
 }) {
   const keys = Object.keys(dataItem);
-  console.log({ dataItem, keyPrefix, keys });
 
   return keys.reduce((acc, item) => {
+    const _item = item.trim();
     switch (item) {
       case 'intro':
         acc.push(
@@ -30,6 +30,16 @@ export default function TableItems({
           </Td>
         );
         break;
+        case'authorAddress':
+          acc.push(<Td
+           key={`${keyPrefix}-${item}`}
+         
+         >
+           <Text noOfLines={3} as={'span'} fontSize={'15px'}>
+             {maskHexAddress(dataItem.authorAddress)}
+           </Text>
+         </Td>)
+         break;
       case 'slug':
         acc.push(
           <Td
