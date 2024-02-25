@@ -1,4 +1,5 @@
 import MarkdownRenderer from '@/components/MarkdownRenderer';
+import Footer from '@/components/footer';
 import Header from '@/components/header';
 import { maskHexAddress } from '@/helpers';
 import { useGetArticleQuery } from '@/state/services';
@@ -156,6 +157,7 @@ const ArticleView = () => {
           )}
         </Box>
       </Box>
+      <Footer />
     </>
   );
 };

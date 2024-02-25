@@ -29,7 +29,7 @@ import {
   Select,
   useToast,
   Text,
-  Spinner
+  Spinner,
 } from '@chakra-ui/react';
 import { NewUserType, RegisterType } from '../new-user-type';
 //import { useAuth } from "near-social-bridge";
@@ -46,10 +46,13 @@ import { communityAddr } from '@/utils/constants';
 import { useAddUserMutation } from '@/state/services';
 import { generateUsername } from '@/utils';
 
-import { parseEther, parseGwei } from "viem";
-import { getNetwork, readContract, watchNetwork, writeContract  } from "@wagmi/core";
-
-
+import { parseEther, parseGwei } from 'viem';
+import {
+  getNetwork,
+  readContract,
+  watchNetwork,
+  writeContract,
+} from '@wagmi/core';
 
 const RegisterForm = ({
   isOpen,
@@ -108,33 +111,31 @@ const RegisterForm = ({
   const [cid, setCid] = useState<string>('');
   //const [isLoading, setIsLoading] = useState(false);
 
-  
   const registerUserTx = async () => {
     try {
       setInTx(true);
       const { hash } = await writeContract({
         address: communityAddr,
         abi: communityAbi,
-        functionName: "registerUser",
+        functionName: 'registerUser',
         args: [cid, allTokensData.userNftUri],
-        value:  parseEther(debouncedAmount || '0'),
+        value: parseEther(debouncedAmount || '0'),
       });
 
       //toast.success("Registration Successful on Avalanche");
 
       setInTx(false);
-      router.push('/member/dashboard')
-    }catch (error) {
+      router.push('/member/dashboard');
+    } catch (error) {
       toast({
         duration: 3000,
         position: 'top',
         status: 'error',
-        title: "You have signed up before",
-      })
+        title: 'You have signed up before',
+      });
       console.log(error);
     }
-  }
-
+  };
 
   // const { config } = usePrepareContractWrite({
   //   //@ts-ignore
@@ -169,10 +170,9 @@ const RegisterForm = ({
     try {
       if (isSubmitSuccessful) {
         // setIsLoading(true);
-        
+
         // setIsLoading(false);
         console.log({ data });
-
       }
 
       //    const cid = await uploadPromptToIpfs(data);
@@ -206,14 +206,13 @@ const RegisterForm = ({
           name: data.fullName,
         });
 
-
         await createUser({
           username: generateUsername(),
           fullName: data?.fullName,
           address: address as `0x${string}`,
           userType: SelectedUserType,
         }).unwrap();
- 
+
         registerUserTx();
         await new Promise((resolve) => setTimeout(resolve, 10000));
 
@@ -337,7 +336,7 @@ const RegisterForm = ({
                               placeholder='Full name'
                             />
                             <div className='text-red-500'>
-                              {errors.fullName?.message}
+                              {errors.fullName?.message + ''}
                             </div>
                           </div>
                           <div>
@@ -348,7 +347,7 @@ const RegisterForm = ({
                               className=' w-full max-w-[100%]'
                             />
                             <div className='text-red-500'>
-                              {errors.birthDate?.message}
+                              {errors.birthDate?.message + ''}
                             </div>
                           </div>
                           <div>
@@ -372,7 +371,7 @@ const RegisterForm = ({
                               ))}
                             </Select>
                             <div className='text-red-500'>
-                              {errors.country?.message}
+                              {errors.country?.message + ''}
                             </div>
                           </div>
                           <div>
@@ -389,7 +388,7 @@ const RegisterForm = ({
                               <option value='female'>Female</option>
                             </Select>
                             <div className='text-red-500'>
-                              {errors.sex?.message}
+                              {errors.sex?.message + ''}
                             </div>
                           </div>
                         </Stack>
@@ -413,7 +412,7 @@ const RegisterForm = ({
                               placeholder="What's your weight in kg?"
                             />
                             <div className='text-red-500'>
-                              {errors.weight?.message}
+                              {errors.weight?.message + ''}
                             </div>
                           </div>
                           <div>
@@ -423,7 +422,7 @@ const RegisterForm = ({
                               placeholder="What's your height in feet and inches?"
                             />
                             <div className='text-red-500'>
-                              {errors.height?.message}
+                              {errors.height?.message + ''}
                             </div>
                           </div>
                           <div>
@@ -443,7 +442,7 @@ const RegisterForm = ({
                               ))}
                             </Select>
                             <div className='text-red-500'>
-                              {errors.diet?.message}
+                              {errors.diet?.message + ''}
                             </div>
                           </div>
                           <div>
@@ -460,7 +459,7 @@ const RegisterForm = ({
                               <option value='very active'>very active</option>
                             </Select>
                             <div className='text-red-500'>
-                              {errors.active?.message}
+                              {errors.active?.message + ''}
                             </div>
                           </div>
                         </Stack>
@@ -499,7 +498,7 @@ const RegisterForm = ({
                               ))}
                             </Select>
                             <div className='text-red-500'>
-                              {errors.sitting?.message}
+                              {errors.sitting?.message + ''}
                             </div>
                           </div>
                           <div>
@@ -522,7 +521,7 @@ const RegisterForm = ({
                               </option>
                             </Select>
                             <div className='text-red-500'>
-                              {errors.alcohol?.message}
+                              {errors.alcohol?.message + ''}
                             </div>
                           </div>
                           <div>
@@ -541,7 +540,7 @@ const RegisterForm = ({
                               </option>
                             </Select>
                             <div className='text-red-500'>
-                              {errors.smoke?.message}
+                              {errors.smoke?.message + ''}
                             </div>
                           </div>
                           <div>
@@ -624,7 +623,7 @@ const RegisterForm = ({
                               ))}
                             </Select>
                             <div className='text-red-500'>
-                              {errors.sleepLength?.message}
+                              {errors.sleepLength?.message + ''}
                             </div>
                           </div>
                           <div>
@@ -646,7 +645,7 @@ const RegisterForm = ({
                               ))}
                             </Select>
                             <div className='text-red-500'>
-                              {errors.overallHealth?.message}
+                              {errors.overallHealth?.message + ''}
                             </div>
                           </div>
                         </Stack>
@@ -668,7 +667,6 @@ const RegisterForm = ({
                       </SwiperSlide>
                     </Swiper>
                   </form>
-                  
                 )}
                 {SelectedUserType === 'nutritionist' && (
                   <Box>

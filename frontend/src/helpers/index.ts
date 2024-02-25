@@ -64,7 +64,7 @@ export const uploadPromptToIpfs = async (data: any) => {
   const client = makeStorageClient();
   const prompt = {
     template: `
-    You are a robot built by rejuvenateAI. Your goal is to predict the rate of aging of users.
+    You are a robot built by RevitalizeAI. Your goal is to predict the rate of aging of users.
     You must respond with the following json output and nothing else. (Reverse, Fast, Moderate, Slow)
     example: {"aging": "Fast"}
 

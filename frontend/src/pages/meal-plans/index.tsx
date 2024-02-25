@@ -1,6 +1,7 @@
 'use client';
 
 import Icon from '@/components/Icon';
+import Footer from '@/components/footer';
 import Header from '@/components/header';
 import { shortenText } from '@/helpers';
 import { useGetMealPlansQuery } from '@/state/services';
@@ -130,6 +131,7 @@ const MealPlansPage = () => {
             ))}
         </Stack>
       </Box>
+      <Footer />
     </>
   );
 };
