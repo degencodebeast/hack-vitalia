@@ -2,30 +2,40 @@ import axios from 'axios';
 
 import { NextResponse } from 'next/server';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { mainHandler } from '@/utils/api-utils';
 
-
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  return mainHandler(req, res, {
+    POST,
+  });
+}
+export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { data } = await axios.post(
+    const response = await fetch(
       'https://api.huddle01.com/api/v1/create-room',
       {
-        title: 'Huddle01 Meet',
-      },
-      {
+        method: 'POST',
+        body: JSON.stringify({
+          title: 'HuddleMate AI',
+          hostWallets: [],
+        }),
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': process.env.API_KEY as string,
+          'x-api-key': process.env.HUDDLE_API_KEY || '',
         },
       }
     );
- 
+
+    const { data } = await response.json();
+
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json(error);
   }
 };
- 
-export default handler;
 
 //  async function handler() {
 //   try {
