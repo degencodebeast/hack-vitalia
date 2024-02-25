@@ -51,82 +51,101 @@ export default function ArticlesDashBoard() {
             </Flex>
             <Button
               as={Link}
-              href={'articles/new'}
+              href={'fitness-plans/new'}
               className='bg-primaryGreen text-primaryBeige hover:bg-primaryYellowTrans hover:text-primaryGreen'
             >
               Create a plan
             </Button>
           </Flex>
-          <Box
-            my={8}
-            maxW={'full'}
-            minW={{ xl: '350px', base: '100%' }}
-            px={5}
-            py={4}
-            w={{ base: 'full' }}
-            flex={1}
-            alignSelf={'flex-start'}
-            // h={"442px"}
-            border={'1px'}
-            borderColor={'gray.300'}
-            rounded={'14px'}
-            bg={'white'}
-            //   pos={"relative/"}
-          >
-            <TableContainer>
-              <Table>
-                <Thead>
-                  <Tr
-                    h={'auto'}
-                    borderBottom={'2px'}
-                    borderBottomColor={'gray.100'}
-                  >
+          {!_data || !_data?.length ? (
+            <Flex
+              my={8}
+              maxW={'full'}
+              minW={{ xl: '350px', base: '100%' }}
+              px={5}
+              py={4}
+              align={'center'}
+              justify={'center'}
+              bg={'white'}
+              h={300}
+              w={{ base: 'full' }}
+            >
+              <Text fontWeight={500} fontSize={24} color={'gray.500'}>
+                No Posts yet
+              </Text>
+            </Flex>
+          ) : (
+            <Box
+              my={8}
+              maxW={'full'}
+              minW={{ xl: '350px', base: '100%' }}
+              px={5}
+              py={4}
+              w={{ base: 'full' }}
+              flex={1}
+              alignSelf={'flex-start'}
+              // h={"442px"}
+              border={'1px'}
+              borderColor={'gray.300'}
+              rounded={'14px'}
+              bg={'white'}
+              //   pos={"relative/"}
+            >
+              <TableContainer>
+                <Table>
+                  <Thead>
+                    <Tr
+                      h={'auto'}
+                      borderBottom={'2px'}
+                      borderBottomColor={'gray.100'}
+                    >
+                      {_data &&
+                        selectObjectKeys(_data[0]).map((key, i) => {
+                          return (
+                            <Th key={'article-' + key} {...tableHeadStyles}>
+                              {key}
+                            </Th>
+                          );
+                        })}
+                      <Th {...tableHeadStyles}>Actions</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody className='files-table-body'>
                     {_data &&
-                      selectObjectKeys(_data[0]).map((key, i) => {
-                        return (
-                          <Th key={'article-' + key} {...tableHeadStyles}>
-                            {key}
-                          </Th>
-                        );
-                      })}
-                    <Th {...tableHeadStyles}>Actions</Th>
-                  </Tr>
-                </Thead>
-                <Tbody className='files-table-body'>
-                  {_data &&
-                    _data.map((d, i) => (
-                      <Tr key={'data' + i}>
-                        <TableItems dataItem={d} />
-                        <Td>
-                          <HStack>
-                            <Button
-                              href={'/blog/article/' + d.slug}
-                              variant={'outline'}
-                              as={Link}
-                              size={'sm'}
-                              textDecor={'none'}
-                              rounded={'full'}
-                            >
-                              View
-                            </Button>
-                            <Button
-                              size={'sm'}
-                              href={'./articles/edit?pid=' + d.id}
-                              variant={'outline'}
-                              as={Link}
-                              textDecor={'none'}
-                              rounded={'full'}
-                            >
-                              Edit
-                            </Button>
-                          </HStack>
-                        </Td>
-                      </Tr>
-                    ))}
-                </Tbody>
-              </Table>
-            </TableContainer>
-          </Box>
+                      _data.map((d, i) => (
+                        <Tr key={'data' + i}>
+                          <TableItems dataItem={d} />
+                          <Td>
+                            <HStack>
+                              <Button
+                                href={'/blog/article/' + d.slug}
+                                variant={'outline'}
+                                as={Link}
+                                size={'sm'}
+                                textDecor={'none'}
+                                rounded={'full'}
+                              >
+                                View
+                              </Button>
+                              <Button
+                                size={'sm'}
+                                href={'./articles/edit?pid=' + d.id}
+                                variant={'outline'}
+                                as={Link}
+                                textDecor={'none'}
+                                rounded={'full'}
+                              >
+                                Edit
+                              </Button>
+                            </HStack>
+                          </Td>
+                        </Tr>
+                      ))}
+                  </Tbody>
+                </Table>
+              </TableContainer>
+            </Box>
+          )}
         </Box>
         ;
       </NutritionistDashBoardLayout>
