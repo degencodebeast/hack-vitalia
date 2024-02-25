@@ -9,7 +9,7 @@ export const NewUserType = ({
   onClick?: () => void;
   getValue?: (val: RegisterType) => void;
 }) => {
-  const [value, setValue] = useState('individual');
+  const [value, setValue] = useState('member');
   const handleRadioChange = (val: RegisterType) => {
     setValue(val);
     getValue?.(val);
@@ -18,7 +18,7 @@ export const NewUserType = ({
     <Box py={5}>
       <RadioGroup onChange={handleRadioChange} value={value}>
         <Stack spacing={'6'}>
-          <Radio value='individual'>
+          <Radio value='member'>
             <Stack spacing={'1'}>
               <Text as={'span'} fontWeight={'medium'}>
                 Individual

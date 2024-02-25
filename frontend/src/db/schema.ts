@@ -75,7 +75,7 @@ export const fitnessPlans = mysqlTable(
       'draft'
     ),
 
-    authorAddress: varchar('author_address',{length:50}).notNull(),
+    authorAddress: varchar('author_address', { length: 50 }).notNull(),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').onUpdateNow(),
   },
@@ -93,7 +93,7 @@ export const users = mysqlTable(
     username: varchar('username', { length: 50 }).unique().notNull(),
     password: varchar('password', { length: 255 }),
     email: varchar('email', { length: 255 }).unique(),
-    address: varchar('address', { length: 40 }).notNull().unique(),
+    address: varchar('address', { length: 100 }).notNull().unique(),
     avatar: varchar('avatar', { length: 255 }),
     userType: mysqlEnum('user_type', ['member', 'nutritionist'])
       .default('member')
