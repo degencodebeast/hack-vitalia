@@ -58,16 +58,16 @@ export default function DashboardSideBar(props: {
     );
   });
   return (
-    <Box className='h-full bg-primaryGray min-w-[250px] sticky top-0 ' pt={2}>
+    <Box className='h-full bg-primaryGray min-w-[220px] sticky top-0 ' pt={2}>
       <Link href='/'>
         <Image
           alt=''
           src='/images/svg/rejuvenate-logo-2.svg'
-          width={250}
+          width={200}
           height={70}
         />
       </Link>
-      <List className='flex flex-col py-6 mt-[30px] mb-6 gap-4'>
+      <List className='flex flex-col py-4 mt-[20px] mb-6 gap-4'>
         {[_links]}
       </List>
     </Box>

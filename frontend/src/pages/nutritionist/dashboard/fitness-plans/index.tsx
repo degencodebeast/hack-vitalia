@@ -20,17 +20,19 @@ import {
 import NutritionistDashBoardLayout from '../layout';
 import Head from 'next/head';
 import { Link } from '@chakra-ui/next-js';
-import { useGetArticlesQuery, useGetFitnessPlansQuery } from '@/state/services';
+import { useGetFitnessPlansQuery } from '@/state/services';
 import { removeKeyFromObject, selectObjectKeys } from '@/utils';
-import { Article } from '@/types/shared';
+import { FitnessPlan } from '@/types/shared';
 import TableItems from '@/components/TableItems';
 
 export default function ArticlesDashBoard() {
   const { data, isLoading, isFetching } = useGetFitnessPlansQuery({ s: 'all' });
-  const _data = removeKeyFromObject(data?.data as Article[], ['author']);
+  const _data = removeKeyFromObject(data?.data || ([] as FitnessPlan[]), [
+    'author',
+  ]);
   const tableHeadStyles = {
     // pb: 4,
-    fontSize: '16px',
+    fontSize: '15px',
     fontWeight: 'medium',
     textTransform: 'uppercase' as ResponsiveValue<'capitalize'>,
     // color: '#9CA4AB',
@@ -87,7 +89,7 @@ export default function ArticlesDashBoard() {
               // h={"442px"}
               border={'1px'}
               borderColor={'gray.300'}
-              rounded={'14px'}
+              // rounded={'14px'}
               bg={'white'}
               //   pos={"relative/"}
             >
@@ -102,19 +104,21 @@ export default function ArticlesDashBoard() {
                       {_data &&
                         selectObjectKeys(_data[0]).map((key, i) => {
                           return (
-                            <Th key={'article-' + key} {...tableHeadStyles}>
+                            <Th key={'fitness-th' + key} {...tableHeadStyles}>
                               {key}
                             </Th>
                           );
                         })}
-                      <Th {...tableHeadStyles}>Actions</Th>
+                      <Th {...tableHeadStyles} key={'fitness-th-actions'}>
+                        Actions
+                      </Th>
                     </Tr>
                   </Thead>
                   <Tbody className='files-table-body'>
                     {_data &&
                       _data.map((d, i) => (
-                        <Tr key={'data' + i}>
-                          <TableItems dataItem={d} />
+                        <Tr key={'fitness-data' + i}>
+                          <TableItems keyPrefix={'fitness'} dataItem={d} />
                           <Td>
                             <HStack>
                               <Button

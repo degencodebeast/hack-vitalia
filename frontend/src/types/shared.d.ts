@@ -35,7 +35,7 @@ export type MealPlan = {
   status?: PostStatus;
   intro?: string;
   views?: number;
-  time: string | 'breakfast' | 'lunch' | 'dinner' | 'snack';
+  time: 'breakfast' | 'lunch' | 'dinner' | 'snack' | string;
   createdAt: string | Date;
   updatedAt?: string | Date;
   author: {
@@ -80,7 +80,7 @@ export type FitnessPlan = {
   };
 };
 export type NewFitnessPlan = Pick<
-  MealPlan,
+  FitnessPlan,
   'slug' | 'title' | 'content' | 'image' | 'authorAddress' | 'intro' | 'status'
 >;
 

@@ -30,6 +30,7 @@ import {
   FormHelperText,
   HStack,
   useToast,
+  ResponsiveValue,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -44,69 +45,84 @@ import { shortenText } from '@/helpers';
 import { Link } from '@chakra-ui/next-js';
 import Head from 'next/head';
 import { useGetMealPlansQuery } from '@/state/services';
+import TableItems from '@/components/TableItems';
+import { removeKeyFromObject, selectObjectKeys } from '@/utils';
 
 export default function DashBoard() {
-  const { data: response, isLoading } = useGetMealPlansQuery({});
-  console.log(response);
+  const { data, isLoading, isFetching } = useGetMealPlansQuery({
+    s: 'all',
+  });
+
+  const mealPlans = removeKeyFromObject(data?.data || ([] as MealPlan[]), [
+    'author',
+  ]);
+
+  const tableHeadStyles = {
+    // pb: 4,
+    fontSize: '15px',
+    fontWeight: 'medium',
+    textTransform: 'uppercase' as ResponsiveValue<'capitalize'>,
+    // color: '#9CA4AB',
+  };
   const today = new Date().getTime();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { user, mealPlans, setMealPlans } = useAppContext();
+  const { user, setMealPlans } = useAppContext();
   const toast = useToast({
     duration: 3000,
     position: 'top',
     status: 'success',
     title: 'Meal Plan added successfully',
   });
-  // form validation rules
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Field is required'),
-    time: Yup.string().required('Field is required'),
-    content: Yup.string().required('Field is required'),
-  });
-  const formOptions = { resolver: yupResolver(validationSchema) };
+  // // form validation rules
+  // const validationSchema = Yup.object().shape({
+  //   title: Yup.string().required('Field is required'),
+  //   time: Yup.string().required('Field is required'),
+  //   content: Yup.string().required('Field is required'),
+  // });
+  // const formOptions = { resolver: yupResolver(validationSchema) };
 
-  // get functions to build form with useForm() hook
-  const { register, handleSubmit, formState, reset, setValue } =
-    useForm(formOptions);
-  const { errors, isValid } = formState;
-  const onValidSubmit = (data: any) => {
-    if (isValid) {
-      const dataObject = {
-        id: uuid(),
-        title: data?.title,
-        time: data?.time,
-        content: data?.content,
-        createdAt: new Date().getTime(),
-        userAddress: user?.userAddress,
-      };
-      console.log('meal plan', { dataObject });
-      setIsSubmitting(true);
-      setTimeout(() => {
-        setIsSubmitting(false);
+  // // get functions to build form with useForm() hook
+  // const { register, handleSubmit, formState, reset, setValue } =
+  //   useForm(formOptions);
+  // const { errors, isValid } = formState;
+  // const onValidSubmit = (data: any) => {
+  //   if (isValid) {
+  //     const dataObject = {
+  //       id: uuid(),
+  //       title: data?.title,
+  //       time: data?.time,
+  //       content: data?.content,
+  //       createdAt: new Date().getTime(),
+  //       userAddress: user?.userAddress,
+  //     };
+  //     console.log('meal plan', { dataObject });
+  //     setIsSubmitting(true);
+  //     setTimeout(() => {
+  //       setIsSubmitting(false);
 
-        const prevPlans = mealPlans || [];
-        setMealPlans([...prevPlans, dataObject]);
-        toast();
-        reset();
-        onClose();
-      }, 3000);
-    }
-  };
+  //       const prevPlans = mealPlans || [];
+  //       setMealPlans([...prevPlans, dataObject]);
+  //       toast();
+  //       reset();
+  //       onClose();
+  //     }, 3000);
+  //   }
+  // };
 
-  function editMealPlan(plan: MealPlan) {
-    onOpen();
-    setValue('time', plan.time);
-    setValue('title', plan.title);
-    setValue('content', plan.content);
-  }
+  // function editMealPlan(plan: MealPlan) {
+  //   onOpen();
+  //   setValue('time', plan.time);
+  //   setValue('title', plan.title);
+  //   setValue('content', plan.content);
+  // }
   return (
     <>
       <Head>
         <title>Dashboard | Meal Plans</title>
       </Head>
       <NutritionistDashBoardLayout>
-        <Modal
+        {/* <Modal
           isOpen={isOpen}
           onClose={() => {
             onClose();
@@ -184,7 +200,7 @@ export default function DashBoard() {
               </FormControl>
             </ModalBody>
           </ModalContent>
-        </Modal>
+        </Modal> */}
         <Box className='min-h-full h-full px-4 mt-6'>
           <Flex align={'center'} justify={'space-between'}>
             <Flex align={'center'} gap={6}>
@@ -200,14 +216,16 @@ export default function DashBoard() {
               </Text>
             </Flex>
             <Button
-              onClick={onOpen}
+              as={Link}
+              href={'meal-plans/new'}
+              // onClick={onOpen}
               className='bg-primaryGreen text-primaryBeige hover:bg-primaryYellowTrans hover:text-primaryGreen'
             >
               Create Meal Plan
             </Button>
           </Flex>
 
-          {!mealPlans?.length && (
+          {(!isLoading || isFetching) && !mealPlans?.length && (
             <Flex
               bg={'gray.100'}
               minH={'250px'}
@@ -221,70 +239,78 @@ export default function DashBoard() {
             </Flex>
           )}
           {mealPlans?.length && (
-            <TableContainer my={6}>
-              <Table>
-                <Thead bg={'white'} className='mb-4'>
-                  <Tr>
-                    <Th>ID</Th>
-                    <Th>Time</Th>
-                    <Th>Meal Name</Th>
-                    <Th>content</Th>
-                    <Th>Created On</Th>
-                    <Th>Actions</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {mealPlans?.map((mealPlan) => (
-                    <Tr key={mealPlan?.id} bg={'white'} rounded={'md'} my={4}>
-                      <Td>{mealPlan?.id}</Td>
-                      <Td>{mealPlan?.time}</Td>
-                      <Td>{mealPlan?.title}</Td>
-                      <Td
-                        maxW={300}
-                        wordBreak={'break-all'}
-                        h={'auto'}
-                        p={2}
-                        minW={250}
-                        whiteSpace={'normal'}
-                      >
-                        <Text wordBreak={'break-word'} noOfLines={3}>
-                          {shortenText(mealPlan?.content || '', 300)}
-                        </Text>
-                      </Td>
-                      <Td fontSize={'14px'}>
-                        {format(
-                          new Date(mealPlan.createdAt),
-                          'E, d MMM hh:mm a'
-                        )}
-                      </Td>
-                      <Td>
-                        <Flex gap={2}>
-                          <Button
-                            as={Link}
-                            size={'sm'}
-                            href={'/meal-plans/' + mealPlan?.slug}
-                            variant={'outline'}
-                            rounded={'full'}
-                            className='text-primaryGreen'
-                          >
-                            View
-                          </Button>
-                          <Button
-                            size={'sm'}
-                            variant={'outline'}
-                            rounded={'full'}
-                            className='text-primaryGreen'
-                            onClick={() => editMealPlan(mealPlan)}
-                          >
-                            Edit
-                          </Button>
-                        </Flex>
-                      </Td>
+            <Box
+              my={8}
+              maxW={'full'}
+              minW={{ xl: '350px', base: '100%' }}
+              px={5}
+              py={4}
+              w={{ base: 'full' }}
+              flex={1}
+              alignSelf={'flex-start'}
+              // h={"442px"}
+              border={'1px'}
+              borderColor={'gray.300'}
+              // rounded={'14px'}
+              bg={'white'}
+              //   pos={"relative/"}
+            >
+              <TableContainer>
+                <Table>
+                  <Thead>
+                    <Tr
+                      h={'auto'}
+                      borderBottom={'2px'}
+                      borderBottomColor={'gray.100'}
+                    >
+                      {mealPlans &&
+                        selectObjectKeys(mealPlans[0]).map((key, i) => {
+                          return (
+                            <Th key={'mealplans-th' + key} {...tableHeadStyles}>
+                              {key}
+                            </Th>
+                          );
+                        })}
+                      <Th {...tableHeadStyles} key={'mealplans-th-actions'}>
+                        Actions
+                      </Th>
                     </Tr>
-                  ))}
-                </Tbody>
-              </Table>
-            </TableContainer>
+                  </Thead>
+                  <Tbody className='files-table-body'>
+                    {mealPlans &&
+                      mealPlans.map((d, i) => (
+                        <Tr key={'mealplans-data' + i}>
+                          <TableItems keyPrefix={'mealplans'} dataItem={d} />
+                          <Td>
+                            <HStack>
+                              <Button
+                                href={'/blog/article/' + d.slug}
+                                variant={'outline'}
+                                as={Link}
+                                size={'sm'}
+                                textDecor={'none'}
+                                rounded={'full'}
+                              >
+                                View
+                              </Button>
+                              <Button
+                                size={'sm'}
+                                href={'./articles/edit?pid=' + d.id}
+                                variant={'outline'}
+                                as={Link}
+                                textDecor={'none'}
+                                rounded={'full'}
+                              >
+                                Edit
+                              </Button>
+                            </HStack>
+                          </Td>
+                        </Tr>
+                      ))}
+                  </Tbody>
+                </Table>
+              </TableContainer>
+            </Box>
           )}
         </Box>
       </NutritionistDashBoardLayout>

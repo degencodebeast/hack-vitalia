@@ -24,13 +24,18 @@ import { useGetArticlesQuery } from '@/state/services';
 import { removeKeyFromObject, selectObjectKeys } from '@/utils';
 import { Article } from '@/types/shared';
 import TableItems from '@/components/TableItems';
+import isEmpty from 'just-is-empty';
 
 export default function ArticlesDashBoard() {
   const { data, isLoading, isFetching } = useGetArticlesQuery({ s: 'all' });
-  const _data = removeKeyFromObject(data?.data as Article[], ['author']);
+  const articles = removeKeyFromObject(data?.data || ([] as Article[]), [
+    'author',
+  ]);
+  console.log({ _data: articles });
+
   const tableHeadStyles = {
     // pb: 4,
-    fontSize: '16px',
+    fontSize: '15px',
     fontWeight: 'medium',
     textTransform: 'uppercase' as ResponsiveValue<'capitalize'>,
     // color: '#9CA4AB',
@@ -57,74 +62,94 @@ export default function ArticlesDashBoard() {
               Create Post
             </Button>
           </Flex>
-          <Box
-            my={8}
-            maxW={'full'}
-            minW={{ xl: '350px', base: '100%' }}
-            px={5}
-            py={4}
-            w={{ base: 'full' }}
-            flex={1}
-            alignSelf={'flex-start'}
-            // h={"442px"}
-            border={'1px'}
-            borderColor={'gray.300'}
-            rounded={'14px'}
-            bg={'white'}
-            //   pos={"relative/"}
-          >
-            <TableContainer>
-              <Table>
-                <Thead>
-                  <Tr
-                    h={'auto'}
-                    borderBottom={'2px'}
-                    borderBottomColor={'gray.100'}
-                  >
-                    {_data &&
-                      selectObjectKeys(_data[0]).map((key, i) => {
-                        return (
-                          <Th key={'article-' + key} {...tableHeadStyles}>
-                            {key}
-                          </Th>
-                        );
-                      })}
-                    <Th {...tableHeadStyles}>Actions</Th>
-                  </Tr>
-                </Thead>
-                <Tbody className='files-table-body'>
-                  {_data &&
-                    _data.map((d, i) => (
-                      <Tr key={'data' + i}>
-                        <TableItems dataItem={d} />
-                        <Td>
-                          <HStack>
-                            <Button
-                              href={'/blog/article/' + d.slug}
-                              variant={'outline'}
-                              as={Link}
-                              textDecor={'none'}
-                              rounded={'full'}
-                            >
-                              View
-                            </Button>
-                            <Button
-                              href={'./articles/edit?pid=' + d.id}
-                              variant={'outline'}
-                              as={Link}
-                              textDecor={'none'}
-                              rounded={'full'}
-                            >
-                              Edit
-                            </Button>
-                          </HStack>
-                        </Td>
-                      </Tr>
-                    ))}
-                </Tbody>
-              </Table>
-            </TableContainer>
-          </Box>
+          {(!isLoading || isFetching) && !articles?.length && (
+            <Flex
+              bg={'gray.100'}
+              minH={'250px'}
+              my={5}
+              justify={'center'}
+              align={'center'}
+            >
+              <Text color={'gray.500'} fontWeight={'medium'} fontSize={'xl'}>
+                You don&apos;t any articlesw plan yet.
+              </Text>
+            </Flex>
+          )}
+          {articles?.length && (
+            <Box
+              my={8}
+              maxW={'full'}
+              minW={{ xl: '350px', base: '100%' }}
+              px={5}
+              py={4}
+              w={{ base: 'full' }}
+              flex={1}
+              alignSelf={'flex-start'}
+              // h={"442px"}
+              border={'1px'}
+              borderColor={'gray.300'}
+              // rounded={'14px'}
+              bg={'white'}
+              //   pos={"relative/"}
+            >
+              <TableContainer>
+                <Table>
+                  <Thead>
+                    <Tr
+                      h={'auto'}
+                      borderBottom={'2px'}
+                      borderBottomColor={'gray.100'}
+                    >
+                      {!isEmpty(articles) &&
+                        selectObjectKeys(articles[0]).map((key, i) => {
+                          return (
+                            <Th key={'article-th' + key} {...tableHeadStyles}>
+                              {key}
+                            </Th>
+                          );
+                        })}
+
+                      <Th {...tableHeadStyles} key={'article-th-actions'}>
+                        Actions
+                      </Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody className='files-table-body'>
+                    {!isEmpty(articles) &&
+                      articles.map((d, i) => (
+                        <Tr key={'article-item' + d.id + i}>
+                          <TableItems keyPrefix={'article'} dataItem={d} />
+                          <Td>
+                            <HStack>
+                              <Button
+                                href={'/blog/article/' + d.slug}
+                                variant={'outline'}
+                                as={Link}
+                                size={'sm'}
+                                textDecor={'none'}
+                                rounded={'full'}
+                              >
+                                View
+                              </Button>
+                              <Button
+                                size={'sm'}
+                                href={'./articles/edit?pid=' + d.id}
+                                variant={'outline'}
+                                as={Link}
+                                textDecor={'none'}
+                                rounded={'full'}
+                              >
+                                Edit
+                              </Button>
+                            </HStack>
+                          </Td>
+                        </Tr>
+                      ))}
+                  </Tbody>
+                </Table>
+              </TableContainer>
+            </Box>
+          )}
         </Box>
         ;
       </NutritionistDashBoardLayout>

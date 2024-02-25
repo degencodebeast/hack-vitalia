@@ -22,6 +22,7 @@ import { useRouter } from 'next/router';
 import { NewArticle, PostStatus } from '@/types/shared';
 import { useAddArticleMutation } from '@/state/services';
 import { shortenText } from '@/helpers';
+import { useAppContext } from '@/context/state';
 
 export default function NewPostPage() {
   const [addArticle, { isLoading, status, isSuccess, isError, data }] =
@@ -34,6 +35,7 @@ export default function NewPostPage() {
     status: 'success',
     title: ' Successful',
   });
+  const { user } = useAppContext();
   const [imageFile, setImageFile] = useState<string>();
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [contentValue, setContentValue] = useState('');
@@ -44,7 +46,7 @@ export default function NewPostPage() {
     intro: '',
     image: '',
     status: 'draft',
-    authorAddress: '0xed65da3exd8fe888dce89834ae',
+    authorAddress: user.userAddress || '0xed65da3exd8fe888dce89834ae',
   });
 
   const [selectedTab, setSelectedTab] = useState<'write' | 'preview'>('write');
@@ -72,23 +74,7 @@ export default function NewPostPage() {
         slug: generateSlug(post.title),
         image: imageFile,
       };
-      // if (imageFile) {
-      //   const reader = new FileReader();
 
-      //   reader.onload = function (e) {
-      //     const base64String = e.target?.result as string;
-      //     postToSave.image = base64String;
-      //   };
-      //   reader.readAsDataURL(imageFile);
-      // }
-
-      if (submitted || isSuccess) {
-        resetFields();
-        toast({ title: data?.message });
-        setTimeout(() => {
-          router.replace('/nutritionist/dashboard/articles');
-        }, 2000);
-      }
       addArticle(postToSave);
     } catch (error) {
       toast({ title: 'An error occurred, please try again', status: 'error' });
@@ -102,24 +88,7 @@ export default function NewPostPage() {
         slug: generateSlug(post.title),
         image: imageFile,
       };
-      // if (imageFile) {
-      //   const reader = new FileReader();
 
-      //   reader.onload = function (e) {
-      //     const base64String = e.target?.result as string;
-      //     postToSave.image = base64String;
-      //   };
-
-      //   reader.readAsDataURL(imageFile);
-      // }
-
-      if (submitted || isSuccess) {
-        resetFields();
-        toast({ title: data?.message });
-        setTimeout(() => {
-          router.replace('/nutritionist/dashboard/articles');
-        }, 2000);
-      }
       addArticle(postToSave);
     } catch (error) {
       toast({ title: 'An error occurred, please try again', status: 'error' });
@@ -144,17 +113,24 @@ export default function NewPostPage() {
       intro: '',
       image: '',
       status: 'draft',
-      authorAddress: '0xed65da3exd8fe888dce89834ae',
+      authorAddress: user.userAddress || '0xed65da3exd8fe888dce89834ae',
     });
     setContentValue('');
     setImageFile(undefined);
   }
 
   useEffect(() => {
-    if (status === 'fulfilled') {
-      setSubmitted(true);
+    let timeoutId: string | number | NodeJS.Timeout;
+    if (isSuccess) {
+      resetFields();
+      toast({ title: data?.message });
+      timeoutId = setTimeout(() => {
+        router.replace('/nutritionist/dashboard/articles');
+      }, 2000);
     }
-  }, [status, isSuccess]);
+    return () => clearTimeout(timeoutId);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.message, isSuccess]);
   return (
     <>
       <NutritionistDashboardLayout>
