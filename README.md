@@ -1,11 +1,11 @@
-# RejuvenateAI x Avalanche hack 
+# RejuvenateAI x Hack-Vitalia hack 
 
 Live Demo - [Youtube video](https://youtu.be/u9oClURPhUY) <br />
-Live Link - [RejuvenateAI dapp](https://rejuvenate-ai-chainlink.vercel.app/) <br />
+Live Link - [RejuvenateAI dapp](https://desoc-hack.vercel.app/) <br />
 
 ## ✨ Description
 
-[RejuvenateAI](https://rejuvenate-ai-chainlink.vercel.app/) is the first community blockchain based project powered by community built for community to promote healthy living and achieve  healthy locations where people live up to a 100 years all around the world. We are trying to make sure people live healthy by incorporating healthy habits into their lifestyle and trying to make sure they get the most out of the human experience by discovering their purpose if they haven't already and enjoying this life, all while doing it together as a community being accountable to each other.
+[RejuvenateAI](https://desoc-hack.vercel.app/) is the first community blockchain based project powered by community built for community to promote healthy living and achieve  healthy locations where people live up to a 100 years all around the world. We are trying to make sure people live healthy by incorporating healthy habits into their lifestyle and trying to make sure they get the most out of the human experience by discovering their purpose if they haven't already and enjoying this life, all while doing it together as a community being accountable to each other.
 
 ## Inspiration
 

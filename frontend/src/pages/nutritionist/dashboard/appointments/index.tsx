@@ -1,5 +1,5 @@
 'use client';
-
+import handler from "../../../api/create-room"
 import Icon from '@/components/Icon';
 // import CustomHuddle from '@/components/custom-huddle';
 import DashboardSideBar from '@/components/dashboard-sidebar';
@@ -21,9 +21,83 @@ import {
 import { format } from 'date-fns';
 import NutritionistDashBoardLayout from '../layout';
 import Head from 'next/head';
+// import { useRouter } from "next/router";
+import axios from "axios";
+import { AccessToken, Role } from "@huddle01/server-sdk/auth";
+import { useDevices, useRoom } from "@huddle01/react/hooks";
+import { useRouter } from "next/navigation"
 
 export default function DashBoard() {
   const today = new Date().getTime();
+  const router = useRouter()
+
+  const getServerSideProps = async () => {
+    const response = await fetch("https://api.huddle01.com/api/v1/create-room", {
+      method: "POST",
+      body: JSON.stringify({
+        title: "HuddleMate AI",
+        hostWallets: [],
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": process.env.HUDDLE_API_KEY || "",
+      },
+    });
+  
+    const { data } = await response.json();
+  
+    // console.log({ data.roomId });
+  
+    const _roomId = data.data.roomId;
+  
+    const accessToken = new AccessToken({
+      apiKey: process.env.HUDDLE_API_KEY as string,
+      roomId: _roomId,
+  
+      role: Role.HOST,
+      permissions: {
+        admin: true,
+        canConsume: true,
+        canProduce: true,
+        canProduceSources: {
+          cam: true,
+          mic: true,
+          screen: true,
+        },
+        canRecvData: true,
+        canSendData: true,
+        canUpdateMetadata: true,
+      },
+      // options: {
+      //   metadata: {
+      //     // you can add any custom attributes here which you want to associate with the user
+      //     walletAddress: "0x29f54719E88332e70550cf8737293436E9d7b10b",
+      //   },
+      // },
+    });
+  
+    const token = await accessToken.toJwt();
+  
+    return {
+      props: { token, roomId: data.roomId },
+    };
+  };
+
+  const createRoom = async () => {
+    try {
+      const {props} = await getServerSideProps();
+       // Assuming response.data contains room info
+      const roomId = props.roomId; // Extract the ID from relevant property
+      const token = props.token;
+
+      // Use roomId to create and navigate to the dynamic route
+      return router.push(`/${roomId}`); // Or redirect using `res.redirect` for server-side rendering
+    } catch (error) {
+      console.error('Room creation failed:', error);
+      // Handle errors gracefully
+    }
+  }
+
   return (
     <>
       <Head>
@@ -184,12 +258,13 @@ export default function DashBoard() {
                     <Td>45 MINS</Td>
                     <Td>
                       <Flex gap={4}>
-                        <Button
+                        <Button 
                           px={4}
                           size={'sm'}
                           rounded={'full'}
                           gap={2}
                           className='hover:bg-primaryYellowTrans hover:text-[#403CEA] text-primaryBeige bg-[#403CEA]'
+                          onClick={createRoom}
                         >
                           Accept
                         </Button>

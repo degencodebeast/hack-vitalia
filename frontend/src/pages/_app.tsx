@@ -12,6 +12,17 @@ import { arbitrumGoerli, avalancheFuji } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { useEffect, useState } from 'react';
 
+import { HuddleClient, HuddleProvider } from '@huddle01/react';
+
+const huddleClient = new HuddleClient({
+  projectId: 'zMQHa6hH5hGrxfwYZp7z8I-1lWScI7UA',
+  options: {
+    activeSpeakers: {
+      size: 8,
+    },
+  },
+});
+
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [avalancheFuji],
   [publicProvider()]
@@ -50,7 +61,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <WagmiConfig config={config}>
         <RainbowKitProvider chains={chains} modalSize='compact'>
           <Providers>
-            <Component {...pageProps} className={poppins.className} />
+            <HuddleProvider client={huddleClient}>
+              <Component {...pageProps} className={poppins.className} />
+            </HuddleProvider>
           </Providers>
         </RainbowKitProvider>
       </WagmiConfig>

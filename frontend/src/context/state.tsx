@@ -72,8 +72,8 @@ const AppContext = createContext<stateContextType>(contextDefaultValue);
 
 export function AppWrapper({ children }: StateContextProviderProps) {
   const [allTokensData, setAllTokenData] = useState<any>({
-    userNftUri: 'bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i',
-    nutritionistNftUri: '',
+    userNftUri: 'https://bafybeicxroigojtsvluxivtdkgmhcjijhnlvco2prg57ws6k3hqetkvhzu.ipfs.dweb.link/user%20badge.png',
+    nutritionistNftUri: 'https://bafybeihbll3mj2l44kqy67gbxwnvui2zqfdphzr5mr53mxto77hgo4umka.ipfs.dweb.link/nutritionist%20badge.png',
   });
   const [address, setAddress] = useState<string>('');
 
