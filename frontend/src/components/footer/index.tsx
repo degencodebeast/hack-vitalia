@@ -1,12 +1,12 @@
-import RejuvenateAi from '../../images/svg/yellow-logo.svg';
+import { Box, Image } from '@chakra-ui/react';
 
 const Footer = () => {
   return (
-    <section className='w-full bg-[#014421]'>
+    <Box as='footer' className='w-full bg-[#014421]' py={8}>
       <div className='max-w-[1300px] w-full px-4 flex justify-between items-center mx-auto'>
-        <RejuvenateAi />
+        <Image alt='Logo' src='/images/svg/yellow-logo.svg' />
       </div>
-    </section>
+    </Box>
   );
 };
 

@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { Link } from '@chakra-ui/next-js';
-import RejuvenateAi from '../../images/svg/rejuvenate-logo.svg';
+
 import { useAppContext } from '@/context/state';
 import RegisterForm from '../register-form';
 import { useAccount, useEnsName, useEnsAvatar } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { Button, HStack, Text, useDisclosure } from '@chakra-ui/react';
+import { Button, HStack, Image, Text, useDisclosure } from '@chakra-ui/react';
 import LogoutButton from '../LogoutButton';
 
 const Header = ({ bg = 'transparent' }: { bg?: string }) => {
@@ -43,7 +43,7 @@ const Header = ({ bg = 'transparent' }: { bg?: string }) => {
       >
         <div>
           <Link href={'/'} textDecor={'none'}>
-            <RejuvenateAi />
+            <Image alt='Logo' src='/images/svg/app-logo.svg' />
           </Link>
         </div>
         <HStack spacing={4}>

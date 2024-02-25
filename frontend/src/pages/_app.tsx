@@ -39,7 +39,7 @@ const poppins = Poppins({
 });
 
 const { connectors } = getDefaultWallets({
-  appName: 'RejuvenateAI',
+  appName: 'RevitalizeAI',
   projectId: projectId,
   chains,
 });
@@ -56,7 +56,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>RejuvenateAI</title>
+        <title>RevitalizeAI</title>
       </Head>
       <WagmiConfig config={config}>
         <RainbowKitProvider chains={chains} modalSize='compact'>

@@ -54,7 +54,7 @@ const data = {
 };
 
 export const initial_condition = `
-    You are a robot built by rejuvenateAI. Your goal is to predict the rate of aging of users.
+    You are a robot built by RevitalizeAI. Your goal is to predict the rate of aging of users.
     You must respond with the following json output and nothing else. (Reverse, Fast, Moderate, Slow)
     example: {"aging": "Fast"}
 
@@ -63,7 +63,7 @@ export const initial_condition = `
     Note the values are a list of strings.
 
     example ${data}
-`
+`;
 
 export const prompt1 = `
     Given the following:
@@ -84,4 +84,4 @@ export const prompt1 = `
     Ensure to respond with the output option on the initial condition.
     I know you don't have enough data but use your best understanding.
     Respond with either Reverse, Fast, Moderate, or Slow. Remember as a json object.
-`
+`;

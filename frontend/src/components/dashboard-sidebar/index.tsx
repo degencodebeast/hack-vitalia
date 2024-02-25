@@ -62,7 +62,7 @@ export default function DashboardSideBar(props: {
       <Link href='/'>
         <Image
           alt=''
-          src='/images/svg/rejuvenate-logo-2.svg'
+          src='/images/svg/app-logo-2.svg'
           width={200}
           height={70}
         />
