@@ -62,7 +62,7 @@ export default function ArticlesDashBoard() {
               Create Post
             </Button>
           </Flex>
-          {(!isLoading || isFetching) && !articles?.length && (
+          {(!isLoading || !isFetching) && !articles?.length && (
             <Flex
               bg={'gray.100'}
               minH={'250px'}
@@ -71,11 +71,11 @@ export default function ArticlesDashBoard() {
               align={'center'}
             >
               <Text color={'gray.500'} fontWeight={'medium'} fontSize={'xl'}>
-                You don&apos;t any articlesw plan yet.
+                You don&apos;t have any articles yet.
               </Text>
             </Flex>
           )}
-          {articles?.length && (
+          {!isEmpty(articles) && (
             <Box
               my={8}
               maxW={'full'}

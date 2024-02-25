@@ -41,6 +41,8 @@ import { countries } from '@/utils/countries';
 import { useDebounce } from '@/hooks/useDebounce';
 import { communityAbi } from '../../../abis';
 import { communityAddr } from '@/utils/constants';
+import { useAddUserMutation } from '@/state/services';
+import { generateUsername } from '@/utils';
 
 const RegisterForm = ({
   isOpen,
@@ -49,7 +51,10 @@ const RegisterForm = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  //const auth = useAuth()
+  const [
+    createUser,
+    { data: createdUser, isLoading: isCreatingUser, isSuccess },
+  ] = useAddUserMutation();
   const { address } = useAccount();
 
   const toast = useToast({
@@ -64,7 +69,7 @@ const RegisterForm = ({
   const swiperNestedRef = useRef<SwiperRef>();
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [SelectedUserType, setSelectedUserType] =
-    useState<RegisterType>('individual');
+    useState<RegisterType>('member');
   const { user, setUser, allTokensData } = useAppContext();
   const [amount, setAmount] = useState('0.01');
   const debouncedAmount = useDebounce<string>(amount, 500);
@@ -160,7 +165,12 @@ const RegisterForm = ({
         });
 
         registerUser?.();
-
+        await createUser({
+          username: generateUsername(),
+          fullName: data?.fullName,
+          address: address as `0x${string}`,
+          userType: SelectedUserType,
+        }).unwrap();
         toast();
         reset();
         setIsSubmitting(false);
@@ -264,7 +274,7 @@ const RegisterForm = ({
                 />
               </SwiperSlide>
               <SwiperSlide>
-                {SelectedUserType == 'individual' && (
+                {SelectedUserType == 'member' && (
                   <form onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}>
                     <Swiper
                       nested

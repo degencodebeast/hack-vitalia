@@ -7,6 +7,9 @@ import {
   FitnessPlan,
   NewArticle,
   NewFitnessPlan,
+  IUser,
+  USER_TYPE,
+  NewUser,
 } from '@/types/shared';
 import { objectToSearchParams } from '@/utils';
 
@@ -89,25 +92,37 @@ export const RejuvenateApi = createApi({
           : // an error occurred, but we still want to refetch this query when `{ type: 'MealPlans', id: 'LIST' }` is invalidated
             [{ type: 'FitnessPlans', id: 'LIST' }],
     }),
-    // getUsers: builder.query<Partial<APIResponse<User[]>>, void>({
-    //   query: () => {
-    //     return {
-    //       url: `users/`,
-    //     };
-    //   },
-    //   providesTags: (result) =>
-    //     // is result available?
-    //     result?.data
-    //       ? // successful query
-    //         [
-    //           ...result?.data.map(({ id }) => ({
-    //             type: 'Users' as const,
-    //             id: id,
-    //           })),
-    //           { type: 'Users', id: 'LIST' },
-    //         ]
-    //       : [{ type: 'Users', id: 'LIST' }],
-    // }),
+    getUsers: builder.query<
+      Partial<APIResponse<IUser[]>>,
+      { t: 'member' | 'nutritionist' | 'all' }
+    >({
+      query: ({ t }) => {
+        return {
+          url: `users?t=${t}`,
+        };
+      },
+      providesTags: (result) =>
+        // is result available?
+        result?.data
+          ? // successful query
+            [
+              ...result?.data.map(({ id }) => ({
+                type: 'Users' as const,
+                id: id,
+              })),
+              { type: 'Users', id: 'LIST' },
+            ]
+          : [{ type: 'Users', id: 'LIST' }],
+    }),
+    getUser: builder.query<
+      Partial<APIResponse<Article>>,
+      { usernameOrAddress: string }
+    >({
+      query: ({ usernameOrAddress }) => `articles/${usernameOrAddress}`,
+      providesTags: (result, error, { usernameOrAddress }) => {
+        return [{ type: 'Users' as const, id: usernameOrAddress }];
+      },
+    }),
     getArticle: builder.query<
       Partial<APIResponse<Article>>,
       { slug: string; use_id?: boolean }
@@ -137,12 +152,15 @@ export const RejuvenateApi = createApi({
         return [{ type: 'FitnessPlans' as const, id: slug }];
       },
     }),
-    // getUser: builder.query<Partial<APIResponse<User>>, string>({
-    //   query: (username) => `users/${username}`,
-    //   providesTags: (result, error, username) => {
-    //     return [{ type: 'Users' as const, id: username }];
-    //   },
-    // }),
+
+    addUser: builder.mutation<APIResponse<IUser>, NewUser>({
+      query: (data) => ({
+        url: `users`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: [{ type: 'Articles' as const, id: 'LIST' }],
+    }),
     addArticle: builder.mutation<APIResponse<Article>, NewArticle>({
       query: (data) => ({
         url: `articles`,
@@ -230,4 +248,7 @@ export const {
   useGetFitnessPlansQuery,
   useUpdateFitnessPlanMutation,
   useAddFitnessPlanMutation,
+  useAddUserMutation,
+  useGetUsersQuery,
+  useGetUserQuery,
 } = RejuvenateApi;
