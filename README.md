@@ -1,4 +1,4 @@
-# RejuvenateAI x Desoc hack 
+# RejuvenateAI x Hack-Vitalia hack 
 
 Live Demo - [Youtube video](https://youtu.be/u9oClURPhUY) <br />
 Live Link - [RejuvenateAI dapp](https://desoc-hack.vercel.app/) <br />
