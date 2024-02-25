@@ -103,7 +103,7 @@ const RegisterForm = ({
     smokingStopped: Yup.string(),
     smokingLength: Yup.string(),
   });
-  const formOptions: any = { resolver: yupResolver(validationSchema) };
+  const formOptions = { resolver: yupResolver(validationSchema) };
   const { register, handleSubmit, formState, reset } = useForm(formOptions);
 
   // get functions to build form with useForm() hook
@@ -336,7 +336,7 @@ const RegisterForm = ({
                               placeholder='Full name'
                             />
                             <div className='text-red-500'>
-                              {errors.fullName?.message + ''}
+                              {errors.fullName?.message}
                             </div>
                           </div>
                           <div>
@@ -347,7 +347,7 @@ const RegisterForm = ({
                               className=' w-full max-w-[100%]'
                             />
                             <div className='text-red-500'>
-                              {errors.birthDate?.message + ''}
+                              {errors.birthDate?.message}
                             </div>
                           </div>
                           <div>
@@ -371,7 +371,7 @@ const RegisterForm = ({
                               ))}
                             </Select>
                             <div className='text-red-500'>
-                              {errors.country?.message + ''}
+                              {errors.country?.message}
                             </div>
                           </div>
                           <div>
@@ -388,7 +388,7 @@ const RegisterForm = ({
                               <option value='female'>Female</option>
                             </Select>
                             <div className='text-red-500'>
-                              {errors.sex?.message + ''}
+                              {errors.sex?.message}
                             </div>
                           </div>
                         </Stack>
@@ -412,7 +412,7 @@ const RegisterForm = ({
                               placeholder="What's your weight in kg?"
                             />
                             <div className='text-red-500'>
-                              {errors.weight?.message + ''}
+                              {errors.weight?.message}
                             </div>
                           </div>
                           <div>
@@ -422,7 +422,7 @@ const RegisterForm = ({
                               placeholder="What's your height in feet and inches?"
                             />
                             <div className='text-red-500'>
-                              {errors.height?.message + ''}
+                              {errors.height?.message}
                             </div>
                           </div>
                           <div>
@@ -442,7 +442,7 @@ const RegisterForm = ({
                               ))}
                             </Select>
                             <div className='text-red-500'>
-                              {errors.diet?.message + ''}
+                              {errors.diet?.message}
                             </div>
                           </div>
                           <div>
@@ -459,7 +459,7 @@ const RegisterForm = ({
                               <option value='very active'>very active</option>
                             </Select>
                             <div className='text-red-500'>
-                              {errors.active?.message + ''}
+                              {errors.active?.message}
                             </div>
                           </div>
                         </Stack>
@@ -498,7 +498,7 @@ const RegisterForm = ({
                               ))}
                             </Select>
                             <div className='text-red-500'>
-                              {errors.sitting?.message + ''}
+                              {errors.sitting?.message}
                             </div>
                           </div>
                           <div>
@@ -521,7 +521,7 @@ const RegisterForm = ({
                               </option>
                             </Select>
                             <div className='text-red-500'>
-                              {errors.alcohol?.message + ''}
+                              {errors.alcohol?.message}
                             </div>
                           </div>
                           <div>
@@ -540,7 +540,7 @@ const RegisterForm = ({
                               </option>
                             </Select>
                             <div className='text-red-500'>
-                              {errors.smoke?.message + ''}
+                              {errors.smoke?.message}
                             </div>
                           </div>
                           <div>
@@ -623,7 +623,7 @@ const RegisterForm = ({
                               ))}
                             </Select>
                             <div className='text-red-500'>
-                              {errors.sleepLength?.message + ''}
+                              {errors.sleepLength?.message}
                             </div>
                           </div>
                           <div>
@@ -645,7 +645,7 @@ const RegisterForm = ({
                               ))}
                             </Select>
                             <div className='text-red-500'>
-                              {errors.overallHealth?.message + ''}
+                              {errors.overallHealth?.message}
                             </div>
                           </div>
                         </Stack>
