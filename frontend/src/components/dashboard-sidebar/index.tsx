@@ -6,10 +6,10 @@ import Image from 'next/image';
 import { useAppContext } from '@/context/state';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-// import { } from 'material-symbols'
+
 export default function DashboardSideBar(props: {
   entryPath?: string;
-  links: Array<{ title: string; url: string; icon: string }>;
+  links: Array<{ title: string; url: string; icon: string; child?: string[] }>;
 }) {
   const { user } = useAppContext();
   const router = useRouter();
@@ -20,25 +20,16 @@ export default function DashboardSideBar(props: {
   //     router.push('/');
   //   }
   // }, [user]);
-  // const pathname = usePathname();
-  // const parts = pathname.split('/');
-  // const lastPart = parts[parts.length - 1];
-  // const _links = props.links.map((link, i) => {
-  //   const isActive =
-  //     lastPart === link?.url ||
-  //     (link?.url === 'overview' && lastPart === 'dashboard');
-  //   // console.log({pathname,lastPart,isActive});
-  //   const buildLink = (entry: string, lnk: string) =>
-  //     lnk.toLowerCase() === 'overview' ? entry + '' : entry + lnk;
+
   const pathname = usePathname();
-  // console.log({pathname,entry:entryPath});
 
   const parts = pathname.split('/');
+  const beforeLastPart = parts[parts.length - 2];
   const lastPart = parts[parts.length - 1];
-  const _links = links.map((link, i) => {
+  const _links = props.links.map((link, i) => {
     const isActive =
       lastPart === link?.url ||
-      link.child.includes(lastPart) ||
+      (beforeLastPart == link.url && link?.child?.includes(lastPart)) ||
       (link?.url === 'overview' && lastPart === 'dashboard');
 
     const buildLink = (entry: string, url: string) =>
@@ -58,7 +49,7 @@ export default function DashboardSideBar(props: {
           textDecor={'none!important'}
           href={buildLink(props?.entryPath as string, link?.url)}
           alignItems={'center'}
-          className='flex gap-[24px]'
+          className='flex gap-[22px]'
         >
           <Icon name={link?.icon} size={24} />
           <span>{link?.title}</span>

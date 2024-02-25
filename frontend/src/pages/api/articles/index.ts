@@ -1,5 +1,5 @@
 import { db } from '@/db';
-import { mealPlans } from '@/db/schema';
+import { articles } from '@/db/schema';
 import {
   HTTP_METHOD_CB,
   errorHandlerCallback,
@@ -9,8 +9,15 @@ import {
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { IS_DEV } from '@/utils';
-import { eq } from 'drizzle-orm';
-
+import { and, desc, eq, or } from 'drizzle-orm';
+import { PostStatus } from '@/types/shared';
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '4mb',
+    },
+  },
+};
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -25,9 +32,33 @@ export const GET: HTTP_METHOD_CB = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
+  const { s: status = 'published', ad } = req.query;
+  let whereFilter =
+    status == 'all'
+      ? {
+          where: or(
+            eq(articles.status, 'published'),
+            eq(articles.status, 'draft')
+          ),
+        }
+      : { where: eq(articles.status, status as PostStatus) };
+  if (status == 'all' && ad) {
+    whereFilter = {
+      where: and(eq(articles.authorAddress, ad as string)),
+    };
+  } else if (ad && status !== 'all') {
+    whereFilter = {
+      where: and(
+        eq(articles.status, status as PostStatus),
+        eq(articles.authorAddress, ad as string)
+      ),
+    };
+  }
+
   try {
-    const allmealPlans = await db.query.mealPlans.findMany({
-      where: eq(mealPlans.status, 'published'),
+    const allArticles = await db.query.articles.findMany({
+      ...whereFilter,
+      orderBy: desc(articles.createdAt),
       with: {
         author: {
           columns: {
@@ -41,8 +72,8 @@ export const GET: HTTP_METHOD_CB = async (
       },
     });
     return await successHandlerCallback(req, res, {
-      message: 'mealPlans retrieved successfully',
-      data: allmealPlans,
+      message: 'Articles retrieved successfully',
+      data: allArticles,
     });
   } catch (error: any) {
     return await errorHandlerCallback(req, res, {
@@ -58,19 +89,17 @@ export const POST: HTTP_METHOD_CB = async (
   try {
     const { status, ...rest } = req.body;
 
-    if (status === 'DRAFT') {
-      await db.insert(mealPlans).values({ ...rest, status });
+    if (status === 'draft') {
+      await db.insert(articles).values({ ...rest, status });
       return await successHandlerCallback(req, res, {
         message: 'Draft saved successfully',
       });
     }
 
-    const createdMealplan = await db.transaction(async (tx) => {
-      const [insertRes] = await tx
-        .insert(mealPlans)
-        .values({ ...rest, status });
-      return await tx.query.mealPlans.findFirst({
-        where: eq(mealPlans.id, insertRes.insertId),
+    const createdArticle = await db.transaction(async (tx) => {
+      const [insertRes] = await tx.insert(articles).values({ ...rest, status });
+      return await tx.query.articles.findFirst({
+        where: eq(articles.id, insertRes.insertId),
       });
     });
 
@@ -78,8 +107,8 @@ export const POST: HTTP_METHOD_CB = async (
       req,
       res,
       {
-        message: 'Meal plan created successfully',
-        data: createdMealplan,
+        message: 'Article created successfully',
+        data: createdArticle,
       },
       201
     );

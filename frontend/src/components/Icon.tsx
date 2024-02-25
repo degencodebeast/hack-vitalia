@@ -1,18 +1,32 @@
-export default function Icon({
+import { Box, Text } from '@chakra-ui/react';
+
+export default function MatIcon({
   name,
-  fill = true,
-  size = 36,
+  size = 24,
+  bold = false,
+  fill = false,
+  color = 'inherit',
 }: {
   name: string;
-  fill?: boolean;
   size?: number;
+  bold?: boolean;
+  fill?: boolean;
+  color?: string;
 }) {
+  //@ts-ignore
+
   return (
-    <span
-      className={`material-symbols-outlined ${fill ? 'fill' : ''}`}
-      style={{ fontSize: size, maxWidth: '50px', overflow: 'hidden' }}
+    <Text
+      maxW={size + 4 + 'px'}
+      overflow={'hidden'}
+      as={'span'}
+      color={color}
+      fontSize={size + 'px'}
+      className={`material-symbols-outlined ${bold ? 'bold' : ''} ${
+        fill ? 'fill' : ''
+      } `}
     >
       {name}
-    </span>
+    </Text>
   );
 }

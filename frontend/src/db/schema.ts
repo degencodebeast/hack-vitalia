@@ -3,6 +3,7 @@ import {
   index,
   int,
   longtext,
+  mediumtext,
   mysqlEnum,
   mysqlTable,
   serial,
@@ -17,21 +18,21 @@ export const articles = mysqlTable(
     id: serial('id').primaryKey(),
     title: varchar('title', { length: 120 }).notNull(),
     intro: varchar('intro', { length: 255 }),
-    image: varchar('image', { length: 255 }),
+    image: mediumtext('image'),
     slug: varchar('slug', { length: 255 }).notNull(),
     content: longtext('content'),
     status: mysqlEnum('status', ['published', 'draft', 'deleted']).default(
       'draft'
     ),
     views: int('views').default(0),
-    authorId: int('author_id').notNull(),
+    authorAddress: varchar('author_address_idx', { length: 50 }).notNull(),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').onUpdateNow(),
   },
   (t) => ({
     titleIdx: index('title_idx').on(t.title),
     slugIdx: index('slug_idx').on(t.slug),
-    authorIdIdx: index('author_id__idx').on(t.authorId),
+    authorAddressIdx: index('author_address_idx').on(t.authorAddress),
   })
 );
 export const mealPlans = mysqlTable(
@@ -40,7 +41,7 @@ export const mealPlans = mysqlTable(
     id: serial('id').primaryKey(),
     title: varchar('title', { length: 120 }).notNull(),
     intro: varchar('intro', { length: 255 }),
-    image: varchar('image', { length: 255 }),
+    image: mediumtext('image'),
     slug: varchar('slug', { length: 255 }).notNull(),
     content: longtext('content'),
     status: mysqlEnum('status', ['published', 'draft', 'deleted']).default(
@@ -51,14 +52,14 @@ export const mealPlans = mysqlTable(
       enum: ['breakfast', 'lunch', 'dinner', 'snack'],
       length: 50,
     }).notNull(),
-    authorId: int('author_id').notNull(),
+    authorAddress: varchar('author_address', { length: 50 }).notNull(),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').onUpdateNow(),
   },
   (t) => ({
     titleIdx: index('title_idx').on(t.title),
     slugIdx: index('slug_idx').on(t.slug),
-    authorIdIdx: index('author_id__idx').on(t.authorId),
+    authorAddressIdx: index('author_address_idx').on(t.authorAddress),
   })
 );
 export const fitnessPlans = mysqlTable(
@@ -67,21 +68,21 @@ export const fitnessPlans = mysqlTable(
     id: serial('id').primaryKey(),
     title: varchar('title', { length: 120 }).notNull(),
     views: int('views').default(0),
-    image: varchar('image', { length: 255 }),
+    image: mediumtext('image'),
     slug: varchar('slug', { length: 255 }).notNull(),
     content: longtext('content'),
     status: mysqlEnum('status', ['published', 'draft', 'deleted']).default(
       'draft'
     ),
 
-    authorId: int('author_id').notNull(),
+    authorAddress: varchar('author_address',{length:50}).notNull(),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').onUpdateNow(),
   },
   (t) => ({
     titleIdx: index('title_idx').on(t.title),
     slugIdx: index('slug_idx').on(t.slug),
-    authorIdIdx: index('author_id__idx').on(t.authorId),
+    authorAddressIdx: index('author_address_idx').on(t.authorAddress),
   })
 );
 export const users = mysqlTable(
@@ -116,22 +117,22 @@ export const userRelations = relations(users, ({ one, many }) => ({
 
 export const articlesRelations = relations(articles, ({ one, many }) => ({
   author: one(users, {
-    fields: [articles.authorId],
-    references: [users.id],
+    fields: [articles.authorAddress],
+    references: [users.address],
   }),
 }));
 export const mealPlansRelations = relations(mealPlans, ({ one, many }) => ({
   author: one(users, {
-    fields: [mealPlans.authorId],
-    references: [users.id],
+    fields: [mealPlans.authorAddress],
+    references: [users.address],
   }),
 }));
 export const fitnessPlansRelations = relations(
   fitnessPlans,
   ({ one, many }) => ({
     author: one(users, {
-      fields: [fitnessPlans.authorId],
-      references: [users.id],
+      fields: [fitnessPlans.authorAddress],
+      references: [users.address],
     }),
   })
 );

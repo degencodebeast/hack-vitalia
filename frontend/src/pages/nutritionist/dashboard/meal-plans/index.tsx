@@ -43,8 +43,11 @@ import { useAppContext } from '@/context/state';
 import { shortenText } from '@/helpers';
 import { Link } from '@chakra-ui/next-js';
 import Head from 'next/head';
+import { useGetMealPlansQuery } from '@/state/services';
 
 export default function DashBoard() {
+  const { data: response, isLoading } = useGetMealPlansQuery({});
+  console.log(response);
   const today = new Date().getTime();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [isSubmitting, setIsSubmitting] = useState(false);
