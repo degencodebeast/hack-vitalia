@@ -1,6 +1,7 @@
 'use client';
 
 import Icon from '@/components/Icon';
+import Footer from '@/components/footer';
 import Header from '@/components/header';
 import { maskHexAddress, shortenText } from '@/helpers';
 import { useGetMealPlansQuery, useGetUsersQuery } from '@/state/services';
@@ -86,6 +87,7 @@ const MembersPage = () => {
             ))}
         </Stack>
       </Box>
+      <Footer />
     </>
   );
 };
