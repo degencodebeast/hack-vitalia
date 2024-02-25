@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import { Button } from '@chakra-ui/react';
+import { Link } from '@chakra-ui/next-js';
+import { Button, Heading, Image } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 const TalkToNutritionist = () => {
   const router = useRouter();
@@ -12,9 +12,9 @@ const TalkToNutritionist = () => {
     <div className='w-full px-4 lg:px-8 text-[#3C4142]'>
       <section className='w-full flex flex-col-reverse gap-7 lg:flex-row py-20 max-w-[1074px] mx-auto items-center justify-between'>
         <div className='w-full flex flex-col gap-6 lg:max-w-[493px]'>
-          <p className='text-[#014421] font-bold text-[24px] lg:text-[40px]'>
+          <Heading className='text-[#014421] font-bold text-[24px] lg:text-[40px]'>
             TALK TO A NUTRITIONIST
-          </p>
+          </Heading>
           <p className='text-sm lg:text-base'>
             Elevate your well-being with personalized nutrition guidance, chat
             with our top tier professional Nutritionists and embark on a journey
@@ -28,7 +28,9 @@ const TalkToNutritionist = () => {
             more fulfilling life.
           </p>
           <Button
-            onClick={findOutMoreHandler}
+            as={Link}
+            href={'/nutritionists'}
+            // onClick={findOutMoreHandler}
             size={'lg'}
             alignSelf={'flex-start'}
           >
@@ -37,7 +39,13 @@ const TalkToNutritionist = () => {
           {/* <Button size={'lg'} variant={'solid'} className="bg-primaryGreen text-primaryBeige" rounded={'md'}>Find out more</Button> */}
         </div>
         <div className='w-full h-[350px] max-w-[471px] lg:h-[474px] relative'>
-          <Image src={'/images/png/nutitionist.png'} fill alt='work with us' />
+          <Image
+            w={'full'}
+            h={'full'}
+            src={'/images/png/nutitionist.png'}
+            objectFit='cover'
+            alt='work with us'
+          />
         </div>
       </section>
     </div>

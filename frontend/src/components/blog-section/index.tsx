@@ -12,39 +12,14 @@ import {
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import ArticleCard from '../article';
+import { useGetArticlesQuery } from '@/state/services';
+import { Article } from '@/types/shared';
 
 const BlogSection = () => {
-  const articles = [
-    {
-      id: 1,
-      slug: 'article-1',
-      title: 'Fitness Recipes: Healthy Food for any workout',
-      intro: '',
-      content:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto qui saepe rerum pariatur nemo facilis quam incidunt laudantium iure officia. Itaque impedit iste nemo facere, temporibus ab quasi qui quas!',
-      image: '/images/fruit.jpg',
-    },
-    {
-      id: 2,
-      slug: 'article-2',
-      title: 'This may be the untold secret to longetivity',
-      intro: '',
-      content:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto qui saepe rerum pariatur nemo facilis quam incidunt laudantium iure officia. Itaque impedit iste nemo facere, temporibus ab quasi qui quas!',
-      image: '/images/fruit.jpg',
-    },
-    {
-      id: 3,
-      slug: 'article-3',
-      title: 'Walking leads to longer life, better outcomes.',
-      intro: '',
-      content:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto qui saepe rerum pariatur nemo facilis quam incidunt laudantium iure officia. Itaque impedit iste nemo facere, temporibus ab quasi qui quas!',
-      image: '/images/fruit.jpg',
-    },
-  ];
+  const { data, isFetching, isLoading } = useGetArticlesQuery({});
+  const articles = data?.data as Article[];
   return (
-    <Box as='section' my={12}>
+    <Box as='section' my={12} mx={'auto'}>
       <Heading
         textTransform={'uppercase'}
         color={'primaryColor.800'}
@@ -54,16 +29,32 @@ const BlogSection = () => {
       >
         Our Blog
       </Heading>
+
       <HStack
         wrap={'wrap'}
+        align={'initial'}
+        justify={'initial'}
         gap={4}
-        maxW={'1100px'}
         mx={'auto'}
+        maxW={'1200px'}
         my={6}
-        py={4}
-        px={{ base: 3, lg: 0 }}
+        p={4}
+        // px={{ base: 3, lg: 0 }}
       >
-        {articles.length &&
+        {(isFetching || isLoading) && (
+          <Flex wrap={'wrap'} gap={5}>
+            {[0, 0, 0, 0].map((s, i) => (
+              <Skeleton
+                key={'skelon' + i}
+                w={300}
+                h={350}
+                rounded={'sm'}
+              ></Skeleton>
+            ))}
+          </Flex>
+        )}
+        {!isLoading &&
+          articles?.length &&
           articles.map((article) => (
             <ArticleCard key={article?.id} article={article} />
           ))}
