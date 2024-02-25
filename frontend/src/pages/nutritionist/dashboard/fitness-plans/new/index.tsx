@@ -20,13 +20,16 @@ import { generateSlug } from '@/utils';
 
 import { useRouter } from 'next/router';
 import { NewArticle, PostStatus } from '@/types/shared';
-import { useAddArticleMutation } from '@/state/services';
+import {
+  useAddArticleMutation,
+  useAddFitnessPlanMutation,
+} from '@/state/services';
 import { shortenText } from '@/helpers';
 import { useAppContext } from '@/context/state';
 
 export default function NewPostPage() {
-  const [addArticle, { isLoading, status, isSuccess, isError, data }] =
-    useAddArticleMutation();
+  const [addFitnessPlan, { isLoading, status, isSuccess, isError, data }] =
+    useAddFitnessPlanMutation();
 
   const router = useRouter();
   const toast = useToast({
@@ -74,8 +77,24 @@ export default function NewPostPage() {
         slug: generateSlug(post.title),
         image: imageFile,
       };
+      // if (imageFile) {
+      //   const reader = new FileReader();
 
-      addArticle(postToSave);
+      //   reader.onload = function (e) {
+      //     const base64String = e.target?.result as string;
+      //     postToSave.image = base64String;
+      //   };
+      //   reader.readAsDataURL(imageFile);
+      // }
+
+      // if (submitted || isSuccess) {
+      //   resetFields();
+      //   toast({ title: data?.message });
+      //   setTimeout(() => {
+      //     router.replace('/nutritionist/dashboard/fitness-plans');
+      //   }, 2000);
+      // }
+      addFitnessPlan(postToSave);
     } catch (error) {
       toast({ title: 'An error occurred, please try again', status: 'error' });
     }
@@ -88,8 +107,18 @@ export default function NewPostPage() {
         slug: generateSlug(post.title),
         image: imageFile,
       };
+      // if (imageFile) {
+      //   const reader = new FileReader();
 
-      addArticle(postToSave);
+      //   reader.onload = function (e) {
+      //     const base64String = e.target?.result as string;
+      //     postToSave.image = base64String;
+      //   };
+
+      //   reader.readAsDataURL(imageFile);
+      // }
+
+      addFitnessPlan(postToSave);
     } catch (error) {
       toast({ title: 'An error occurred, please try again', status: 'error' });
     }
@@ -124,8 +153,8 @@ export default function NewPostPage() {
     if (isSuccess) {
       resetFields();
       toast({ title: data?.message });
-      timeoutId = setTimeout(() => {
-        router.replace('/nutritionist/dashboard/articles');
+      setTimeout(() => {
+        router.replace('/nutritionist/dashboard/fitness-plans');
       }, 2000);
     }
     return () => clearTimeout(timeoutId);
@@ -181,8 +210,8 @@ export default function NewPostPage() {
                 onChange={handleInputChange}
                 h={'auto'}
                 py={2}
-                placeholder='Post Title...'
-                fontSize={'x-large'}
+                placeholder='Fitness Plan Title...'
+                fontSize={'large'}
                 fontWeight={'medium'}
               />
               <Textarea
@@ -191,7 +220,7 @@ export default function NewPostPage() {
                 onChange={handleInputChange}
                 my={4}
                 maxH={'200px'}
-                placeholder='A short introduction for the post...'
+                placeholder='A short introduction for the Fitness plan...'
               ></Textarea>
               <Box py={4}>
                 <ReactMde

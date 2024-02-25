@@ -25,14 +25,14 @@ export const articles = mysqlTable(
       'draft'
     ),
     views: int('views').default(0),
-    authorId: int('author_id').notNull(),
+    authorAddress: varchar('author_address_idx', { length: 50 }).notNull(),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').onUpdateNow(),
   },
   (t) => ({
     titleIdx: index('title_idx').on(t.title),
     slugIdx: index('slug_idx').on(t.slug),
-    authorIdIdx: index('author_id__idx').on(t.authorId),
+    authorAddressIdx: index('author_address_idx').on(t.authorAddress),
   })
 );
 export const mealPlans = mysqlTable(
@@ -52,14 +52,14 @@ export const mealPlans = mysqlTable(
       enum: ['breakfast', 'lunch', 'dinner', 'snack'],
       length: 50,
     }).notNull(),
-    authorId: int('author_id').notNull(),
+    authorAddress: varchar('author_address', { length: 50 }).notNull(),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').onUpdateNow(),
   },
   (t) => ({
     titleIdx: index('title_idx').on(t.title),
     slugIdx: index('slug_idx').on(t.slug),
-    authorIdIdx: index('author_id__idx').on(t.authorId),
+    authorAddressIdx: index('author_address_idx').on(t.authorAddress),
   })
 );
 export const fitnessPlans = mysqlTable(
@@ -75,14 +75,14 @@ export const fitnessPlans = mysqlTable(
       'draft'
     ),
 
-    authorId: int('author_id').notNull(),
+    authorAddress: varchar('author_address', { length: 50 }).notNull(),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').onUpdateNow(),
   },
   (t) => ({
     titleIdx: index('title_idx').on(t.title),
     slugIdx: index('slug_idx').on(t.slug),
-    authorIdIdx: index('author_id__idx').on(t.authorId),
+    authorAddressIdx: index('author_address_idx').on(t.authorAddress),
   })
 );
 export const users = mysqlTable(
@@ -93,7 +93,7 @@ export const users = mysqlTable(
     username: varchar('username', { length: 50 }).unique().notNull(),
     password: varchar('password', { length: 255 }),
     email: varchar('email', { length: 255 }).unique(),
-    address: varchar('address', { length: 40 }).notNull().unique(),
+    address: varchar('address', { length: 100 }).notNull().unique(),
     avatar: varchar('avatar', { length: 255 }),
     userType: mysqlEnum('user_type', ['member', 'nutritionist'])
       .default('member')
@@ -117,22 +117,22 @@ export const userRelations = relations(users, ({ one, many }) => ({
 
 export const articlesRelations = relations(articles, ({ one, many }) => ({
   author: one(users, {
-    fields: [articles.authorId],
-    references: [users.id],
+    fields: [articles.authorAddress],
+    references: [users.address],
   }),
 }));
 export const mealPlansRelations = relations(mealPlans, ({ one, many }) => ({
   author: one(users, {
-    fields: [mealPlans.authorId],
-    references: [users.id],
+    fields: [mealPlans.authorAddress],
+    references: [users.address],
   }),
 }));
 export const fitnessPlansRelations = relations(
   fitnessPlans,
   ({ one, many }) => ({
     author: one(users, {
-      fields: [fitnessPlans.authorId],
-      references: [users.id],
+      fields: [fitnessPlans.authorAddress],
+      references: [users.address],
     }),
   })
 );

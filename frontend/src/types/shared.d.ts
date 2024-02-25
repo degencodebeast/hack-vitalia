@@ -4,7 +4,7 @@ export type Article = {
   title: string;
   content: string;
   image?: string;
-  authorId: number;
+  authorAddress: string;
   status?: PostStatus;
   intro?: string;
   createdAt: string | Date;
@@ -15,7 +15,7 @@ export type Article = {
     fullName?: string;
     username: string;
     address: string;
-   
+
     avatar?: string;
   };
 };
@@ -23,7 +23,7 @@ export type PostStatus = 'published' | 'draft' | 'deleted';
 
 export type NewArticle = Pick<
   Article,
-  'slug' | 'title' | 'content' | 'image' | 'authorId' | 'intro' | 'status'
+  'slug' | 'title' | 'content' | 'image' | 'authorAddress' | 'intro' | 'status'
 >;
 export type MealPlan = {
   id: number;
@@ -31,11 +31,11 @@ export type MealPlan = {
   title: string;
   content: string;
   image?: string;
-  authorId: number;
+  authorAddress: string;
   status?: PostStatus;
   intro?: string;
   views?: number;
-  time: string | 'breakfast' | 'lunch' | 'dinner' | 'snack';
+  time: 'breakfast' | 'lunch' | 'dinner' | 'snack' | string;
   createdAt: string | Date;
   updatedAt?: string | Date;
   author: {
@@ -43,17 +43,42 @@ export type MealPlan = {
     fullName?: string;
     username: string;
     address: string;
-  
+
     avatar?: string;
   };
 };
+export type USER_TYPE = 'member' | 'nutritionist';
+export type USER_ROLE = 'user' | 'admin';
+export interface IUser {
+  id: number;
+  fullName: string;
+  username: string;
+  password?: string;
+  email?: string;
+  address: string;
+  avatar?: string;
+  userType: USER_TYPE;
+  role?: USER_ROLE;
+  createdAt: string | Date;
+  updatedAt?: string | Date;
+}
+export type NewUser = Pick<
+  IUser,
+  | 'address'
+  | 'fullName'
+  | 'role'
+  | 'userType'
+  | 'username'
+  | 'password'
+  | 'avatar'
+>;
 export type NewMealPlan = Pick<
   MealPlan,
   | 'slug'
   | 'title'
   | 'content'
   | 'image'
-  | 'authorId'
+  | 'authorAddress'
   | 'intro'
   | 'status'
   | 'time'
@@ -64,7 +89,7 @@ export type FitnessPlan = {
   title: string;
   content: string;
   image?: string;
-  authorId: number;
+  authorAddress: string;
   status?: PostStatus;
   intro?: string;
   views?: number;
@@ -75,20 +100,13 @@ export type FitnessPlan = {
     fullName?: string;
     username: string;
     address: string;
-   
+
     avatar?: string;
   };
 };
 export type NewFitnessPlan = Pick<
-  MealPlan,
-  | 'slug'
-  | 'title'
-  | 'content'
-  | 'image'
-  | 'authorId'
-  | 'intro'
-  | 'status'
-
+  FitnessPlan,
+  'slug' | 'title' | 'content' | 'image' | 'authorAddress' | 'intro' | 'status'
 >;
 
 export type StateStatus = 'loading' | 'error' | 'loaded';

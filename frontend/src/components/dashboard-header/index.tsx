@@ -5,6 +5,7 @@ import Avatar from 'boring-avatars';
 import Icon from '../Icon';
 import { useAppContext } from '@/context/state';
 import LogoutButton from '../LogoutButton';
+import isEmpty from 'just-is-empty';
 export default function DashBoardHeader(props: any) {
   const { address } = useAccount();
   const { user, ensName } = useAppContext();
@@ -24,12 +25,13 @@ export default function DashBoardHeader(props: any) {
             variant='beam'
             colors={['#928D26', '#1A6A7C', '#00AB3D', '#3371B4', '#0A20D90']}
           />
-
-          <Text fontWeight={'semibold'} className='text-primaryGreen '>
-            {/* {maskHexAddress(user?.userAddress as string)} */}
-            {maskHexAddress(address as string)} 
-            {/* {ensName} */}
-          </Text>
+          {!isEmpty(address) && (
+            <Text fontWeight={'semibold'} className='text-primaryGreen '>
+              {/* {maskHexAddress(user?.userAddress as string)} */}
+              {maskHexAddress((address as string) || '')}
+              {/* {ensName} */}
+            </Text>
+          )}
         </HStack>
         <LogoutButton />
       </div>

@@ -1,4 +1,5 @@
 import MarkdownRenderer from '@/components/MarkdownRenderer';
+import Header from '@/components/header';
 import { maskHexAddress } from '@/helpers';
 import { useGetArticleQuery } from '@/state/services';
 import { Article } from '@/types/shared';
@@ -17,6 +18,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
+import isEmpty from 'just-is-empty';
 import Head from 'next/head';
 import { usePathname, useParams } from 'next/navigation';
 import { useRouter } from 'next/router';
@@ -25,15 +27,28 @@ import { useState } from 'react';
 const ArticleView = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const { data, isLoading, isFetching } = useGetArticleQuery(slug as string);
+  const { data, isLoading, isFetching } = useGetArticleQuery({
+    slug: slug as string,
+  });
   const article = data?.data;
 
   return (
     <>
       <Head>
         <title>{article?.title}</title>
+        <meta name='description' content={article?.intro} />
+        <meta property='og:title' content={article?.title} />
+
+        <meta property='og:description' content={article?.intro} />
+        <meta property='og:type' content='article' />
+        <meta
+          property='og:url'
+          content={`https://rejuvenate-ai/blog/${article?.slug}`}
+        />
+        <meta property='og:image' content={article?.image} />
       </Head>
-      <Box bg={'secondaryColor.100'}>
+      <Header />
+      <Box bg={'secondaryColor.100'} py={8}>
         <Box
           bg={'white'}
           maxW={'1200px'}
@@ -48,7 +63,7 @@ const ArticleView = () => {
                 <Skeleton
                   mb={2}
                   minH={'50px'}
-                  isLoaded={!isLoading && !isFetching}
+                  isLoaded={!isLoading && !isFetching && !isEmpty(article)}
                 >
                   <Heading mb={5} as={'h1'}>
                     {article?.title}
@@ -67,7 +82,7 @@ const ArticleView = () => {
                       minH={'65px'}
                       minW={'65px'}
                       flexShrink={0}
-                      isLoaded={!isLoading && !isFetching}
+                      isLoaded={!isLoading && !isFetching && !isEmpty(article)}
                     ></SkeletonCircle>
                   ) : (
                     <Avatar
@@ -76,12 +91,15 @@ const ArticleView = () => {
                       src={article?.author?.avatar}
                     />
                   )}
-                  <Skeleton flex={1} isLoaded={!isLoading && !isFetching}>
+                  <Skeleton
+                    flex={1}
+                    isLoaded={!isLoading && !isFetching && !isEmpty(article)}
+                  >
                     <Stack minH={'30px'}>
                       <Text as={'strong'} fontSize={'large'}>
                         {article?.author?.fullName ||
                           maskHexAddress(
-                            article?.author?.address || '0x4de54a23f34d3es29'
+                            article?.authorAddress || '0x4de54a23f34d3es29'
                           )}
                       </Text>{' '}
                       <Text
@@ -99,7 +117,9 @@ const ArticleView = () => {
                     </Stack>
                   </Skeleton>
                 </HStack>
-                <Skeleton isLoaded={!isLoading && !isFetching}>
+                <Skeleton
+                  isLoaded={!isLoading && !isFetching && !isEmpty(article)}
+                >
                   {article?.intro && (
                     <Text color={'gray.600'} fontSize={'18px'} mb={1}>
                       {article?.intro}
@@ -109,7 +129,7 @@ const ArticleView = () => {
               </Box>
             </Stack>
           </Box>
-          <Skeleton isLoaded={!isLoading && !isFetching}>
+          <Skeleton isLoaded={!isLoading && !isFetching && !isEmpty(article)}>
             <Box>
               <Image
                 w={'full'}
@@ -122,7 +142,7 @@ const ArticleView = () => {
               />
             </Box>
           </Skeleton>
-          {isLoading || isFetching ? (
+          {isLoading || isFetching || isEmpty(article) ? (
             <Box minH={100} my={6} display={'flex'} flexDir={'column'} gap={3}>
               <SkeletonText h={10} />
               <SkeletonText h={10} />

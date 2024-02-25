@@ -16,38 +16,42 @@ import 'react-mde/lib/styles/css/react-mde-all.css';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 import DragAndDropImage from '@/components/DragAndDropImage';
 
-import { generateSlug } from '@/utils';
+import { genID, generateSlug } from '@/utils';
 
 import { useRouter } from 'next/router';
-import { NewArticle, PostStatus } from '@/types/shared';
-import { useAddArticleMutation } from '@/state/services';
+import { Article, NewArticle, PostStatus } from '@/types/shared';
+import { useAddArticleMutation, useGetArticleQuery } from '@/state/services';
 import { shortenText } from '@/helpers';
-import { useAppContext } from '@/context/state';
 
 export default function NewPostPage() {
-  const [addArticle, { isLoading, status, isSuccess, isError, data }] =
-    useAddArticleMutation();
-
+  const [
+    addArticle,
+    {
+      isLoading: isMutationLoading,
+      status,
+      isSuccess,
+      isError,
+      data: isMutationData,
+    },
+  ] = useAddArticleMutation();
   const router = useRouter();
+  const { pid } = router.query;
+  const { data, isLoading, isFetching } = useGetArticleQuery({
+    slug: pid as string,
+    use_id: true,
+  });
+  const articleToEdit = data?.data as Article;
+
   const toast = useToast({
     duration: 3000,
     position: 'top',
     status: 'success',
-    title: ' Successful',
+    title: 'Saved Successful',
   });
-  const { user } = useAppContext();
-  const [imageFile, setImageFile] = useState<string>();
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [contentValue, setContentValue] = useState('');
-  const [post, setPost] = useState<NewArticle>({
-    title: '',
-    slug: '',
-    content: '',
-    intro: '',
-    image: '',
-    status: 'draft',
-    authorAddress: user.userAddress || '0xed65da3exd8fe888dce89834ae',
-  });
+  const [post, setPost] = useState<Partial<Article>>(articleToEdit);
+  const [imageFile, setImageFile] = useState<string>(post?.image as string);
 
   const [selectedTab, setSelectedTab] = useState<'write' | 'preview'>('write');
   const onImageChangeHandler = useCallback(
@@ -71,11 +75,27 @@ export default function NewPostPage() {
     try {
       const postToSave = {
         ...post,
-        slug: generateSlug(post.title),
+        // slug: generateSlug(post.title),
         image: imageFile,
       };
+      // if (imageFile) {
+      //   const reader = new FileReader();
 
-      addArticle(postToSave);
+      //   reader.onload = function (e) {
+      //     const base64String = e.target?.result as string;
+      //     postToSave.image = base64String;
+      //   };
+      //   reader.readAsDataURL(imageFile);
+      // }
+
+      if (submitted) {
+        resetFields();
+        toast({ title: isMutationData?.message });
+        setTimeout(() => {
+          // router.replace('/nutritionist/dashboard/articles');
+        }, 2000);
+      }
+      addArticle(postToSave as Article);
     } catch (error) {
       toast({ title: 'An error occurred, please try again', status: 'error' });
     }
@@ -85,11 +105,28 @@ export default function NewPostPage() {
       const postToSave = {
         ...post,
         status: 'published' as PostStatus,
-        slug: generateSlug(post.title),
+        // slug: generateSlug(post.title),
         image: imageFile,
       };
+      // if (imageFile) {
+      //   const reader = new FileReader();
 
-      addArticle(postToSave);
+      //   reader.onload = function (e) {
+      //     const base64String = e.target?.result as string;
+      //     postToSave.image = base64String;
+      //   };
+
+      //   reader.readAsDataURL(imageFile);
+      // }
+
+      if (submitted) {
+        resetFields();
+        toast({ title: isMutationData?.message });
+        setTimeout(() => {
+          // router.replace('/nutritionist/dashboard/articles');
+        }, 2000);
+      }
+      addArticle(postToSave as Article);
     } catch (error) {
       toast({ title: 'An error occurred, please try again', status: 'error' });
     }
@@ -113,24 +150,22 @@ export default function NewPostPage() {
       intro: '',
       image: '',
       status: 'draft',
-      authorAddress: user.userAddress || '0xed65da3exd8fe888dce89834ae',
+      authorAddress: '0xed65da3exd8fe888dce89834ae',
     });
     setContentValue('');
-    setImageFile(undefined);
+    setImageFile('');
   }
 
   useEffect(() => {
-    let timeoutId: string | number | NodeJS.Timeout;
-    if (isSuccess) {
-      resetFields();
-      toast({ title: data?.message });
-      timeoutId = setTimeout(() => {
-        router.replace('/nutritionist/dashboard/articles');
-      }, 2000);
+    if (status === 'fulfilled') {
+      setSubmitted(true);
     }
-    return () => clearTimeout(timeoutId);
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.message, isSuccess]);
+  }, [status, isSuccess]);
+  useEffect(() => {
+    setPost(articleToEdit);
+    setImageFile(articleToEdit?.image as string);
+    setContentValue(articleToEdit?.content as string);
+  }, [articleToEdit]);
   return (
     <>
       <NutritionistDashboardLayout>
@@ -151,7 +186,7 @@ export default function NewPostPage() {
               {' '}
               <HStack gap={4}>
                 <Button
-                  isLoading={isLoading}
+                  isLoading={isMutationLoading}
                   onClick={saveAsPublished}
                   rounded={'full'}
                   px={6}
@@ -160,7 +195,7 @@ export default function NewPostPage() {
                   Publish{' '}
                 </Button>{' '}
                 <Button
-                  isLoading={isLoading}
+                  isLoading={isMutationLoading}
                   onClick={saveAsDraft}
                   rounded={'full'}
                   variant={'outline'}
@@ -171,13 +206,14 @@ export default function NewPostPage() {
             </Flex>
             <Stack px={4} py={6} gap={3}>
               <DragAndDropImage
+                initialImages={[{ id: genID(), src: post?.image as string }]}
                 onUploadChange={(hasImage, files, image) =>
                   onImageChangeHandler(hasImage, files, image)
                 }
               />{' '}
               <Input
                 name='title'
-                value={post.title}
+                value={post?.title}
                 onChange={handleInputChange}
                 h={'auto'}
                 py={2}
@@ -187,7 +223,7 @@ export default function NewPostPage() {
               />
               <Textarea
                 name='intro'
-                value={post.intro}
+                value={post?.intro}
                 onChange={handleInputChange}
                 my={4}
                 maxH={'200px'}

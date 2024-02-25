@@ -28,11 +28,14 @@ export const GET: HTTP_METHOD_CB = async (
   res: NextApiResponse
 ) => {
   try {
-    let { slug } = req.query;
+    let { slug, use_id } = req.query;
 
+    const whereFilter =
+      use_id == 'true'
+        ? { where: eq(articles.id, parseInt(slug as string, 10)) }
+        : { where: eq(articles.slug, slug as string) };
     const article = await db.query.articles.findFirst({
-      where: or(eq(articles.slug, slug as string)),
-
+      ...whereFilter,
       with: {
         author: {
           columns: {

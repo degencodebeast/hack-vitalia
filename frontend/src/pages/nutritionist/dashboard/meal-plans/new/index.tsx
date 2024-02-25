@@ -2,9 +2,12 @@ import {
   Box,
   Button,
   Flex,
+  FormLabel,
   HStack,
   Input,
+  Select,
   Stack,
+  Text,
   Textarea,
   useToast,
 } from '@chakra-ui/react';
@@ -19,14 +22,13 @@ import DragAndDropImage from '@/components/DragAndDropImage';
 import { generateSlug } from '@/utils';
 
 import { useRouter } from 'next/router';
-import { NewArticle, PostStatus } from '@/types/shared';
-import { useAddArticleMutation } from '@/state/services';
-import { shortenText } from '@/helpers';
+import { NewMealPlan, PostStatus } from '@/types/shared';
+import { useAddMealPlanMutation } from '@/state/services';
 import { useAppContext } from '@/context/state';
 
 export default function NewPostPage() {
-  const [addArticle, { isLoading, status, isSuccess, isError, data }] =
-    useAddArticleMutation();
+  const [addMealPlan, { isLoading, status, isSuccess, isError, data }] =
+    useAddMealPlanMutation();
 
   const router = useRouter();
   const toast = useToast({
@@ -39,12 +41,13 @@ export default function NewPostPage() {
   const [imageFile, setImageFile] = useState<string>();
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [contentValue, setContentValue] = useState('');
-  const [post, setPost] = useState<NewArticle>({
+  const [post, setPost] = useState<NewMealPlan>({
     title: '',
     slug: '',
     content: '',
     intro: '',
     image: '',
+    time: 'breakfast',
     status: 'draft',
     authorAddress: user.userAddress || '0xed65da3exd8fe888dce89834ae',
   });
@@ -53,16 +56,7 @@ export default function NewPostPage() {
   const onImageChangeHandler = useCallback(
     (hasImage: boolean, files: File[], image: string) => {
       if (hasImage) {
-        // setPost((prev) => ({ ...prev, image: image }));
         setImageFile(image);
-        // const reader = new FileReader();
-
-        //         reader.onload = function (e) {
-        //           const base64String = e.target?.result as string;
-
-        //           setPost((prev) => ({ ...prev, image: base64String }));
-        //         };
-        //         reader.readAsDataURL(files[0]);
       }
     },
     []
@@ -75,7 +69,7 @@ export default function NewPostPage() {
         image: imageFile,
       };
 
-      addArticle(postToSave);
+      addMealPlan(postToSave);
     } catch (error) {
       toast({ title: 'An error occurred, please try again', status: 'error' });
     }
@@ -89,7 +83,7 @@ export default function NewPostPage() {
         image: imageFile,
       };
 
-      addArticle(postToSave);
+      addMealPlan(postToSave);
     } catch (error) {
       toast({ title: 'An error occurred, please try again', status: 'error' });
     }
@@ -100,7 +94,9 @@ export default function NewPostPage() {
   }
 
   function handleInputChange(
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ): void {
     const { name, value } = event.target;
     setPost((prev) => ({ ...prev, [name]: value }));
@@ -112,6 +108,7 @@ export default function NewPostPage() {
       content: '',
       intro: '',
       image: '',
+      time: 'breakfast',
       status: 'draft',
       authorAddress: user.userAddress || '0xed65da3exd8fe888dce89834ae',
     });
@@ -124,8 +121,8 @@ export default function NewPostPage() {
     if (isSuccess) {
       resetFields();
       toast({ title: data?.message });
-      timeoutId = setTimeout(() => {
-        router.replace('/nutritionist/dashboard/articles');
+      setTimeout(() => {
+        router.replace('/nutritionist/dashboard/meal-plans');
       }, 2000);
     }
     return () => clearTimeout(timeoutId);
@@ -181,8 +178,8 @@ export default function NewPostPage() {
                 onChange={handleInputChange}
                 h={'auto'}
                 py={2}
-                placeholder='Post Title...'
-                fontSize={'x-large'}
+                placeholder='Meal Plan Title...'
+                fontSize={'large'}
                 fontWeight={'medium'}
               />
               <Textarea
@@ -191,8 +188,26 @@ export default function NewPostPage() {
                 onChange={handleInputChange}
                 my={4}
                 maxH={'200px'}
-                placeholder='A short introduction for the post...'
+                placeholder='A short introduction for the Meal plan...'
               ></Textarea>
+              <Box my={4}>
+                <FormLabel htmlFor='meal-time'>Choose Meal Time</FormLabel>
+                <Select
+                  id='meal-time'
+                  defaultValue={''}
+                  name='time'
+                  onChange={handleInputChange}
+                >
+                  <option value='' disabled></option>
+                  <option value='breakfast'>Breakfast</option>
+                  <option value='lunch'>Lunch</option>
+                  <option value='dinner'>Dinner</option>
+                  <option value='snack'>Snack</option>
+                </Select>
+                {/* <Text my={2} color='red.600'>
+                  {errors.time?.message}
+                </Text> */}
+              </Box>
               <Box py={4}>
                 <ReactMde
                   value={contentValue}
