@@ -24,14 +24,50 @@ import { useState } from 'react';
 
 const MembersPage = () => {
   const { isLoading, isFetching, data } = useGetUsersQuery({ t: 'all' });
-  const users = data?.data;
+  const users = [
+    {
+      id: 1,
+      address: '0x7e3d53767637d78ce',
+      fullName: '',
+      username: '',
+      avatar: '/images/user-54.jpg',
+    },
+    {
+      id: 2,
+      address: '0xcadea459737d78d8d',
+      fullName: '',
+      username: '',
+      avatar: '',
+    },
+    {
+      id: 3,
+      address: '0x53767637d78d8d87c8de3950',
+      fullName: '',
+      username: '',
+      avatar: '/images/user-53.jpg',
+    },
+    {
+      id: 4,
+      address: '0x8ced38098cd390a8388c839',
+      fullName: '',
+      username: '',
+      avatar: '/images/user-59.jpg',
+    },
+    {
+      id: 5,
+      address: '0x73cda729de74d09f4c38d4a',
+      fullName: '',
+      username: '',
+      avatar: '',
+    },
+  ];
   return (
     <>
       <Head>
         <title>Rejuvenate | Members</title>
       </Head>
       <Header />
-      <Box className='bg-primaryBeige'>
+      <Box minH={500} className='bg-primaryBeige'>
         <Stack
           direction={'row'}
           px={{ lg: 6, base: 4 }}
@@ -45,33 +81,39 @@ const MembersPage = () => {
           {!isLoading &&
             !isEmpty(users) &&
             users?.map((user) => (
-              <HStack
+              <Stack
+                align={'center'}
                 key={user?.id}
                 rounded={'lg'}
                 boxShadow={'md'}
                 bg={'white'}
                 minH={'250px'}
-                p={2}
+                p={4}
                 maxW={350}
                 gap={4}
-                pb={5}
+                py={5}
               >
                 <Box>
                   {user?.avatar ? (
-                    <Avatar size={'md'} src={user?.avatar} />
+                    <Avatar
+                      size={'md'}
+                      src={user?.avatar}
+                      w={'120px'}
+                      h={'120px'}
+                    />
                   ) : (
-                    <BoringAvatar />
+                    <BoringAvatar size={'120px'} variant='pixel' />
                   )}
                 </Box>
 
                 <Box>
-                  <Heading size={'md'}>
+                  <Heading size={'md'} mb={4} mt={1}>
                     {user?.fullName
                       ? user?.fullName
                       : maskHexAddress(user?.address)}
                   </Heading>
 
-                  <HStack spacing={'6'} flex={1}>
+                  <HStack justify={'center'} spacing={'6'} flex={1}>
                     <Button
                       as={Link}
                       href={'/members/'}
@@ -83,7 +125,7 @@ const MembersPage = () => {
                     </Button>
                   </HStack>
                 </Box>
-              </HStack>
+              </Stack>
             ))}
         </Stack>
       </Box>
