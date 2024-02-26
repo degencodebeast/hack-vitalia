@@ -1,8 +1,4 @@
-'use client';
-
 import Icon from '@/components/Icon';
-import CustomHuddle from '@/components/custom-huddle';
-import DashboardSideBar from '@/components/dashboard-sidebar';
 import {
   Td,
   Box,
@@ -71,7 +67,6 @@ export default function DashBoard() {
                 <Td>45 MINS</Td>
                 <Td>
                   <Flex gap={4}>
-                    <CustomHuddle />
                     {/* <Button size={'sm'} rounded={'full'} gap={2} className="hover:bg-primaryYellowTrans hover:text-primaryGreen text-primaryBeige bg-primaryGreen"><Icon size={20} name="phone"/> Start Call</Button> */}
                     <Button
                       size={'sm'}
