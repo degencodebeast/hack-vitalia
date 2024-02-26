@@ -72,8 +72,10 @@ const AppContext = createContext<stateContextType>(contextDefaultValue);
 
 export function AppWrapper({ children }: StateContextProviderProps) {
   const [allTokensData, setAllTokenData] = useState<any>({
-    userNftUri: 'https://bafybeicxroigojtsvluxivtdkgmhcjijhnlvco2prg57ws6k3hqetkvhzu.ipfs.dweb.link/user%20badge.png',
-    nutritionistNftUri: 'https://bafybeihbll3mj2l44kqy67gbxwnvui2zqfdphzr5mr53mxto77hgo4umka.ipfs.dweb.link/nutritionist%20badge.png',
+    userNftUri:
+      'https://bafybeicxroigojtsvluxivtdkgmhcjijhnlvco2prg57ws6k3hqetkvhzu.ipfs.dweb.link/user%20badge.png',
+    nutritionistNftUri:
+      'https://bafybeihbll3mj2l44kqy67gbxwnvui2zqfdphzr5mr53mxto77hgo4umka.ipfs.dweb.link/nutritionist%20badge.png',
   });
   const [address, setAddress] = useState<string>('');
 
@@ -83,7 +85,7 @@ export function AppWrapper({ children }: StateContextProviderProps) {
   const [community, setCommunity] = useState<Community | null>(null);
   const [communities, setCommunities] =
     useState<Community[]>(defaultCommunities);
-  const [mealPlans, setMealPlans] = useState<MealPlan[]>(sampleMealPlans);
+  const [mealPlans, setMealPlans] = useState<MealPlan[]>([]);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [isUserConnected, setIsUserConnected] = useState<boolean>(false);
@@ -133,181 +135,3 @@ export function AppWrapper({ children }: StateContextProviderProps) {
 export function useAppContext() {
   return useContext(AppContext);
 }
-export const sampleMealPlans: MealPlan[] = [
-  {
-    id: 1,
-    time: 'Breakfast',
-    slug: 'healthy-oatmeal-delight',
-    authorAddress: 1,
-    title: 'Healthy Oatmeal Delight',
-    content: `
-    # Healthy Oatmeal Delight
-    
-    ## Overview
-    This nutritious breakfast option is packed with fiber and essential nutrients to kickstart your day.
-    
-    ## Ingredients
-    - 1 cup rolled oats
-    - 1/2 cup almond milk
-    - 1 tablespoon chia seeds
-    - 1/2 banana, sliced
-    - Handful of fresh berries (strawberries, blueberries, or raspberries)
-    
-    ## Preparation
-    1. In a bowl, combine rolled oats and almond milk.
-    2. Add chia seeds and mix well.
-    3. Let it sit in the refrigerator overnight.
-    4. In the morning, top with banana slices and fresh berries.
-    
-    ## Nutritional Values
-    - Calories: 300
-    - Protein: 8g
-    - Carbohydrates: 45g
-    - Fiber: 10g
-    - Healthy Fats: 5g
-    
-    ## Notes
-    Feel free to customize with your favorite fruits and nuts.
-    `,
-    createdAt: new Date(),
-    author: {
-      id: 1,
-      fullName: 'Vicky Debby',
-      username: 'Vicky-Debbie',
-      address: '0xabcdef0123456789012345678901234567890abc',
-    },
-  },
-  {
-    id: 2,
-    time: 'Lunch',
-    authorAddress: 1,
-    slug: 'mediterranean-chickpea-salad',
-    title: 'Mediterranean Chickpea Salad',
-    content: `
-    # Mediterranean Chickpea Salad
-    
-    ## Overview
-    A refreshing and protein-packed salad inspired by Mediterranean flavors.
-    
-    ## Ingredients
-    - 1 can chickpeas, drained and rinsed
-    - 1 cup cherry tomatoes, halved
-    - 1 cucumber, diced
-    - 1/4 cup feta cheese, crumbled
-    - 2 tablespoons olive oil
-    - 1 tablespoon balsamic vinegar
-    - Fresh basil leaves for garnish
-    
-    ## Preparation
-    1. Combine chickpeas, cherry tomatoes, cucumber, and feta cheese in a bowl.
-    2. In a small bowl, whisk together olive oil and balsamic vinegar.
-    3. Pour the dressing over the salad and toss gently.
-    4. Garnish with fresh basil leaves before serving.
-    
-    ## Nutritional Values
-    - Calories: 350
-    - Protein: 12g
-    - Carbohydrates: 40g
-    - Fat: 18g
-    - Fiber: 10g
-    
-    ## Notes
-    Perfect for a light and satisfying lunch.
-    `,
-    createdAt: new Date(),
-    author: {
-      id: 1,
-      fullName: 'Vicky Debby',
-      username: 'Vicky-Debbie',
-      address: '0xabcdef0123456789012345678901234567890abc',
-    },
-  },
-  {
-    id: 3,
-    time: 'Dinner',
-    authorAddress: 1,
-    slug: 'grilled-salmon-with-lemon-herb',
-    title: 'Grilled Salmon with Lemon Herb Marinade',
-    content: `
-    # Grilled Salmon with Lemon Herb Marinade
-    
-    ## Overview
-    A delicious and healthy dinner option featuring grilled salmon with a zesty lemon herb marinade.
-    
-    ## Ingredients
-    - 2 salmon fillets
-    - Zest and juice of 1 lemon
-    - 2 tablespoons olive oil
-    - 2 cloves garlic, minced
-    - 1 teaspoon dried oregano
-    - Salt and pepper to taste
-    
-    ## Preparation
-    1. In a bowl, mix lemon zest, lemon juice, olive oil, minced garlic, oregano, salt, and pepper.
-    2. Place salmon fillets in a dish and coat with the marinade. Let it marinate for at least 30 minutes.
-    3. Preheat the grill and cook salmon for 4-5 minutes per side or until cooked through.
-    
-    ## Nutritional Values
-    - Calories: 400
-    - Protein: 30g
-    - Fat: 25g
-    - Carbohydrates: 2g
-    - Omega-3 Fatty Acids: 1,500mg
-    
-    ## Notes
-    Serve with a side of steamed vegetables for a complete meal.
-    `,
-    createdAt: new Date(),
-    author: {
-      id: 1,
-      fullName: 'Vicky Debby',
-      username: 'Vicky-Debbie',
-      address: '0xabcdef0123456789012345678901234567890abc',
-    },
-  },
-  {
-    id: 4,
-    time: 'Breakfast',
-    slug: 'protein-packed-avocado-toast',
-    authorAddress: 1,
-    title: 'Protein-Packed Avocado Toast',
-    content: `
-    # Protein-Packed Avocado Toast
-    
-    ## Overview
-    A quick and nutritious breakfast with the goodness of avocados and a protein boost.
-    
-    ## Ingredients
-    - 2 slices whole-grain bread
-    - 1 ripe avocado, mashed
-    - 2 boiled eggs, sliced
-    - Cherry tomatoes, sliced for garnish
-    - Salt and pepper to taste
-    - Optional: red pepper flakes for a spicy kick
-    
-    ## Preparation
-    1. Toast the whole-grain bread slices until golden brown.
-    2. Spread mashed avocado evenly on each slice.
-    3. Arrange sliced boiled eggs on top.
-    4. Season with salt, pepper, and red pepper flakes if desired.
-    5. Garnish with cherry tomatoes.
-    
-    ## Nutritional Values
-    - Calories: 320
-    - Protein: 15g
-    - Carbohydrates: 25g
-    - Healthy Fats: 18g
-    - Fiber: 8g
-    
-    ## Notes
-    A satisfying breakfast that keeps you energized throughout the morning.
-    `,
-    createdAt: new Date(),
-    author: {
-      id: 1,
-      fullName: 'Vicky Debby',
-      username: 'Vicky-Debbie',
-      address: '0xabcdef0123456789012345678901234567890abc',
-    },
-  },
-];
