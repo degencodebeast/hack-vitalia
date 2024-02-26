@@ -7,7 +7,6 @@ import {
   ThemeConfig,
 } from '@chakra-ui/react';
 import { extendTheme } from '@chakra-ui/react';
-import { useHuddle01 } from '@huddle01/react';
 const colors = {
   primaryColor: {
     50: '#e1fff0',
