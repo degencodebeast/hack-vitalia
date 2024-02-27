@@ -16,9 +16,10 @@ import { HuddleClient, HuddleProvider } from '@huddle01/react';
 
 const huddleClient = new HuddleClient({
   projectId: 'zMQHa6hH5hGrxfwYZp7z8I-1lWScI7UA',
+  //projectId: 'r5Z7HLbOu4jXOxy_AL9GtOh2eWMfkAfr',
   options: {
     activeSpeakers: {
-      size: 8,
+      size: 2,
     },
   },
 });

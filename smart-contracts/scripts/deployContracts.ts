@@ -30,15 +30,15 @@ const avalancheRpc = "https://api.avax-test.network/ext/bc/C/rpc"
 async function main() {
     //await deployCommunityContracts();
 
-    //await setupNFTs();
+    await setupNFTs();
     //await joinCommunity("0x3A3bc7C19bE0381294d8E7Bd311C123b76b33982");
 
 
-    await verifyContract()
-    const chainID = network.config.chainId;
-    if (chainID != 31337) {
-        await verifyContract()
-    }
+    // await verifyContract()
+    // const chainID = network.config.chainId;
+    // if (chainID != 31337) {
+    //     await verifyContract()
+    // }
 
     //await joinCommunity(communityContract);
 }
@@ -94,9 +94,9 @@ async function joinCommunity(_communityAddr: any) {
 
 async function setupNFTs() {
 
-    let userNFTAddr = "0xC862942EF3bb3D185F8154487A6af9ca9F5FB775"
-    let nutritionistNFTAddr = "0x0Ac68437476A0aB3aC8e3fB03b01B030B4Ec5413"
-    let communityAddr = "0x48DF3348bb3810c4eec755152fA3a9c68897f0F2"
+    let userNFTAddr = "0x8cE89567ea2cB34DfDBa438a32991f4bA9aE0405"
+    let nutritionistNFTAddr = "0x8dD80E558F9168D261b59792169C024568C9D943"
+    let communityAddr = "0x5A55F1C417fB81D1066ecf34C5f1caFa38D498D2"
 
     const provider = getDefaultProvider(avalancheRpc);
     const connectedWallet = wallet.connect(provider);
@@ -167,7 +167,7 @@ async function verifyContract() {
 
     try {
         await run("verify:verify", {
-            address: treasuryAddr,
+            address: "",
             constructorArguments: [],
         });
         //console.log(`contract for ${chain.name} verified`);

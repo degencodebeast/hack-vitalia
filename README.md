@@ -1,11 +1,11 @@
 # RevitalizeAI x Hack-Vitalia hack
 
 Live Demo - [Youtube video](https://youtu.be/u9oClURPhUY) <br />
-Live Link - [RevitalizeAI dapp](https://desoc-hack.vercel.app/) <br />
+Live Link - [RevitalizeAI dapp](https://revitalize-ai.vercel.app/) <br />
 
 ## ✨ Description
 
-[RevitalizeAI](https://desoc-hack.vercel.app/) is the first community blockchain based project powered by community built for community to promote healthy living and achieve healthy locations where people live up to a 100 years all around the world. We are trying to make sure people live healthy by incorporating healthy habits into their lifestyle and trying to make sure they get the most out of the human experience by discovering their purpose if they haven't already and enjoying this life, all while doing it together as a community being accountable to each other.
+[RevitalizeAI](https://revitalize-ai.vercel.app/) is the first community blockchain based project powered by community built for community to promote healthy living and achieve healthy locations where people live up to a 100 years all around the world. We are trying to make sure people live healthy by incorporating healthy habits into their lifestyle and trying to make sure they get the most out of the human experience by discovering their purpose if they haven't already and enjoying this life, all while doing it together as a community being accountable to each other.
 
 ## Inspiration
 
@@ -43,10 +43,10 @@ We created and deployed our smart contracts on the Avalanche fuji testnet chain.
 
 ### Avalanche Testnet
 
-1. CommunityNetwork contract 0x48DF3348bb3810c4eec755152fA3a9c68897f0F2 - [View source code](https://github.com/degencodebeast/RevitalizeAI-Avalanche/blob/main/smart-contracts/contracts/CommunityNetwork.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x48DF3348bb3810c4eec755152fA3a9c68897f0F2)
+1. CommunityNetwork contract 0x5A55F1C417fB81D1066ecf34C5f1caFa38D498D2 - [View source code](https://github.com/degencodebeast/hack-vitalia/blob/main/smart-contracts/contracts/CommunityNetwork.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x5A55F1C417fB81D1066ecf34C5f1caFa38D498D2)
 
-2. Treasury contract 0x3168Be8281fa2D097d3DB9119143b0937e529a87 - [View source code](https://github.com/degencodebeast/RevitalizeAI-Avalanche/blob/main/smart-contracts/contracts/Treasury.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x3168Be8281fa2D097d3DB9119143b0937e529a87)
+2. Treasury contract 0xF80aFa94f0b8d82909e10012384705155482cB8b - [View source code](https://github.com/degencodebeast/hack-vitalia/blob/main/smart-contracts/contracts/Treasury.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0xF80aFa94f0b8d82909e10012384705155482cB8b)
 
-3. User NFT contract 0xC862942EF3bb3D185F8154487A6af9ca9F5FB775 - [View source code](https://github.com/degencodebeast/RevitalizeAI-Avalanche/blob/main/smart-contracts/contracts/UserNFT.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0xC862942EF3bb3D185F8154487A6af9ca9F5FB775)
+3. User NFT contract 0x8cE89567ea2cB34DfDBa438a32991f4bA9aE0405 - [View source code](https://github.com/degencodebeast/hack-vitalia/blob/main/smart-contracts/contracts/UserNFT.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x8cE89567ea2cB34DfDBa438a32991f4bA9aE0405)
 
-4. Nutritionist NFT contract 0x0Ac68437476A0aB3aC8e3fB03b01B030B4Ec5413 - [View source code](https://github.com/degencodebeast/RevitalizeAI-Avalanche/blob/main/smart-contracts/contracts/NutritionistNFT.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x0Ac68437476A0aB3aC8e3fB03b01B030B4Ec5413)
+4. Nutritionist NFT contract 0x8dD80E558F9168D261b59792169C024568C9D943 - [View source code](https://github.com/degencodebeast/hack-vitalia/blob/main/smart-contracts/contracts/NutritionistNFT.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x8dD80E558F9168D261b59792169C024568C9D943)
