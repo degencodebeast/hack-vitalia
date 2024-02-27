@@ -1,4 +1,6 @@
 // import { Web3Storage } from 'web3.storage';
+import { ThirdwebStorage } from "@thirdweb-dev/storage";
+
 import {
   formatDistance,
   format,
@@ -35,9 +37,7 @@ export function generateSlug(text: string) {
     nanoid(10)
   );
 }
-function getAccessToken() {
-  return process.env.NEXT_PUBLIC_WEB3STORAGE_API_TOKEN;
-}
+
 export function convertCamelCaseToSpaceSeparated(camelCaseString: string) {
   // Insert a space before each uppercase letter
   const spacedString = camelCaseString.replace(/([a-z])([A-Z])/g, '$1 $2');
@@ -153,25 +153,41 @@ export const uploadPromptToIpfs = async (data: any) => {
         `,
   };
 
-  const content = new Blob([JSON.stringify(prompt)], {
-    type: 'application/json',
-  });
-  const fileObj = new File([content], 'file.json', {
-    type: 'application/json',
-  });
-  // const res = await client.put([fileObj]);
-  // console.log(res);
-  // return res;
 };
 
-export const putJSONandGetHash = async (json: any) => {
-  const client = makeStorageClient();
-  const content = new Blob([JSON.stringify(json)], {
-    type: 'application/json',
+// export const putJSONandGetHash = async (json: any) => {
+//   const client = makeStorageClient();
+//   const content = new Blob([JSON.stringify(json)], {
+//     type: 'application/json',
+//   });
+//   const fileObj = new File([content], 'file.json', {
+//     type: 'application/json',
+//   });
+//   const res = await client.put([fileObj]);
+//   return res;
+// };
+
+
+export const uploadToThirdWeb = async (json: any) => {
+  // First, instantiate the thirdweb IPFS storage
+  const storage = new ThirdwebStorage({
+    secretKey: process.env.NEXT_PUBLIC_THIRDWEB_SECRET_KEY as string
   });
-  const fileObj = new File([content], 'file.json', {
-    type: 'application/json',
-  });
-  // const res = await client.put([fileObj]);
-  // return res;
-};
+
+  // Here we get the IPFS URI of where our metadata has been uploaded
+  const uri = await storage.upload(json);
+  // This will log a URL like ipfs://QmWgbcjKWCXhaLzMz4gNBxQpAHktQK6MkLvBkKXbsoWEEy/0
+  console.info("uri:", uri);
+
+  // // Here we a URL with a gateway that we can look at in the browser
+  // const url = await storage.resolveScheme(uri);
+  // // This will log a URL like https://ipfs.thirdwebstorage.com/ipfs/QmWgbcjKWCXhaLzMz4gNBxQpAHktQK6MkLvBkKXbsoWEEy/0
+  // console.info("url:", url);
+
+  // // You can also download the data from the uri
+  // const data = await storage.downloadJSON(uri);
+  // console.log("data:", data)
+
+  return uri;
+}
+
