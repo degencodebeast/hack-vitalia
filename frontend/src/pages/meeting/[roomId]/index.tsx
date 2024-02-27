@@ -1,6 +1,6 @@
-import ChatBox from '../../components/video-chat-box/ChatBox';
-import RemotePeer from '../../components/remote-peer';
-import { TPeerMetadata } from '../../types/peerMetadata';
+import ChatBox from '../../../components/video-chat-box/ChatBox';
+import RemotePeer from '../../../components/remote-peer';
+import { TPeerMetadata } from '../../../types/peerMetadata';
 import {
   useLocalAudio,
   useLocalPeer,
@@ -60,7 +60,7 @@ export default function Home() {
       roomId: router.query.roomId as string,
       token,
     });
-    router.replace(`${router.query.roomId}`);
+    router.replace(`/meeting/${router.query.roomId}`);
   }
   return (
     <main

@@ -26,8 +26,10 @@ import axios from 'axios';
 import { AccessToken, Role } from '@huddle01/server-sdk/auth';
 import { useDevices, useRoom } from '@huddle01/react/hooks';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export default function DashBoard() {
+  const [isLoading, setIsLoading] = useState(false);
   const today = new Date().getTime();
   const router = useRouter();
 
@@ -61,17 +63,17 @@ export default function DashBoard() {
 
   const createRoom = async () => {
     try {
+      setIsLoading(true);
+
       const props = (await getServerData()) as {
         roomId: string;
         token: string;
       };
 
       console.log('Props:', props);
-
-      // Assuming response.data contains room info
-
       // Use roomId to create and navigate to the dynamic route
-      router.push(`/${props?.roomId}?token=${props?.token}`); // Or redirect using `res.redirect` for server-side rendering
+      router.push(`/meeting/${props?.roomId}?token=${props?.token}`); // Or redirect using `res.redirect` for server-side rendering
+      setIsLoading(false);
     } catch (error) {
       console.error('Room creation failed:', error);
       // Handle errors gracefully
@@ -130,8 +132,6 @@ export default function DashBoard() {
                   <Td>45 MINS</Td>
                   <Td>
                     <Flex gap={4}>
-                      {/* <CustomHuddle /> */}
-                      {/* <Button size={'sm'} rounded={'full'} gap={2} className="hover:bg-primaryYellowTrans hover:text-primaryGreen text-primaryBeige bg-primaryGreen"><Icon size={20} name="phone"/> Start Call</Button> */}
                       <Button
                         size={'sm'}
                         variant={'outline'}
@@ -163,6 +163,8 @@ export default function DashBoard() {
                       <Button
                         size={'sm'}
                         rounded={'full'}
+                        isLoading={isLoading}
+                        onClick={() => createRoom()}
                         gap={2}
                         className='hover:bg-primaryYellowTrans hover:text-primaryGreen text-primaryBeige bg-primaryGreen'
                       >
@@ -243,6 +245,7 @@ export default function DashBoard() {
                           size={'sm'}
                           rounded={'full'}
                           gap={2}
+                          isLoading={isLoading}
                           className='hover:bg-primaryYellowTrans hover:text-[#403CEA] text-primaryBeige bg-[#403CEA]'
                           onClick={() => createRoom()}
                           // onClick={async () => {
