@@ -213,7 +213,7 @@ const RegisterForm = ({
           userType: SelectedUserType,
         }).unwrap();
 
-        registerUserTx();
+        await registerUserTx();
         await new Promise((resolve) => setTimeout(resolve, 10000));
 
         //toast();
