@@ -201,11 +201,21 @@ export default function Home() {
                       : await startScreenShare();
                   }}
                 >
-                  {shareStream ? 'Disable Screen' : 'Enable Screen'}
+                  {shareStream ? (
+                    <MatIcon
+                      name='stop_screen_share
+                    
+                    '
+                    />
+                  ) : (
+                    <MatIcon name='screen_share' />
+                  )}
                 </Button>
                 <Button
                   type='button'
-                  className='bg-blue-500 p-2 mx-2 rounded-lg'
+                  rounded={'30px'}
+                  bg={'gray.500'}
+                  color={'white'}
                   onClick={async () => {
                     const status = isRecording
                       ? await fetch(
@@ -220,7 +230,11 @@ export default function Home() {
                     setIsRecording(!isRecording);
                   }}
                 >
-                  {isRecording ? 'Stop Recording' : 'Start Recording'}
+                  {isRecording ? (
+                    <MatIcon name='stop_circle' />
+                  ) : (
+                    <MatIcon name='screen_record' />
+                  )}
                 </Button>
               </HStack>
             )}
