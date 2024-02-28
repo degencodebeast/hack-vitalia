@@ -10,9 +10,9 @@ function RemoteMessageBubble({ message }: Props) {
   const { metadata } = useRemotePeer<TPeerMetadata>({ peerId: message.sender });
 
   return (
-    <div className="items-start flex flex-col">
-      <span className="text-white bg-gray-500">{metadata?.displayName}</span>
-      <span className="text-white text-sm">{message.text}</span>
+    <div className='items-start flex flex-col'>
+      <span className='text-white bg-gray-500'>{metadata?.displayName}</span>
+      <span className='text-white text-sm'>{message.text}</span>
     </div>
   );
 }

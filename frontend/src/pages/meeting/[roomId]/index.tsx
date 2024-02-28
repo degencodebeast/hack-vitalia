@@ -13,6 +13,16 @@ import { AccessToken, Role } from '@huddle01/server-sdk/auth';
 import { Inter } from 'next/font/google';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  IconButton,
+  Input,
+  Stack,
+} from '@chakra-ui/react';
+import MatIcon from '@/components/Icon';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -63,126 +73,168 @@ export default function Home() {
     router.replace(`/meeting/${router.query.roomId}`);
   }
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center p-4 ${inter.className}`}
-    >
-      <div className='z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex'>
-        <p className='fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30'>
+    <Box as='main'>
+      {/* <p className='fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30'>
           <code className='font-mono font-bold'>{state}</code>
-        </p>
-        <div className='fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none'>
-          {state === 'idle' && (
-            <>
-              <input
-                disabled={state !== 'idle'}
-                placeholder='Display Name'
+        </p> */}
+      <Box className=''>
+        {state === 'idle' && (
+          <Flex my={10} py={10}>
+            <Stack
+              minW={300}
+              gap={4}
+              shadow={'md'}
+              py={8}
+              px={4}
+              rounded={'md'}
+            >
+              <Input
+                isDisabled={state !== 'idle'}
+                placeholder='Enter Display Name'
                 type='text'
-                className='border-2 border-blue-400 rounded-lg p-2 mx-2 bg-black text-white'
+                // className='border-2 border-blue-400 rounded-lg p-2 mx-2 bg-black text-white'
                 value={displayName}
                 onChange={(event) => setDisplayName(event.target.value)}
               />
 
-              <button
-                disabled={!displayName}
+              <Button
+                isDisabled={!displayName}
                 type='button'
-                className='bg-blue-500 p-2 mx-2 rounded-lg'
                 onClick={() => handleJoinRoom()}
               >
                 Join Room
-              </button>
-            </>
-          )}
-
-          {state === 'connected' && (
-            <>
-              <button
-                type='button'
-                className='bg-blue-500 p-2 mx-2 rounded-lg'
-                onClick={async () => {
-                  isVideoOn ? await disableVideo() : await enableVideo();
-                }}
-              >
-                {isVideoOn ? 'Disable Video' : 'Enable Video'}
-              </button>
-              <button
-                type='button'
-                className='bg-blue-500 p-2 mx-2 rounded-lg'
-                onClick={async () => {
-                  isAudioOn ? await disableAudio() : await enableAudio();
-                }}
-              >
-                {isAudioOn ? 'Disable Audio' : 'Enable Audio'}
-              </button>
-              <button
-                type='button'
-                className='bg-blue-500 p-2 mx-2 rounded-lg'
-                onClick={async () => {
-                  shareStream
-                    ? await stopScreenShare()
-                    : await startScreenShare();
-                }}
-              >
-                {shareStream ? 'Disable Screen' : 'Enable Screen'}
-              </button>
-              <button
-                type='button'
-                className='bg-blue-500 p-2 mx-2 rounded-lg'
-                onClick={async () => {
-                  const status = isRecording
-                    ? await fetch(
-                        `/api/stopRecording?roomId=${router.query.roomId}`
-                      )
-                    : await fetch(
-                        `/api/startRecording?roomId=${router.query.roomId}`
-                      );
-
-                  const data = await status.json();
-
-                  setIsRecording(!isRecording);
-                }}
-              >
-                {isRecording ? 'Stop Recording' : 'Start Recording'}
-              </button>
-            </>
-          )}
-        </div>
-      </div>
-
-      <div className='w-full mt-8 flex gap-4 justify-between items-stretch'>
-        <div className='flex-1 justify-between items-center flex flex-col'>
-          <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-            <div className='relative flex gap-2'>
+              </Button>
+            </Stack>
+          </Flex>
+        )}
+      </Box>
+      {state === 'connected' && (
+        <Flex
+          py={8}
+          h={'100vh'}
+          maxW={1440}
+          mx={'auto'}
+          gap={4}
+          maxH={'1100px'}
+          justify={'space-between'}
+          bg={'red.50'}
+        >
+          <Stack h={'full'} bg={'blackAlpha.100'} w={'full'}>
+            <Flex pos={'relative'} gap={2} flex={1}>
               {isVideoOn && (
-                <div className='w-1/2 mx-auto border-2 rounded-xl border-blue-400'>
+                <Box
+                  rounded={'xl'}
+                  top={2}
+                  left={5}
+                  pos={shareStream ? 'absolute' : 'relative'}
+                  h={'full'}
+                  // maxH={'1000px'}
+                  maxW={shareStream ? '300px' : '100%'}
+                  flex={1}
+                >
                   <video
+                    height={'100%'}
+                    width={'100%'}
                     ref={videoRef}
-                    className='aspect-video rounded-xl'
+                    className='aspect-video rounded-lg'
                     autoPlay
                     muted
                   />
-                </div>
+                </Box>
               )}
+              {!isVideoOn && <Box></Box>}
               {shareStream && (
-                <div className='w-1/2 mx-auto border-2 rounded-xl border-blue-400'>
+                <Box>
                   <video
                     ref={screenRef}
+                    height={'100%'}
+                    width={'100%'}
                     className='aspect-video rounded-xl'
                     autoPlay
                     muted
                   />
-                </div>
+                </Box>
               )}
-            </div>
-          </div>
+            </Flex>
+            {state === 'connected' && (
+              <HStack gap={3} bg={'black'} p={3}>
+                <Button
+                  type='button'
+                  rounded={'30px'}
+                  bg={'gray.500'}
+                  color={'white'}
+                  aria-label='video enable or disable'
+                  // className='bg-blue-500 p-2 mx-2 rounded-lg'
+                  onClick={async () => {
+                    isVideoOn ? await disableVideo() : await enableVideo();
+                  }}
+                >
+                  {isVideoOn ? (
+                    <MatIcon name='videocam' />
+                  ) : (
+                    <MatIcon name='videocam_off' />
+                  )}
+                </Button>
+                <Button
+                  type='button'
+                  rounded={'30px'}
+                  bg={'gray.500'}
+                  color={'white'}
+                  onClick={async () => {
+                    isAudioOn ? await disableAudio() : await enableAudio();
+                  }}
+                >
+                  {isAudioOn ? (
+                    <MatIcon name='mic' />
+                  ) : (
+                    <MatIcon name='mic_off' />
+                  )}
+                </Button>
+                <Button
+                  type='button'
+                  rounded={'30px'}
+                  bg={'gray.500'}
+                  color={'white'}
+                  onClick={async () => {
+                    shareStream
+                      ? await stopScreenShare()
+                      : await startScreenShare();
+                  }}
+                >
+                  {shareStream ? 'Disable Screen' : 'Enable Screen'}
+                </Button>
+                <Button
+                  type='button'
+                  className='bg-blue-500 p-2 mx-2 rounded-lg'
+                  onClick={async () => {
+                    const status = isRecording
+                      ? await fetch(
+                          `/api/stop-recording?roomId=${router.query.roomId}`
+                        )
+                      : await fetch(
+                          `/api/start-recording?roomId=${router.query.roomId}`
+                        );
 
-          <div className='mt-8 mb-32 grid gap-2 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left'>
+                    const data = await status.json();
+
+                    setIsRecording(!isRecording);
+                  }}
+                >
+                  {isRecording ? 'Stop Recording' : 'Start Recording'}
+                </Button>
+              </HStack>
+            )}
+          </Stack>
+          <Box h={'full'}>
+            {/* <div className='mt-8 mb-32 grid gap-2 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left'>
             {peerIds.map((peerId) =>
               peerId ? <RemotePeer key={peerId} peerId={peerId} /> : null
             )}
-          </div>
-        </div>
-        {state === 'connected' && <ChatBox />}
-      </div>
-    </main>
+          </div> */}
+            {state === 'connected' && <ChatBox />}
+          </Box>
+        </Flex>
+      )}
+    </Box>
   );
 }
