@@ -1,7 +1,8 @@
-# RevitalizeAI x Hack-Vitalia hack
+# RevitalizeAI 
 
 Live Demo - [Youtube video](https://youtu.be/u9oClURPhUY) <br />
 Live Link - [RevitalizeAI dapp](https://revitalize-ai.vercel.app/) <br />
+Pitch Deck - [Google slides](https://docs.google.com/presentation/d/17ugyPuitUSNnS0WOj0iDY__dNDwvGXNM3Gl82835Rcg/edit?usp=sharing) <br/>
 
 ## ✨ Description
 
@@ -39,14 +40,14 @@ Here's a breakdown of how it was built:
 
 ## Where we deployed to/contract details
 
-We created and deployed our smart contracts on the Avalanche fuji testnet chain.
+We created and deployed our smart contracts on the Shido testnet chain.
 
-### Avalanche Testnet
+### Shido Testnet
 
-1. CommunityNetwork contract 0x5A55F1C417fB81D1066ecf34C5f1caFa38D498D2 - [View source code](https://github.com/degencodebeast/hack-vitalia/blob/main/smart-contracts/contracts/CommunityNetwork.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x5A55F1C417fB81D1066ecf34C5f1caFa38D498D2)
+1. CommunityNetwork contract 0x3a65168B746766066288B83417329a7F901b5569 - [View source code](https://github.com/degencodebeast/hack-vitalia/blob/main/smart-contracts/contracts/CommunityNetwork.sol) | [View on Shido](https://shidoscan.com/contract/0x3a65168B746766066288B83417329a7F901b5569)
 
-2. Treasury contract 0xF80aFa94f0b8d82909e10012384705155482cB8b - [View source code](https://github.com/degencodebeast/hack-vitalia/blob/main/smart-contracts/contracts/Treasury.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0xF80aFa94f0b8d82909e10012384705155482cB8b)
+2. Treasury contract 0x9E1eF5A92C9Bf97460Cd00C0105979153EA45b27 - [View source code](https://github.com/degencodebeast/hack-vitalia/blob/main/smart-contracts/contracts/Treasury.sol) | [View on Shido](https://shidoscan.com/contract/0x9E1eF5A92C9Bf97460Cd00C0105979153EA45b27)
 
-3. User NFT contract 0x8cE89567ea2cB34DfDBa438a32991f4bA9aE0405 - [View source code](https://github.com/degencodebeast/hack-vitalia/blob/main/smart-contracts/contracts/UserNFT.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x8cE89567ea2cB34DfDBa438a32991f4bA9aE0405)
+3. User NFT contract 0x6D919b8dC30BEf41b56Aa8b18b2052c9459F8E9A - [View source code](https://github.com/degencodebeast/hack-vitalia/blob/main/smart-contracts/contracts/UserNFT.sol) | [View on Shido](https://shidoscan.com/contract/0x6D919b8dC30BEf41b56Aa8b18b2052c9459F8E9A)
 
-4. Nutritionist NFT contract 0x8dD80E558F9168D261b59792169C024568C9D943 - [View source code](https://github.com/degencodebeast/hack-vitalia/blob/main/smart-contracts/contracts/NutritionistNFT.sol) | [View on Avalanche](https://testnet.snowtrace.io/address/0x8dD80E558F9168D261b59792169C024568C9D943)
+4. Nutritionist NFT contract 0xA39d26482B5c226Fd02A5f3e159C72ee03d63Fc0 - [View source code](https://github.com/degencodebeast/hack-vitalia/blob/main/smart-contracts/contracts/NutritionistNFT.sol) | [View on Shido](https://shidoscan.com/contract/0xA39d26482B5c226Fd02A5f3e159C72ee03d63Fc0)

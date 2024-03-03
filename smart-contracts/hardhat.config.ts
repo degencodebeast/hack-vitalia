@@ -111,6 +111,11 @@ const config: HardhatUserConfig = {
       chainId: 43113,
       accounts: [`${process.env.PRIVATE_KEY}`],
     },
+    shido: {
+      url: " https://rpc-testnet-nodes.shidoscan.com",
+      chainId: 9007, 
+      accounts: [`${process.env.PRIVATE_KEY}`]
+    }
   },
   typechain: {
     target: "ethers-v5"
