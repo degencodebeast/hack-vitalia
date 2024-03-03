@@ -39,8 +39,6 @@ export default function DashBoard() {
         '/api/create-room'
       );
 
-      console.log('createRoomFromServer data:', createRoomFromServer.data);
-
       const roomId = createRoomFromServer.data?.roomId;
       const createAccessTokenResponse = await axios.post<{
         roomId: string;
@@ -48,17 +46,9 @@ export default function DashBoard() {
       }>(`/api/get-access-token?roomId=${roomId}`);
       console.log({ createRoomFromServer, createAccessTokenResponse });
 
-      console.log(
-        'createAccessTokenResponse data:',
-        createAccessTokenResponse.data
-      );
-
       const token = createAccessTokenResponse.data?.token;
       return { token, roomId: roomId };
-    } catch (error) {
-      console.error('Error fetching server data:', error);
-      // Handle errors gracefully
-    }
+    } catch (error) {}
   };
 
   const createRoom = async () => {
@@ -69,8 +59,6 @@ export default function DashBoard() {
         roomId: string;
         token: string;
       };
-
-      console.log('Props:', props);
       // Use roomId to create and navigate to the dynamic route
       router.push(`/meeting/${props?.roomId}?token=${props?.token}`); // Or redirect using `res.redirect` for server-side rendering
       setIsLoading(false);
@@ -248,9 +236,6 @@ export default function DashBoard() {
                           isLoading={isLoading}
                           className='hover:bg-primaryYellowTrans hover:text-[#403CEA] text-primaryBeige bg-[#403CEA]'
                           onClick={() => createRoom()}
-                          // onClick={async () => {
-                          //   await createRoom()
-                          // }}
                         >
                           Accept
                         </Button>

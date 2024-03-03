@@ -38,7 +38,7 @@ import SwiperMain from 'swiper';
 import Icon from '../Icon';
 import NutritionistForm from '../nutritionist-form';
 import { countries } from '@/utils/countries';
-import { uploadToThirdWeb } from '@/helpers';
+// import { putJSONandGetHash } from '@/helpers';
 import { useDebounce } from '@/hooks/useDebounce';
 import { communityAbi } from '../../../abis';
 import { communityAddr } from '@/utils/constants';
@@ -196,9 +196,9 @@ const RegisterForm = ({
           smokingLength: data.smokingLength,
         };
 
-        const cid = await uploadToThirdWeb(formDataObject);
+        // const cid = await putJSONandGetHash(formDataObject);
 
-        setCid(cid);
+        // setCid(cid);
         setUser({
           ...user,
           userAddress: address,

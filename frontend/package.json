@@ -15,6 +15,7 @@
     "format:fix": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@airstack/airstack-react": "^0.6.2",
     "@chakra-ui/next-js": "^2.1.5",
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.11.1",
@@ -30,7 +31,6 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "@rainbow-me/rainbowkit": "^1.1.1",
     "@reduxjs/toolkit": "^2.2.1",
-    "@thirdweb-dev/storage": "^2.0.9",
     "@types/cors": "^2.8.17",
     "@types/react-transition-group": "^4.4.10",
     "@web3-react/core": "6.1.9",

@@ -24,9 +24,7 @@ export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
         }),
         headers: {
           'Content-Type': 'application/json',
-          //'x-api-key': process.env.HUDDLE_API_KEY || '',
-          'x-api-key': "waJpOBHSCK60CYFI77XglmUwkjvSsq-a",
-          //'x-api-key': 'qgoZqCLhcqDKyhAnNXKfXMvXGjmalEoy',
+          'x-api-key': process.env.HUDDLE_API_KEY || '',
         },
       }
     );

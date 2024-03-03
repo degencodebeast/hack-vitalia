@@ -42,9 +42,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const accessToken = new AccessToken({
-      //apiKey: process.env.HUDDLE_API_KEY as string,
-      apiKey: "waJpOBHSCK60CYFI77XglmUwkjvSsq-a",
-      //apiKey: "qgoZqCLhcqDKyhAnNXKfXMvXGjmalEoy",
+      apiKey: process.env.HUDDLE_API_KEY as string,
       roomId: roomId as string,
       role: Role.HOST,
       permissions: {
