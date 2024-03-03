@@ -8,6 +8,7 @@ import {
 } from 'date-fns';
 import slugify from 'slugify';
 import { nanoid } from 'nanoid';
+import { ThirdwebStorage } from "@thirdweb-dev/storage";
 
 export function shortenText(text: string, len = 50) {
   return text?.length > len ? text?.substring(0, len) + '...' : text;
@@ -153,25 +154,30 @@ export const uploadPromptToIpfs = async (data: any) => {
         `,
   };
 
-  const content = new Blob([JSON.stringify(prompt)], {
-    type: 'application/json',
-  });
-  const fileObj = new File([content], 'file.json', {
-    type: 'application/json',
-  });
-  // const res = await client.put([fileObj]);
-  // console.log(res);
-  // return res;
 };
 
-export const putJSONandGetHash = async (json: any) => {
-  const client = makeStorageClient();
-  const content = new Blob([JSON.stringify(json)], {
-    type: 'application/json',
+
+
+export const uploadToThirdWeb = async (json: any) => {
+  // First, instantiate the thirdweb IPFS storage
+  const storage = new ThirdwebStorage({
+    secretKey: process.env.NEXT_PUBLIC_THIRDWEB_SECRET_KEY as string
   });
-  const fileObj = new File([content], 'file.json', {
-    type: 'application/json',
-  });
-  // const res = await client.put([fileObj]);
-  // return res;
-};
+
+  // Here we get the IPFS URI of where our metadata has been uploaded
+  const uri = await storage.upload(json);
+  // This will log a URL like ipfs://QmWgbcjKWCXhaLzMz4gNBxQpAHktQK6MkLvBkKXbsoWEEy/0
+  console.info("uri:", uri);
+
+  // // Here we a URL with a gateway that we can look at in the browser
+  // const url = await storage.resolveScheme(uri);
+  // // This will log a URL like https://ipfs.thirdwebstorage.com/ipfs/QmWgbcjKWCXhaLzMz4gNBxQpAHktQK6MkLvBkKXbsoWEEy/0
+  // console.info("url:", url);
+
+  // // You can also download the data from the uri
+  // const data = await storage.downloadJSON(uri);
+  // console.log("data:", data)
+
+  return uri;
+}
+
