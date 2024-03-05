@@ -175,7 +175,7 @@ const RegisterForm = ({
         console.log({ data });
       }
 
-      //    const cid = await uploadPromptToIpfs(data);
+      
       if (isValid) {
         setIsSubmitting(true);
         // Serialize the form data into a JSON object

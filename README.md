@@ -1,6 +1,6 @@
 # RevitalizeAI 
 
-Live Demo - [Youtube video](https://youtu.be/u9oClURPhUY) <br />
+Live Demo - [Youtube video](https://youtu.be/lWvMPmLUveg) <br />
 Live Link - [RevitalizeAI dapp](https://revitalize-ai.vercel.app/) <br />
 Pitch Deck - [Google slides](https://docs.google.com/presentation/d/17ugyPuitUSNnS0WOj0iDY__dNDwvGXNM3Gl82835Rcg/edit?usp=sharing) <br/>
 
